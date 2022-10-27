@@ -1,99 +1,135 @@
-version: '2'
+version: "3"
 
 services:
   config-server:
     image: springcommunity/spring-petclinic-config-server
     container_name: config-server
-    mem_limit: 512M
     ports:
-     - 8888:8888
+     - "8888:8888"
 
   discovery-server:
     image: springcommunity/spring-petclinic-discovery-server
     container_name: discovery-server
-    mem_limit: 512M
     depends_on:
       - config-server
     entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
-     - 8761:8761
+     - "8761:8761"
 
   customers-service:
     image: springcommunity/spring-petclinic-customers-service
     container_name: customers-service
-    mem_limit: 512M
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
-    - 8081:8081
+    - "8081:8081"
 
   visits-service:
     image: springcommunity/spring-petclinic-visits-service
     container_name: visits-service
-    mem_limit: 512M
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
-     - 8082:8082
+     - "8082:8082"
 
   vets-service:
     image: springcommunity/spring-petclinic-vets-service
     container_name: vets-service
-    mem_limit: 512M
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
-     - 8083:8083
+     - "8083:8083"
 
   api-gateway:
     image: springcommunity/spring-petclinic-api-gateway
     container_name: api-gateway
-    mem_limit: 512M
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
-     - 8080:8080
+     - "8080:8080"
 
   tracing-server:
     image: openzipkin/zipkin
     container_name: tracing-server
-    mem_limit: 512M
     environment:
     - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
     ports:
-     - 9411:9411
+     - "9411:9411"
 
   admin-server:
     image: springcommunity/spring-petclinic-admin-server
     container_name: admin-server
-    mem_limit: 512M
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
-     - 9090:9090
+     - "9090:9090"
 
   ## Grafana / Prometheus
-
-  grafana-server:
-    build: ./docker/grafana
-    container_name: grafana-server
-    mem_limit: 256M
+  grafana:
+    image: grafana/grafana:9.2.2
+    container_name: grafana
+    volumes:
+      - ${PWD}/docker/config/grafana/provisioning:/etc/grafana/provisioning
+      - ${PWD}/docker/config/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ${PWD}/docker/config/grafana/dashboards:/var/lib/grafana/dashboards
     ports:
-    - 3000:3000
+    - "3000:3000"
 
-  prometheus-server:
-    build: ./docker/prometheus
-    container_name: prometheus-server
-    mem_limit: 256M
+  tempo:
+    image: grafana/tempo:latest
+    container_name: grafana-tempo
+    command: [ "-config.file=/tempo.yaml" ]
+    volumes:
+      - ${PWD}/docker/config/tempo-local.yaml:/tempo.yaml
+      - ${PWD}/tempo-data:/tmp/tempo
     ports:
-    - 9091:9090
+      - "3200:3200"
+      - "14268:14268"  # jaeger ingest
+      - "4317:4317"  # otlp grpc
+      - "4318:4318"  # otlp http
+      - "9411:9411"   # zipkin
+
+  loki:
+    image: grafana/loki:2.6.1
+    container_name: grafana-loki
+    volumes:
+      - ${PWD}/docker/config/loki-config.yaml:/etc/loki/loki-config.yaml
+    ports:
+      - 3100:3100
+
+  promtail:
+    image: grafana/promtail:2.6.1
+    command: ["-config.file=/etc/promtail/promtail-config.yaml"]
+    container_name: grafana-promtail
+    volumes:
+      - ${PWD}/docker/config/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - /tmp/app-logs/:/var/log/app-logs
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - --config.file=/etc/prometheus.yaml
+      - --web.enable-remote-write-receiver
+      - --enable-feature=exemplar-storage
+    container_name: prometheus
+    volumes:
+      - ${PWD}/docker/config/prometheus.yaml:/etc/prometheus.yaml
+    ports:
+      - "9091:9090"
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.61.0
+    command: [ "--config=/etc/otel-collector.yaml" ]
+    container_name: otel-collector
+    volumes:
+      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml
