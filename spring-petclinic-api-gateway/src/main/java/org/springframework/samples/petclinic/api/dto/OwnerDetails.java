@@ -16,7 +16,6 @@
 package org.springframework.samples.petclinic.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,27 +25,12 @@ import static java.util.stream.Collectors.toList;
 /**
  * @author Maciej Szarlinski
  */
-@Data
-public class OwnerDetails {
-
-    private int id;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String address;
-
-    private String city;
-
-    private String telephone;
-
-    private final List<PetDetails> pets = new ArrayList<>();
-
+public record OwnerDetails(int id, String firstName, String lastName, String address, String city, String telephone, List<PetDetails> pets) {
+    
     @JsonIgnore
     public List<Integer> getPetIds() {
         return pets.stream()
-            .map(PetDetails::getId)
+            .map(PetDetails::id)
             .collect(toList());
     }
 }
