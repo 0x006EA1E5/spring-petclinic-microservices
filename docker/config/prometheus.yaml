@@ -6,6 +6,27 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: [ 'localhost:9090' ]
+
   - job_name: 'tempo'
     static_configs:
       - targets: [ 'tempo:3200' ]
+
+  - job_name: api-gateway
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:8080' ]
+
+  - job_name: customers-service
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:8081' ]
+
+  - job_name: visits-service
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:8082' ]
+
+  - job_name: vets-service
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'host.docker.internal:8083' ]

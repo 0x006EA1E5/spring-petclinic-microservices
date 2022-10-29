@@ -15,5 +15,34 @@ scrape_configs:
     - targets:
         - localhost
       labels:
-        job: app-logs
-        __path__: /var/log/app-logs/*.log
+        job: api-gateway
+        __path__: /var/log/app-logs/api-gateway.log.json
+  pipeline_stages:
+    - match:
+        selector: '{job="api-gateway"}'
+        stages:
+          - json:
+              expressions:
+                timestamp: timestamp
+                level: level
+                thread: thread
+                logger: logger
+                message: message
+                mdc: mdc
+          - json:
+              expressions:
+                traceId:
+                spanId:
+              source: mdc
+          - labels:
+              level:
+              thread:
+              logger:
+              message:
+              traceId:
+              spanId:
+          - output:
+              source: output
+          - timestamp:
+              format: RFC3339Nano
+              source: timestamp

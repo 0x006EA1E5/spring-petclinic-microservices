@@ -12,6 +12,8 @@ logging:
         boot: INFO
         web: INFO
 
+eureka:
+
 ---
 spring:
   config:
