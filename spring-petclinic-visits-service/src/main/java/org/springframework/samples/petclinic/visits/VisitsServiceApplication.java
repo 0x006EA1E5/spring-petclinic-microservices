@@ -16,12 +16,15 @@
 package org.springframework.samples.petclinic.visits;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.Config;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author Maciej Szarlinski
  */
 @SpringBootApplication
+@Import(Config.class)
 public class VisitsServiceApplication {
 
     public static void main(String[] args) {

@@ -16,8 +16,10 @@
 package org.springframework.samples.petclinic.vets;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.Config;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Import;
 import org.springframework.samples.petclinic.vets.system.VetsProperties;
 
 /**
@@ -25,6 +27,7 @@ import org.springframework.samples.petclinic.vets.system.VetsProperties;
  */
 @SpringBootApplication
 @EnableConfigurationProperties(VetsProperties.class)
+@Import(Config.class)
 public class VetsServiceApplication {
 
 	public static void main(String[] args) {

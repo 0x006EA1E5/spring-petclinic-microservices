@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
+import io.micrometer.observation.annotation.Observed;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -51,6 +52,7 @@ public class ApiGatewayController {
     }
 
     @GetMapping(value = "owners/{ownerId}")
+    @Observed
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
         return customersServiceClient.getOwner(ownerId)
             .flatMap(owner ->
@@ -67,11 +69,14 @@ public class ApiGatewayController {
     private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
             owner.pets()
-                .forEach(pet -> pet.visits()
-                    .addAll(visits.items().stream()
-                        .filter(v -> v.petId() == pet.id())
-                        .toList())
-                );
+                .forEach(pet -> {
+                    if (pet.visits() != null) {
+                        pet.visits()
+                            .addAll(visits.items().stream()
+                                .filter(v -> v.petId() == pet.id())
+                                .toList());
+                    }
+                });
             return owner;
         };
     }

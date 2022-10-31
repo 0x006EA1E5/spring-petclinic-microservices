@@ -15,10 +15,13 @@
  */
 package org.springframework.samples.petclinic.api.dto;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+
 import java.util.List;
 
 /**
  * @author Maciej Szarlinski
  */
-public record PetDetails(int id, String name, PetType type, List<VisitDetails> visits) { }
+public record PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<VisitDetails> visits) { }

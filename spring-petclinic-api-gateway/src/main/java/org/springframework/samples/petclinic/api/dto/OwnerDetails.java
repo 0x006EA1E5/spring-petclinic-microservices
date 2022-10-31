@@ -26,11 +26,11 @@ import static java.util.stream.Collectors.toList;
  * @author Maciej Szarlinski
  */
 public record OwnerDetails(int id, String firstName, String lastName, String address, String city, String telephone, List<PetDetails> pets) {
-    
+
     @JsonIgnore
     public List<Integer> getPetIds() {
         return pets.stream()
             .map(PetDetails::id)
-            .collect(toList());
+            .toList();
     }
 }

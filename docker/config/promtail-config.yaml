@@ -9,7 +9,6 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-
 - job_name: app-logs
   static_configs:
     - targets:
@@ -17,9 +16,24 @@ scrape_configs:
       labels:
         job: api-gateway
         __path__: /var/log/app-logs/api-gateway.log.json
+    - targets:
+        - localhost
+      labels:
+        job: customer-service
+        __path__: /var/log/app-logs/customer-service.log.json
+    - targets:
+        - localhost
+      labels:
+        job: vets-service
+        __path__: /var/log/app-logs/vets-service.log.json
+    - targets:
+        - localhost
+      labels:
+        job: visits-service
+        __path__: /var/log/app-logs/visits-service.log.json
   pipeline_stages:
     - match:
-        selector: '{job="api-gateway"}'
+        selector: '{job=~".+"}'
         stages:
           - json:
               expressions:
@@ -28,6 +42,7 @@ scrape_configs:
                 thread: thread
                 logger: logger
                 message: message
+                exception: exception
                 mdc: mdc
           - json:
               expressions:
@@ -36,13 +51,11 @@ scrape_configs:
               source: mdc
           - labels:
               level:
-              thread:
               logger:
-              message:
               traceId:
               spanId:
+#          - timestamp:
+#              format: RFC3339Nano
+#              source: timestamp
           - output:
               source: output
-          - timestamp:
-              format: RFC3339Nano
-              source: timestamp

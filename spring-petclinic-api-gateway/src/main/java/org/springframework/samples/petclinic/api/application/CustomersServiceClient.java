@@ -15,6 +15,11 @@
  */
 package org.springframework.samples.petclinic.api.application;
 
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
+import io.micrometer.tracing.annotation.NewSpan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.api.dto.OwnerDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,16 +31,23 @@ import reactor.core.publisher.Mono;
 @Component
 public class CustomersServiceClient {
 
-    private final WebClient.Builder webClientBuilder;
+    private static final Logger logger = LoggerFactory.getLogger(CustomersServiceClient.class);
 
-    public CustomersServiceClient(WebClient.Builder webClientBuilder) {
+    private final WebClient.Builder webClientBuilder;
+    private final ObservationRegistry registry;
+
+    public CustomersServiceClient(WebClient.Builder webClientBuilder, ObservationRegistry registry) {
         this.webClientBuilder = webClientBuilder;
+        this.registry = registry;
     }
 
+    @NewSpan
     public Mono<OwnerDetails> getOwner(final int ownerId) {
+        logger.info("hello, world!");
         return webClientBuilder.build().get()
             .uri("http://localhost:8081/owners/{ownerId}", ownerId)
             .retrieve()
             .bodyToMono(OwnerDetails.class);
+
     }
 }

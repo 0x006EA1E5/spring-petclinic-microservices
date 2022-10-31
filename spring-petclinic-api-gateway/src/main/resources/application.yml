@@ -24,3 +24,9 @@ spring:
             - Path=/api/customer/**
           filters:
             - StripPrefix=2
+
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true

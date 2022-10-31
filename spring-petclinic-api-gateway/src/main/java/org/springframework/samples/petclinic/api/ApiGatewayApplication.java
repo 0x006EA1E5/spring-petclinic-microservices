@@ -85,4 +85,16 @@ public class ApiGatewayApplication {
             .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(4)).build())
             .build());
     }
+
+//    @Bean
+//    SpanHandler mySpanHandler() {
+//        return new SpanHandler() {
+//            @Override
+//            public boolean end(TraceContext context, MutableSpan span, Cause cause) {
+//                span.tag("appId", "api-gateway");
+//                span.tag("traceID", context.traceIdString());
+//                return super.end(context, span, cause);
+//            }
+//        };
+//    }
 }
