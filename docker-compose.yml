@@ -60,3 +60,55 @@ services:
     container_name: otel-collector
     volumes:
       - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+    container_name: elasticsearch
+    volumes:
+      - ${PWD}/docker/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ${PWD}/elasticsearch-data/:/usr/share/elasticsearch/data:rw
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.4.3
+    command:
+#      - setup
+      - -e
+      - --strict.perms=false
+    user: root
+    container_name: filebeat
+    ports:
+      - 8080:80
+    volumes:
+      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /tmp/app-logs/:/var/log/app-logs
+      - ${PWD}/filebeat-registry:/usr/share/filebeat/data/registry:rw
+
+  filebeat-setup:
+    image: docker.elastic.co/beats/filebeat:8.4.3
+    command:
+      - setup
+      - -e
+      - --strict.perms=false
+    user: root
+    container_name: filebeat-setup
+    ports:
+      - 8080:80
+    volumes:
+      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /tmp/app-logs/:/var/log/app-logs
+      - ${PWD}/filebeat-registry:/usr/share/filebeat/data/registry:rw
+
+  elasticsearch-admin:
+    image: stephanediondev/elasticsearch-admin
+    container_name: elasticsearch-admin
+    ports:
+      - 80:8080
+      - 443:4443
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: +kKvULi=4qpvFtIOj9Nh
+      SECRET_REGISTER: abcd

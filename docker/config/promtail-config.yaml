@@ -52,10 +52,11 @@ scrape_configs:
           - labels:
               level:
               logger:
-              traceId:
-              spanId:
-#          - timestamp:
-#              format: RFC3339Nano
-#              source: timestamp
-          - output:
-              source: output
+              appId: job
+#              traceId:
+#              spanId:
+              _entry:
+          - timestamp:
+              format: RFC3339Nano
+              source: timestamp
+

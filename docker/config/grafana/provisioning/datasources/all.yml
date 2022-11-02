@@ -63,4 +63,47 @@ datasources:
         matcherRegex: '"traceId":"(\w+)"'
         name: TraceID
         url: $${__value.raw}
+- name: Elasticsearch
+  type: elasticsearch
+  orgId: 1
+  uid: elasticsearch
+  typeLogoUrl: ''
+  access: proxy
+  url: http://elasticsearch:9200
+  user: ''
+  database: ''
+  basicAuth: true
+  basicAuthUser: elastic
+  withCredentials: false
+  isDefault: false
+  jsonData:
+    esVersion: 8.0.0
+    includeFrozen: false
+    logLevelField: ''
+    logMessageField: ''
+    maxConcurrentShardRequests: 5
+    timeField: "@timestamp"
+    tlsAuthWithCACert: true
+    basicAuthPassword: +kKvULi=4qpvFtIOj9Nh
+#  secureJsonFields:
+#    basicAuthPassword: true
+#    tlsCACert: false
+  version: 5
+  readOnly: false
+  editable: true
+  accessControl:
+    alert.instances.external:read: true
+    alert.instances.external:write: true
+    alert.notifications.external:read: true
+    alert.notifications.external:write: true
+    alert.rules.external:read: true
+    alert.rules.external:write: true
+    datasources.id:read: true
+    datasources:delete: true
+    datasources:query: true
+    datasources:read: true
+    datasources:write: true
 
+
+# elastic u:elastic p:FBYS7eMEhVmGn3coVE88
+# elastic u:elastic p:+kKvULi=4qpvFtIOj9Nh

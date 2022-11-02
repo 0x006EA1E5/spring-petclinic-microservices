@@ -1,0 +1,47 @@
+filebeat:
+#  config:
+#    modules:
+#      path: ${path.config}/modules.d/*.yml
+#      reload.enabled: false
+  inputs:
+    - type: filestream
+      id: app-logs
+      # Change to true to enable this input configuration.
+      enabled: true
+
+      # Paths that should be crawled and fetched. Glob based paths.
+      paths:
+        - /var/log/app-logs/*.json
+setup.dashboards.enabled: false
+#filebeat.autodiscover:
+#  providers:
+#    - type: docker
+#      hints.enabled: true
+
+#processors:
+#- add_cloud_metadata: ~
+
+processors:
+  - decode_json_fields:
+      fields:
+        - message
+      process_array: false
+      max_depth: 1
+      target: ""
+      overwrite_keys: true
+      add_error_key: true
+  - timestamp:
+      field: timestamp
+      layouts: ['2006-01-02T15:04:05.999-0700']
+      test: ['2022-10-31T16:25:46.916000000+0000']
+  - drop_fields:
+      fields: [timestamp]
+
+
+output.elasticsearch:
+  hosts: 'http://elasticsearch:9200'
+  username: 'elastic'
+  password: '+kKvULi=4qpvFtIOj9Nh'
+  ssl:
+    enabled: false
+
