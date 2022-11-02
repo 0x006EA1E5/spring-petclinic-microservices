@@ -83,8 +83,12 @@ datasources:
     logMessageField: ''
     maxConcurrentShardRequests: 5
     timeField: "@timestamp"
-    tlsAuthWithCACert: true
+    tlsAuthWithCACert: false
     basicAuthPassword: +kKvULi=4qpvFtIOj9Nh
+    dataLinks:
+      - datasourceUid: tempo
+        field: traceId
+        url: "${__value.raw}"
 #  secureJsonFields:
 #    basicAuthPassword: true
 #    tlsCACert: false

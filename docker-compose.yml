@@ -6,9 +6,9 @@ services:
     image: grafana/grafana:9.2.2
     container_name: grafana
     volumes:
-      - ${PWD}/docker/config/grafana/provisioning:/etc/grafana/provisioning
-      - ${PWD}/docker/config/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ${PWD}/docker/config/grafana/dashboards:/var/lib/grafana/dashboards
+      - ${PWD}/docker/config/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ${PWD}/docker/config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ${PWD}/docker/config/grafana/dashboards:/var/lib/grafana/dashboards:ro
     ports:
     - "3000:3000"
 
@@ -17,8 +17,8 @@ services:
     container_name: tempo
     command: [ "-config.file=/tempo.yaml" ]
     volumes:
-      - ${PWD}/docker/config/tempo-local.yaml:/tempo.yaml
-      - ${PWD}/tempo-data:/tmp/tempo
+      - ${PWD}/docker/config/tempo-local.yaml:/tempo.yaml:ro
+      - ${PWD}/docker/data/tempo:/tmp/tempo
     ports:
       - "3200:3200"
       - "14268:14268"  # jaeger ingest
@@ -30,17 +30,17 @@ services:
     image: grafana/loki:2.6.1
     container_name: loki
     volumes:
-      - ${PWD}/docker/config/loki-config.yaml:/etc/loki/loki-config.yaml
+      - ${PWD}/docker/config/loki-config.yaml:/etc/loki/loki-config.yaml:ro
     ports:
       - 3100:3100
 
-  promtail:
-    image: grafana/promtail:2.6.1
-    command: ["-config.file=/etc/promtail/promtail-config.yaml"]
-    container_name: promtail
-    volumes:
-      - ${PWD}/docker/config/promtail-config.yaml:/etc/promtail/promtail-config.yaml
-      - /tmp/app-logs/:/var/log/app-logs
+#  promtail:
+#    image: grafana/promtail:2.6.1
+#    command: ["-config.file=/etc/promtail/promtail-config.yaml"]
+#    container_name: promtail
+#    volumes:
+#      - ${PWD}/docker/config/promtail-config.yaml:/etc/promtail/promtail-config.yaml:ro
+#      - /tmp/app-logs/:/var/log/app-logs
 
   prometheus:
     image: prom/prometheus:latest
@@ -50,7 +50,7 @@ services:
       - --enable-feature=exemplar-storage
     container_name: prometheus
     volumes:
-      - ${PWD}/docker/config/prometheus.yaml:/etc/prometheus.yaml
+      - ${PWD}/docker/config/prometheus.yaml:/etc/prometheus.yaml:ro
     ports:
       - "9091:9090"
 
@@ -59,56 +59,53 @@ services:
     command: [ "--config=/etc/otel-collector.yaml" ]
     container_name: otel-collector
     volumes:
-      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml
+      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml:ro
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
     container_name: elasticsearch
     volumes:
       - ${PWD}/docker/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ${PWD}/elasticsearch-data/:/usr/share/elasticsearch/data:rw
+      - ${PWD}/docker/data/elasticsearch-data/:/usr/share/elasticsearch/data:rw
     ports:
       - 9200:9200
       - 9300:9300
 
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:8.4.3
-    command:
+#  filebeat:
+#    image: docker.elastic.co/beats/filebeat:8.4.3
+#    command:
+##      - setup
+##      - -e
+#      - '--strict.perms=false'
+#      - -v
+#    user: root
+#    container_name: filebeat
+#    volumes:
+#      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+#      - /tmp/app-logs/:/app-logs/:rw
+#      - ${PWD}/docker/data/filebeat/:/usr/share/filebeat/data/:rw
+#
+#  filebeat-setup:
+#    image: docker.elastic.co/beats/filebeat:8.4.3
+#    command:
 #      - setup
-      - -e
-      - --strict.perms=false
-    user: root
-    container_name: filebeat
-    ports:
-      - 8080:80
-    volumes:
-      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-      - /tmp/app-logs/:/var/log/app-logs
-      - ${PWD}/filebeat-registry:/usr/share/filebeat/data/registry:rw
+#      - -e
+#      - --strict.perms=false
+#    user: root
+#    container_name: filebeat-setup
+#    volumes:
+#      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+#      - /tmp/app-logs/:/var/log/app-logs/:ro
+#      - ${PWD}/filebeat-registry:/usr/share/filebeat/data/registry:rw
 
-  filebeat-setup:
-    image: docker.elastic.co/beats/filebeat:8.4.3
-    command:
-      - setup
-      - -e
-      - --strict.perms=false
-    user: root
-    container_name: filebeat-setup
-    ports:
-      - 8080:80
-    volumes:
-      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-      - /tmp/app-logs/:/var/log/app-logs
-      - ${PWD}/filebeat-registry:/usr/share/filebeat/data/registry:rw
-
-  elasticsearch-admin:
-    image: stephanediondev/elasticsearch-admin
-    container_name: elasticsearch-admin
-    ports:
-      - 80:8080
-      - 443:4443
-    environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      ELASTICSEARCH_USERNAME: elastic
-      ELASTICSEARCH_PASSWORD: +kKvULi=4qpvFtIOj9Nh
-      SECRET_REGISTER: abcd
+#  elasticsearch-admin:
+#    image: stephanediondev/elasticsearch-admin
+#    container_name: elasticsearch-admin
+#    ports:
+#      - 80:8080
+#      - 443:4443
+#    environment:
+#      ELASTICSEARCH_URL: http://elasticsearch:9200
+#      ELASTICSEARCH_USERNAME: elastic
+#      ELASTICSEARCH_PASSWORD: +kKvULi=4qpvFtIOj9Nh
+#      SECRET_REGISTER: abcd

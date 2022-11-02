@@ -1,14 +1,10 @@
 filebeat:
-  config:
-#    modules:
-#      path: ${path.config}/modules.d/*.yml
-#      reload.enabled: true
   inputs:
-    - type: filestream
+    - type: log
       id: config-server
       # Change to true to enable this input configuration.
       enabled: true
-      file_identity.path: ~
+#      file_identity.path: ~
       # Paths that should be crawled and fetched. Glob based paths.
 #      close:
 #        reader:
@@ -17,47 +13,47 @@ filebeat:
 #        scanner:
 #          resend_on_touch: true
       paths:
-        - /app-logs/*.log.json
+        - /tmp/app-logs/*.log.json
       processors:
         - add_fields:
             when:
               equals:
-                log.file.path: /app-logs/config-server.log.json
+                log.file.path: /var/log/app-logs/config-server.log.json
             target: ''
             fields:
               appId: config-server
         - add_fields:
             when:
               equals:
-                log.file.path: /app-logs/admin-server.log.json
+                log.file.path: /var/log/app-logs/admin-server.log.json
             target: ''
             fields:
               appId: admin-server
         - add_fields:
             when:
               equals:
-                log.file.path: /app-logs/api-gateway.log.json
+                log.file.path: /var/log/app-logs/api-gateway.log.json
             target: ''
             fields:
               appId: api-gateway
         - add_fields:
             when:
               equals:
-                log.file.path: /app-logs/customer-service.log.json
+                log.file.path: /var/log/app-logs/customer-service.log.json
             target: ''
             fields:
               appId: customer-service
         - add_fields:
             when:
               equals:
-                log.file.path: /app-logs/vets-service.log.json
+                log.file.path: /var/log/app-logs/vets-service.log.json
             target: ''
             fields:
               appId: vets-service
         - add_fields:
             when:
               equals:
-                log.file.path: /app-logs/visits-service.log.json
+                log.file.path: /var/log/app-logs/visits-service.log.json
             target: ''
             fields:
               appId: visits-service
@@ -103,7 +99,7 @@ processors:
 
 output.elasticsearch:
   hosts:
-    - 'elasticsearch:9200'
+    - 'localhost:9200'
 #  username: 'elastic'
 #  password: '+kKvULi=4qpvFtIOj9Nh'
   ssl:

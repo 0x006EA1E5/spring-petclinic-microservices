@@ -20,4 +20,4 @@ target/
 # Branch switching
 generated/
 
-tempo-data/
+docker/data/

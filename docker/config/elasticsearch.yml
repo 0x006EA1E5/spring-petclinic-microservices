@@ -34,4 +34,6 @@ cluster:
     allocation:
       disk:
         threshold_enabled: false
+      same_shard:
+        host: false
 #----------------------- END SECURITY AUTO CONFIGURATION -------------------------
