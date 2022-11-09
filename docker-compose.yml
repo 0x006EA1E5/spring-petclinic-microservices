@@ -47,7 +47,7 @@ services:
     command:
       - --config.file=/etc/prometheus.yaml
       - --web.enable-remote-write-receiver
-      - --enable-feature=exemplar-storage
+      - --enable-feature=exemplar-storage,remote-write-receiver
     container_name: prometheus
     volumes:
       - ${PWD}/docker/config/prometheus.yaml:/etc/prometheus.yaml:ro
@@ -66,7 +66,7 @@ services:
     container_name: elasticsearch
     volumes:
       - ${PWD}/docker/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ${PWD}/docker/data/elasticsearch-data/:/usr/share/elasticsearch/data:rw
+      - ${PWD}/docker/data/elasticsearch/:/usr/share/elasticsearch/data:rw
     ports:
       - 9200:9200
       - 9300:9300

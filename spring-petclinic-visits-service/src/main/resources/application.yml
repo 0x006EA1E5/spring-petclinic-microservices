@@ -3,3 +3,14 @@ spring:
     name: visits-service
   config:
     import: configserver:http://localhost:8888/
+management:
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+            percentiles-histogram: true
+    distribution:
+      percentiles-histogram:
+        'http.server.requests': true

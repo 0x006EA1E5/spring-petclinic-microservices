@@ -3,3 +3,11 @@ spring:
     name: customers-service
   config:
     import: configserver:http://localhost:8888/
+management:
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+            percentiles-histogram: true

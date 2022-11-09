@@ -8,3 +8,56 @@ spring:
   profiles:
     active: production
 
+  sleuth:
+    web:
+      filter-order: -2147483648
+
+management:
+#  observations:
+#    http:
+#      server:
+#        requests:
+#          name:
+#  distribution:
+#    percentiles:
+#      exemplars:
+#        - 0.9
+#        - 0.95
+#        - 0.99
+#        - 0.999
+#      http.server.requests:
+#        - 0.9
+#        - 0.95
+#        - 0.99
+#        - 0.999
+#  metrics:
+#    distribution:
+#      expiry:
+#        http.server.requests: 1s
+#      buffer-length:
+#        http.server.requests: 10
+#      percentiles-histogram:
+#        http.server.requests: true
+#      slo:
+#        'http.server.requests':
+#          - 10ms
+#          - 200ms
+#          - 500ms
+#          - 1s
+
+  endpoints.web.exposure.include: '*'
+  metrics:
+    distribution:
+      percentiles-histogram:
+        'http.server.requests': true
+      slo:
+        'http.server.requests':
+          - 10ms
+          - 200ms
+          - 500ms
+          - 1s
+  tracing.sampling.probability: 1.0
+#  prometheus:
+#    metrics:
+#      export:
+#        histogram-flavor: victoriametrics
