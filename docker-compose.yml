@@ -54,16 +54,23 @@ services:
     ports:
       - "9091:9090"
 
-  otel-collector:
-    image: otel/opentelemetry-collector:0.61.0
-    command: [ "--config=/etc/otel-collector.yaml" ]
-    container_name: otel-collector
-    volumes:
-      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml:ro
+#  otel-collector:
+#    image: otel/opentelemetry-collector:0.61.0
+#    command: [ "--config=/etc/otel-collector.yaml" ]
+#    container_name: otel-collector
+#    volumes:
+#      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml:ro
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
     container_name: elasticsearch
+    healthcheck:
+      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+#    environment:
+#      - discovery.type=single-node
     volumes:
       - ${PWD}/docker/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ${PWD}/docker/data/elasticsearch/:/usr/share/elasticsearch/data:rw
@@ -71,19 +78,32 @@ services:
       - 9200:9200
       - 9300:9300
 
-#  filebeat:
-#    image: docker.elastic.co/beats/filebeat:8.4.3
-#    command:
-##      - setup
-##      - -e
-#      - '--strict.perms=false'
-#      - -v
-#    user: root
-#    container_name: filebeat
-#    volumes:
-#      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-#      - /tmp/app-logs/:/app-logs/:rw
-#      - ${PWD}/docker/data/filebeat/:/usr/share/filebeat/data/:rw
+  zookeeper:
+    image: zookeeper:3.8.0
+    container_name: zookeeper
+    volumes:
+      - ${PWD}/docker/config/zoo.cfg:/conf/zoo.cfg:ro
+      - ${PWD}/docker/data/zookeeper/:/data:rw
+    ports:
+      - 2181:2181
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.4.3
+    command:
+#      - setup
+#      - -e
+      - '--strict.perms=false'
+#      - '--path.data=/usr/share/filebeat/data/'
+      - -v
+    depends_on:
+      elasticsearch:
+          condition: service_healthy
+    user: root
+    container_name: filebeat
+    volumes:
+      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /tmp/app-logs/:/app-logs/:ro
+      - ${PWD}/docker/data/filebeat/:/usr/share/filebeat/data/:rw
 #
 #  filebeat-setup:
 #    image: docker.elastic.co/beats/filebeat:8.4.3

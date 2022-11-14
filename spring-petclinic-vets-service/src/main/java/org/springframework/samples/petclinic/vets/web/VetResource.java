@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,10 +38,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 class VetResource {
 
+    private final DiscoveryClient discoveryClient;
+
     private final VetRepository vetRepository;
 
     @GetMapping
     public List<Vet> showResourcesVetList() {
+        discoveryClient.getInstances("customers-service");
         return vetRepository.findAll();
     }
 }

@@ -16,6 +16,8 @@
 package org.springframework.samples.petclinic.api.boundary.web;
 
 import io.micrometer.observation.annotation.Observed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -38,6 +40,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/gateway")
 public class ApiGatewayController {
+    private final Logger logger = LoggerFactory.getLogger(ApiGatewayController.class);
 
     private final CustomersServiceClient customersServiceClient;
 
@@ -52,8 +55,8 @@ public class ApiGatewayController {
     }
 
     @GetMapping(value = "owners/{ownerId}")
-    @Observed
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
+        logger.info("getOwnerDetails {}", ownerId);
         return customersServiceClient.getOwner(ownerId)
             .flatMap(owner ->
                 visitsServiceClient.getVisitsForPets(owner.getPetIds())

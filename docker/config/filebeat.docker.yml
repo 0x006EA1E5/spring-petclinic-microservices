@@ -21,43 +21,43 @@ filebeat:
       processors:
         - add_fields:
             when:
-              equals:
-                log.file.path: /app-logs/config-server.log.json
+              contains:
+                log.file.path: config-server.log.json
             target: ''
             fields:
               appId: config-server
         - add_fields:
             when:
-              equals:
-                log.file.path: /app-logs/admin-server.log.json
+              contains:
+                log.file.path: admin-server.log.json
             target: ''
             fields:
               appId: admin-server
         - add_fields:
             when:
-              equals:
-                log.file.path: /app-logs/api-gateway.log.json
+              contains:
+                log.file.path: api-gateway.log.json
             target: ''
             fields:
               appId: api-gateway
         - add_fields:
             when:
-              equals:
-                log.file.path: /app-logs/customer-service.log.json
+              contains:
+                log.file.path: customer-service.log.json
             target: ''
             fields:
               appId: customer-service
         - add_fields:
             when:
-              equals:
-                log.file.path: /app-logs/vets-service.log.json
+              contains:
+                log.file.path: vets-service.log.json
             target: ''
             fields:
               appId: vets-service
         - add_fields:
             when:
-              equals:
-                log.file.path: /app-logs/visits-service.log.json
+              contains:
+                log.file.path: visits-service.log.json
             target: ''
             fields:
               appId: visits-service

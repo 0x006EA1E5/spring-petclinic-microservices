@@ -45,7 +45,7 @@ public class CustomersServiceClient {
     public Mono<OwnerDetails> getOwner(final int ownerId) {
         logger.info("hello, world!");
         return webClientBuilder.build().get()
-            .uri("http://localhost:8081/owners/{ownerId}", ownerId)
+            .uri("http://customers-service/owners/{ownerId}", ownerId)
             .retrieve()
             .bodyToMono(OwnerDetails.class);
 
