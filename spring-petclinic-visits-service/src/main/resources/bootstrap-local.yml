@@ -1,0 +1,8 @@
+server:
+  port: 8081
+jarjar:
+  aws:
+    prefix: dev-atm-use1-observable-app
+    bucket: use1-app-dev-725778237416
+    region:
+      static: us-east-1
