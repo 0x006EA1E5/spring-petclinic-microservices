@@ -4,7 +4,6 @@ import io.micrometer.context.ContextRegistry;
 import io.micrometer.context.ContextSnapshot;
 import io.micrometer.context.ThreadLocalAccessor;
 import io.micrometer.observation.contextpropagation.ObservationThreadLocalAccessor;
-import org.jetbrains.annotations.NotNull;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 import org.springframework.lang.Nullable;
@@ -15,7 +14,6 @@ import reactor.util.context.Context;
 import java.util.function.Function;
 
 public class ObservationContextPropagationDecorator<T> implements CoreSubscriber<T> {
-	@NotNull
 	public static Function<? super Publisher<Object>, ? extends Publisher<Object>> decortator() {
 		return Operators.lift((scannable, coreSubscriber) -> new ObservationContextPropagationDecorator<>(coreSubscriber));
 	}
@@ -33,7 +31,7 @@ public class ObservationContextPropagationDecorator<T> implements CoreSubscriber
     @Nullable
     private static ObservationThreadLocalAccessor findObservationThreadLocalAccessor() {
          for (ThreadLocalAccessor<?> threadLocalAccessor : ContextRegistry.getInstance().getThreadLocalAccessors()) {
-             if (ObservationThreadLocalAccessor.KEY.equals(threadLocalAccessor.key()) 
+             if (ObservationThreadLocalAccessor.KEY.equals(threadLocalAccessor.key())
                     && threadLocalAccessor instanceof ObservationThreadLocalAccessor observationThreadLocalAccessor) {
                  return observationThreadLocalAccessor;
              }

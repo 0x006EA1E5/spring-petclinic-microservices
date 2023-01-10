@@ -1,24 +1,22 @@
-# COMMON APPLICATION PROPERTIES
-
 server:
   # start services on random port by default
   port: 8083
   # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
   shutdown: graceful
 
-# embedded database init, supports mysql too trough the 'mysql' spring profile
-
-# Spring Boot 1.5 makes actuator secure by default
-management.security.enabled: false
-# Enable all Actuators and not only the two available by default /health and /info starting Spring Boot 2.0
-
-# Temporary hack required by the Spring Boot 2 / Spring Cloud Finchley branch
-# Waiting issue https://github.com/spring-projects/spring-boot/issues/13042
-spring.cloud.refresh.refreshable: false
-
-
-# Logging
-logging.level.org.springframework: INFO
+spring:
+  application:
+    name: vets-service
+  cache:
+    cache-names: vets
+  sql:
+    init:
+      schema-locations: classpath*:db/hsqldb/schema.sql
+      data-locations: classpath*:db/hsqldb/data.sql
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
 
 # Metrics
 management:
@@ -27,83 +25,30 @@ management:
       enabled: true
     prometheus:
       enabled: true
-    #  endpoints:
-    #    web:
-    #      exposure:
-    #        include: '*'
-    #  metrics:
-    #    distribution:
-    #      percentiles-histogram:
-    #        http:
-    #          server:
-    #            requests=true:
-    export:
-      prometheus:
-        enabled: true
   tracing:
     sampling:
       probability: 1.0
   endpoints.web.exposure.include: '*'
   metrics:
     distribution:
-      #      percentiles-histogram:
-      #        'http.server.requests': true
-      slo:
-        'http.server.requests':
-          - 10ms
-          - 200ms
-          - 500ms
-          - 1s
-
-
-# traceId and spanId are predefined MDC keys - we want the logs to include them
-logging.pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
-
-
-
-spring:
-#  config:
-#    import: optional:zookeeper
-
-  application:
-    name: vets-service
-  cache:
-    cache-names: vets
-  profiles:
-    active: production
-
-  sql:
-    init:
-      schema-locations: classpath*:db/hsqldb/schema.sql
-      data-locations: classpath*:db/hsqldb/data.sql
-#  cloud:
-#    config:
-#      # Allow the microservices to override the remote properties with their own System properties or config file
-#      allow-override: true
-#      # Override configuration with any local property source
-#      override-none: true
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
-
-#  sleuth:
-#    web:
-#      filter-order: -2147483648
-
+      percentiles-histogram:
+        'http.server.requests': true
+#      slo:
+#        'http.server.requests':
+#          - 10ms
+#          - 200ms
+#          - 500ms
+#          - 1s
 
 vets:
   cache:
     ttl: 60
     heap-size: 100
 
-
-#---
-#spring:
-#  config:
-#    activate:
-#      on-profile: default
-#eureka:
-#  instance:
-#    # enable to register multiple app instances with a random server port
-#    instance-id: ${spring.application.name}:${random.uuid}
+# Logging
+# traceId and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG

@@ -1,5 +1,5 @@
 {
-  "applicationId": "fluxtracerig",
+  "applicationId": "petclinicvisitsservice",
   "formatVersion": 1,
   "permissions": {
     "READ": {

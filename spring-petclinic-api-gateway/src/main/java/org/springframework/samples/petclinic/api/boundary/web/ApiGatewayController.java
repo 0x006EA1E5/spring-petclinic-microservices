@@ -15,24 +15,33 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
-import io.micrometer.observation.annotation.Observed;
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
+import io.micrometer.observation.contextpropagation.ObservationThreadLocalAccessor;
+import io.vavr.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
-import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
-import org.springframework.samples.petclinic.api.application.VisitsServiceClient;
+import org.springframework.core.ReactiveAdapter;
+import org.springframework.http.observation.reactive.ServerRequestObservationContext;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.samples.petclinic.api.application.CustomersService;
+import org.springframework.samples.petclinic.api.application.VisitsService;
 import org.springframework.samples.petclinic.api.dto.OwnerDetails;
 import org.springframework.samples.petclinic.api.dto.Visits;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.HandlerResult;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Maciej Szarlinski
@@ -42,30 +51,86 @@ import java.util.stream.Collectors;
 public class ApiGatewayController {
     private final Logger logger = LoggerFactory.getLogger(ApiGatewayController.class);
 
-    private final CustomersServiceClient customersServiceClient;
+    private final CustomersService customersService;
 
-    private final VisitsServiceClient visitsServiceClient;
+    private final ObservationRegistry observationRegistry;
+    private final VisitsService visitsService;
+
 
     private final ReactiveCircuitBreakerFactory cbFactory;
 
-    public ApiGatewayController(CustomersServiceClient customersServiceClient, VisitsServiceClient visitsServiceClient, ReactiveCircuitBreakerFactory cbFactory) {
-        this.customersServiceClient = customersServiceClient;
-        this.visitsServiceClient = visitsServiceClient;
+    public ApiGatewayController(CustomersService customersService, ObservationRegistry observationRegistry, VisitsService visitsService, ReactiveCircuitBreakerFactory cbFactory) {
+        this.customersService = customersService;
+        this.observationRegistry = observationRegistry;
+        this.visitsService = visitsService;
         this.cbFactory = cbFactory;
     }
 
     @GetMapping(value = "owners/{ownerId}")
-    public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
+    public Mono<OwnerDetails> getOwnerDetails(ServerHttpRequest httpRequest, final @PathVariable int ownerId) {
         logger.info("getOwnerDetails {}", ownerId);
-        return customersServiceClient.getOwner(ownerId)
-            .flatMap(owner ->
-                visitsServiceClient.getVisitsForPets(owner.getPetIds())
-                    .transform(it -> {
-                        ReactiveCircuitBreaker cb = cbFactory.create("getOwnerDetails");
-                        return cb.run(it, throwable -> emptyVisitsForPets());
-                    })
-                    .map(addVisitsToOwner(owner))
-            );
+//        WebClient.builder()
+//        Mono<String>
+        var args = List.of("hello", "world")
+        ;
+        ReactiveAdapter adapter = this.reactiveAdapterRegistry.getAdapter(returnType.getParameterType());
+        if (adapter == null) {
+            return Mono.just(args)
+                .handle((arguments, synchronousSink) -> synchronousSink.next(method.invoke(getBean(), arguments)))
+                .map(value -> new HandlerResult(this, value, returnType, bindingContext));
+        }
+
+
+//        return Mono.deferContextual((contextView) -> {
+////            Observation.createNotStarted("getOwnerDetails", observationRegistry);
+////
+////            return customersService.getOwner(ownerId)
+////                .contextCapture()
+////                .contextWrite(context -> context.put());
+//
+//            if ( contextView.get(ObservationThreadLocalAccessor.KEY) instanceof Observation o) {
+//                if (o.getContext() instanceof ServerRequestObservationContext s) {
+//                    var serverWebExchange = s.getServerWebExchange();
+//
+////                            s.getServerWebExchange().mutate()
+////
+////                    var route = Route.async()
+////                        .id("customers-service")
+////                        .uri("lb://customers-service")
+//////                                .filter((exchange, chain) -> chain.filter(exchange))
+////                        .predicate(serverWebExchange1 -> true)
+//////                                .getPredicate()
+////                        .build();
+////                    serverWebExchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR, route);
+//                    var observation = Observation.createNotStarted("getOwnerDetails", observationRegistry);
+//                    observation.start();
+//                    return customersService.getOwner(ownerId)
+//                        .doOnEach(signal -> {
+//                            Throwable throwable = signal.getThrowable();
+//                            if (throwable != null) {
+//                                observation.error(throwable);
+//                            }
+//                            observation.stop();
+//                        })
+//                        .doOnCancel(() -> observation.stop())
+//                        .contextWrite(context -> context.put(ObservationThreadLocalAccessor.KEY, observation));
+//                }
+//            }
+//            return Mono.empty();
+////            return customersService.getOwner(ownerId)
+////                .contextWrite(context -> context.put("hello", "world!"));
+//        });
+        return customersService.getOwner(ownerId);
+//        return customersService.getOwner(ownerId)
+//            .flatMap(owner ->
+//                visitsService.getVisitsForPets(owner.getPetIds())
+//                    .transform(it -> {
+//                        ReactiveCircuitBreaker cb = cbFactory.create("getOwnerDetails");
+//                        return cb.run(it, throwable -> emptyVisitsForPets());
+//                    })
+//                    .map(addVisitsToOwner(owner))
+//            )
+//            .contextCapture();
 
     }
 

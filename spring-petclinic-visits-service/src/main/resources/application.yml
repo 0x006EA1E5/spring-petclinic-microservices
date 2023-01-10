@@ -1,16 +1,51 @@
+server:
+#  port: 8081
+  shutdown: graceful
+
 spring:
   application:
-    name: visits-service
-  config:
-    import: configserver:http://localhost:8888/
+    name: petclinicvisitsservice
+  sql:
+    init:
+      schema-locations: classpath*:db/hsqldb/schema.sql
+      data-locations: classpath*:db/hsqldb/data.sql
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+# Metrics
 management:
   metrics:
-    web:
-      server:
-        request:
-          autotime:
-            enabled: true
-            percentiles-histogram: true
     distribution:
       percentiles-histogram:
         'http.server.requests': true
+  endpoints.web.exposure.include: "*"
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+jarjar:
+  info:
+    appId: ${spring.application.name}
+    version: 2.6.7-SNAPSHOT
+  security:
+    web:
+      headers:
+        content-security-policy:
+          required: false
+        x-content-type-options:
+          value: nosniff
+
+# Logging
+# traceId and spanId are predefined MDC keys - we want the logs to include them
+logging:
+#  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG

@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Timed("petclinic.visit")
+//@Timed("petclinic.visit")
 class VisitResource {
 
     private final VisitRepository visitRepository;
@@ -68,6 +68,7 @@ class VisitResource {
 
     @GetMapping("pets/visits")
     public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
+        log.info("visitsMultiGet {}", petIds);
         final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);
         return new Visits(byPetIdIn);
     }

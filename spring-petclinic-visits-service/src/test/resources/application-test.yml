@@ -9,10 +9,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-
-eureka:
-  client:
+management:
+  tracing:
     enabled: false
+#eureka:
+#  client:
+#    enabled: false
 
 logging.level.org.springframework: INFO
 

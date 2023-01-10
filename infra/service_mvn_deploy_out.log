@@ -1,0 +1,69 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< org.springframework.samples.petclinic.visits:spring-petclinic-visits-service >--
+[INFO] Building spring-petclinic-visits-service 2.7.6-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.31 has been relocated to com.mysql:mysql-connector-j:jar:8.0.31: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+[WARNING] The artifact org.hibernate:hibernate-validator:jar:8.0.0.Final has been relocated to org.hibernate.validator:hibernate-validator:jar:8.0.0.Final
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.0:resources (default-resources) @ spring-petclinic-visits-service ---
+[INFO] Copying 1 resource
+[INFO] Copying 5 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ spring-petclinic-visits-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.0:testResources (default-testResources) @ spring-petclinic-visits-service ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ spring-petclinic-visits-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ spring-petclinic-visits-service ---
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.springframework.samples.petclinic.visits.web.VisitResourceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.158 s - in org.springframework.samples.petclinic.visits.web.VisitResourceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ spring-petclinic-visits-service ---
+[INFO] Building jar: /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-visits-service/target/spring-petclinic-visits-service-2.7.6-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.0.1:repackage (repackage) @ spring-petclinic-visits-service ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.0.1:repackage (default) @ spring-petclinic-visits-service ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] 
+[INFO] --- flatten-maven-plugin:1.3.0:flatten (flatten) @ spring-petclinic-visits-service ---
+[INFO] Generating flattened POM of project org.springframework.samples.petclinic.visits:spring-petclinic-visits-service:jar:2.7.6-SNAPSHOT...
+[INFO] 
+[INFO] --- maven-install-plugin:3.0.1:install (default-install) @ spring-petclinic-visits-service ---
+[INFO] Installing /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-visits-service/.flattened-pom.xml to /Users/gregory.eales/.m2/repository/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-SNAPSHOT.pom
+[INFO] Installing /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-visits-service/target/spring-petclinic-visits-service-2.7.6-SNAPSHOT.jar to /Users/gregory.eales/.m2/repository/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-visits-service ---
+Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml
+Progress (1): 828 B                   Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml (828 B at 1.8 kB/s)
+Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230109.180428-12.pom
+Progress (1): 4.1/4.7 kBProgress (1): 4.7 kB                        Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230109.180428-12.pom (4.7 kB at 22 kB/s)
+Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230109.180428-12.jar
+Progress (1): 0.5/73 MBProgress (1): 1.0/73 MBProgress (1): 1.6/73 MBProgress (1): 2.1/73 MBProgress (1): 2.6/73 MBProgress (1): 3.1/73 MBProgress (1): 3.7/73 MBProgress (1): 4.2/73 MBProgress (1): 4.7/73 MBProgress (1): 5.2/73 MBProgress (1): 5.8/73 MBProgress (1): 6.3/73 MBProgress (1): 6.8/73 MBProgress (1): 7.3/73 MBProgress (1): 7.9/73 MBProgress (1): 8.4/73 MBProgress (1): 8.9/73 MBProgress (1): 9.4/73 MBProgress (1): 10.0/73 MBProgress (1): 10/73 MB  Progress (1): 11/73 MBProgress (1): 12/73 MBProgress (1): 12/73 MBProgress (1): 13/73 MBProgress (1): 13/73 MBProgress (1): 14/73 MBProgress (1): 14/73 MBProgress (1): 15/73 MBProgress (1): 15/73 MBProgress (1): 16/73 MBProgress (1): 16/73 MBProgress (1): 17/73 MBProgress (1): 17/73 MBProgress (1): 18/73 MBProgress (1): 18/73 MBProgress (1): 19/73 MBProgress (1): 19/73 MBProgress (1): 20/73 MBProgress (1): 20/73 MBProgress (1): 21/73 MBProgress (1): 21/73 MBProgress (1): 22/73 MBProgress (1): 23/73 MBProgress (1): 23/73 MBProgress (1): 24/73 MBProgress (1): 24/73 MBProgress (1): 25/73 MBProgress (1): 25/73 MBProgress (1): 26/73 MBProgress (1): 26/73 MBProgress (1): 27/73 MBProgress (1): 27/73 MBProgress (1): 28/73 MBProgress (1): 28/73 MBProgress (1): 29/73 MBProgress (1): 29/73 MBProgress (1): 30/73 MBProgress (1): 30/73 MBProgress (1): 31/73 MBProgress (1): 31/73 MBProgress (1): 32/73 MBProgress (1): 33/73 MBProgress (1): 33/73 MBProgress (1): 34/73 MBProgress (1): 34/73 MBProgress (1): 35/73 MBProgress (1): 35/73 MBProgress (1): 36/73 MBProgress (1): 36/73 MBProgress (1): 37/73 MBProgress (1): 37/73 MBProgress (1): 38/73 MBProgress (1): 38/73 MBProgress (1): 39/73 MBProgress (1): 39/73 MBProgress (1): 40/73 MBProgress (1): 40/73 MBProgress (1): 41/73 MBProgress (1): 41/73 MBProgress (1): 42/73 MBProgress (1): 42/73 MBProgress (1): 43/73 MBProgress (1): 44/73 MBProgress (1): 44/73 MBProgress (1): 45/73 MBProgress (1): 45/73 MBProgress (1): 46/73 MBProgress (1): 46/73 MBProgress (1): 47/73 MBProgress (1): 47/73 MBProgress (1): 48/73 MBProgress (1): 48/73 MBProgress (1): 49/73 MBProgress (1): 49/73 MBProgress (1): 50/73 MBProgress (1): 50/73 MBProgress (1): 51/73 MBProgress (1): 51/73 MBProgress (1): 52/73 MBProgress (1): 52/73 MBProgress (1): 53/73 MBProgress (1): 53/73 MBProgress (1): 54/73 MBProgress (1): 55/73 MBProgress (1): 55/73 MBProgress (1): 56/73 MBProgress (1): 56/73 MBProgress (1): 57/73 MBProgress (1): 57/73 MBProgress (1): 58/73 MBProgress (1): 58/73 MBProgress (1): 59/73 MBProgress (1): 59/73 MBProgress (1): 60/73 MBProgress (1): 60/73 MBProgress (1): 61/73 MBProgress (1): 61/73 MBProgress (1): 62/73 MBProgress (1): 62/73 MBProgress (1): 63/73 MBProgress (1): 63/73 MBProgress (1): 64/73 MBProgress (1): 64/73 MBProgress (1): 65/73 MBProgress (1): 66/73 MBProgress (1): 66/73 MBProgress (1): 67/73 MBProgress (1): 67/73 MBProgress (1): 68/73 MBProgress (1): 68/73 MBProgress (1): 69/73 MBProgress (1): 69/73 MBProgress (1): 70/73 MBProgress (1): 70/73 MBProgress (1): 71/73 MBProgress (1): 71/73 MBProgress (1): 72/73 MBProgress (1): 72/73 MBProgress (1): 73/73 MBProgress (1): 73 MB                      Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230109.180428-12.jar (73 MB at 21 MB/s)
+Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml
+Progress (1): 335 B                   Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml (335 B at 5.9 kB/s)
+Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml
+Progress (1): 828 B                   Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml (828 B at 5.1 kB/s)
+Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml
+Progress (1): 335 B                   Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml (335 B at 2.0 kB/s)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.368 s
+[INFO] Finished at: 2023-01-09T18:04:44Z
+[INFO] ------------------------------------------------------------------------

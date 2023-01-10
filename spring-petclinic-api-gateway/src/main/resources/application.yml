@@ -1,8 +1,14 @@
+server:
+  shutdown: graceful
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/json,text/css,application/javascript
+    min-response-size: 2048
+
 spring:
   application:
     name: api-gateway
-  config:
-    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
   cloud:
     gateway:
       routes:
@@ -24,9 +30,60 @@ spring:
             - Path=/api/customer/**
           filters:
             - StripPrefix=2
+  sql:
+    init:
+      schema-locations: classpath*:db/hsqldb/schema.sql
+      data-locations: classpath*:db/hsqldb/data.sql
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  # Internationalization
+  messages.basename: messages/messages
 
+# Metrics
 management:
   prometheus:
     metrics:
       export:
         enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    distribution:
+      percentiles-histogram:
+        'http.server.requests': true
+  #      slo:
+  #        'http.server.requests':
+  #          - 10ms
+  #          - 200ms
+  #          - 500ms
+  #          - 1s
+  tracing:
+    sampling:
+      probability: 1.0
+
+#zuul:
+#  prefix: /api
+#  ignoredServices: '*'
+#  routes:
+#    vets-service: /vet/**
+#    visits-service: /visit/**
+#    customers-service: /customer/**
+#    api-gateway: /gateway/**
+
+# Logging
+# traceId and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG
+    org.springframework.cloud.gateway: DEBUG

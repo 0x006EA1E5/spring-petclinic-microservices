@@ -20,15 +20,15 @@ class VisitsServiceClientIntegrationTest {
 
     private static final Integer PET_ID = 1;
 
-    private VisitsServiceClient visitsServiceClient;
+    private VisitsService visitsServiceClient;
 
     private MockWebServer server;
 
     @BeforeEach
     void setUp() {
         server = new MockWebServer();
-        visitsServiceClient = new VisitsServiceClient(WebClient.builder());
-        visitsServiceClient.setHostname(server.url("/").toString());
+//        visitsServiceClient = new VisitsServiceClient(null, WebClient.builder());
+//        visitsServiceClient.setHostname(server.url("/").toString());
     }
 
     @AfterEach

@@ -46,23 +46,23 @@ datasources:
     tracesToMetrics:
       "datasourceUid": "prometheus"
 
-- name: Loki
-  type: loki
-  uid: loki
-  access: proxy
-  orgId: 1
-  url: http://loki:3100
-  basicAuth: false
-  isDefault: false
-  version: 1
-  editable: true
-  apiVersion: 1
-  jsonData:
-    derivedFields:
-      - datasourceUid: tempo
-        matcherRegex: '"traceId":"(\w+)"'
-        name: TraceID
-        url: $${__value.raw}
+#- name: Loki
+#  type: loki
+#  uid: loki
+#  access: proxy
+#  orgId: 1
+#  url: http://loki:3100
+#  basicAuth: false
+#  isDefault: false
+#  version: 1
+#  editable: true
+#  apiVersion: 1
+#  jsonData:
+#    derivedFields:
+#      - datasourceUid: tempo
+#        matcherRegex: '"traceId":"(\w+)"'
+#        name: TraceID
+#        url: $${__value.raw}
 - name: Elasticsearch
   type: elasticsearch
   orgId: 1
@@ -88,11 +88,8 @@ datasources:
     dataLinks:
       - datasourceUid: tempo
         field: traceId
-        url: "${__value.raw}"
-#  secureJsonFields:
-#    basicAuthPassword: true
-#    tlsCACert: false
-  version: 5
+        url: $${__value.raw}
+  version: 1
   readOnly: false
   editable: true
   accessControl:

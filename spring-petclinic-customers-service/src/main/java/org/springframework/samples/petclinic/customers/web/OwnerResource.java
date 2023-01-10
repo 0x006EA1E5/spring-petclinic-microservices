@@ -37,7 +37,7 @@ import java.util.Optional;
  */
 @RequestMapping("/owners")
 @RestController
-@Timed("petclinic.owner")
+//@Timed("petclinic.owner")
 @RequiredArgsConstructor
 @Slf4j
 class OwnerResource {
@@ -58,6 +58,7 @@ class OwnerResource {
      */
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") @Min(1) int ownerId) {
+        log.info("findOwner {}", ownerId);
         return ownerRepository.findById(ownerId);
     }
 

@@ -1,13 +1,46 @@
+server:
+  port: 8081
+  # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
+  shutdown: graceful
+
 spring:
   application:
     name: customers-service
-  config:
-    import: configserver:http://localhost:8888/
+  config.activate.on-profile: default
+  sql:
+    init:
+      schema-locations: classpath*:db/hsqldb/schema.sql
+      data-locations: classpath*:db/hsqldb/data.sql
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+# Metrics
 management:
+  endpoints.web.exposure.include: "*"
   metrics:
-    web:
-      server:
-        request:
-          autotime:
-            enabled: true
-            percentiles-histogram: true
+    distribution:
+      percentiles-histogram:
+        'http.server.requests': true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+eureka:
+  instance:
+    # enable to register multiple app instances with a random server port
+    instance-id: ${spring.application.name}:${random.uuid}
+
+# Logging
+# traceId and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG

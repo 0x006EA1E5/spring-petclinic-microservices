@@ -6,5 +6,5 @@ export BUSINESS_ID=atm
 export APP_ID=petclinicvisitsservice
 export ALIAS=use1
 export RELEASE_VERSION=2.7.6-SNAPSHOT
-export ARTIFACT_URL=https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230109.180428-12.jar
-chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d $DTAP -b $BUSINESS_ID -a $APP_ID -A $ALIAS -v TIMESTAMP=$(date +%s)
+export PANDA_PROPERTIES_FILE="./infra/${APP_ID}_panda.json"
+chancellor configuration panda deploy -d "$DTAP" -b "$BUSINESS_ID" -a "$APP_ID" -A "$ALIAS" -t "$CHANCELLOR_TOKEN" -c "$PANDA_PROPERTIES_FILE"

@@ -3,7 +3,7 @@ version: "3.9"
 services:
   ## Grafana / Prometheus
   grafana:
-    image: grafana/grafana:9.2.2
+    image: grafana/grafana:9.2.4
     container_name: grafana
     volumes:
       - ${PWD}/docker/config/grafana/provisioning:/etc/grafana/provisioning:ro
@@ -26,13 +26,13 @@ services:
       - "4318:4318"  # otlp http
       - "9411:9411"   # zipkin
 
-  loki:
-    image: grafana/loki:2.6.1
-    container_name: loki
-    volumes:
-      - ${PWD}/docker/config/loki-config.yaml:/etc/loki/loki-config.yaml:ro
-    ports:
-      - 3100:3100
+#  loki:
+#    image: grafana/loki:2.6.1
+#    container_name: loki
+#    volumes:
+#      - ${PWD}/docker/config/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+#    ports:
+#      - 3100:3100
 
 #  promtail:
 #    image: grafana/promtail:2.6.1
@@ -43,7 +43,7 @@ services:
 #      - /tmp/app-logs/:/var/log/app-logs
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.40.1
     command:
       - --config.file=/etc/prometheus.yaml
       - --web.enable-remote-write-receiver
@@ -62,7 +62,7 @@ services:
 #      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml:ro
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+    image: elasticsearch:8.5.0
     container_name: elasticsearch
     healthcheck:
       test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
@@ -88,7 +88,7 @@ services:
       - 2181:2181
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.4.3
+    image: docker.elastic.co/beats/filebeat:8.5.0
     command:
 #      - setup
 #      - -e
