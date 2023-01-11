@@ -15,12 +15,12 @@
  */
 package org.springframework.samples.petclinic.customers.web;
 
-import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.model.Owner;
 import org.springframework.samples.petclinic.customers.model.OwnerRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -40,6 +40,7 @@ import java.util.Optional;
 //@Timed("petclinic.owner")
 @RequiredArgsConstructor
 @Slf4j
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class OwnerResource {
 
     private final OwnerRepository ownerRepository;

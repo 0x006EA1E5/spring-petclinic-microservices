@@ -13,6 +13,7 @@ import org.springframework.samples.petclinic.customers.model.OwnerRepository;
 import org.springframework.samples.petclinic.customers.model.Pet;
 import org.springframework.samples.petclinic.customers.model.PetRepository;
 import org.springframework.samples.petclinic.customers.model.PetType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,6 +43,7 @@ class PetResourceTest {
     OwnerRepository ownerRepository;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldGetAPetInJSonFormat() throws Exception {
 
         Pet pet = setupPet();

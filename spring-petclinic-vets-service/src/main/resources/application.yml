@@ -1,12 +1,12 @@
 server:
   # start services on random port by default
-  port: 8083
+#  port: 8083
   # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
   shutdown: graceful
 
 spring:
   application:
-    name: vets-service
+    name: petclinicvetsservice
   cache:
     cache-names: vets
   sql:
@@ -40,6 +40,17 @@ management:
 #          - 500ms
 #          - 1s
 
+jarjar:
+  info:
+    appId: ${spring.application.name}
+    version: 2.6.7-SNAPSHOT
+  security:
+    web:
+      headers:
+        content-security-policy:
+          required: false
+        x-content-type-options:
+          value: nosniff
 vets:
   cache:
     ttl: 60

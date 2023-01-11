@@ -22,6 +22,7 @@
     {
       "name": "environmentVariables",
       "variables": {
+        "SPRING_APPLICATION_NAME": "${APP_ID}"
       }
     },
     {

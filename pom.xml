@@ -22,6 +22,8 @@
         <module>spring-petclinic-vets-service</module>
         <module>spring-petclinic-visits-service</module>
         <module>spring-petclinic-api-gateway</module>
+        <module>spring-petclinic-jarjar</module>
+        <module>spring-petclinic-shared</module>
     </modules>
 
     <properties>
@@ -75,6 +77,11 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-bom</artifactId>
+                <version>1.21.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

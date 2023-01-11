@@ -31,6 +31,28 @@
     </distributionManagement>
 
     <dependencies>
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,78 +66,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-        </dependency>
-
-        <!-- provides a kitemark-compliant (response format) /health-check endpoint required to deploy the application to Ocado cloud environments -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-health</artifactId>
-        </dependency>
-        <!-- ensures log output is sent to STDOUT with Ocado kitemark-compliant JSON formatting, allowing log processing to ELK (enabled only using an @OnCloud condition, please also check the Reference for additional property settings depending on your deployment type) -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-logging-elk</artifactId>
-        </dependency>
-        <!-- provides typesafe jarjar.info.* properties for multiple purposes (like cloud resource naming, authorization, information) -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-info</artifactId>
-        </dependency>
-        <!-- provides an advisory report with recommendations for the application as well as web endpoints for accessing it. The module optionally synergizes with Panda (permission: read-advisories) -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-advisories-web</artifactId>
-        </dependency>
-        <!-- configures base web security, method security, security headers and related security features, including Panda as an authentication provider -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-security-panda-web</artifactId>
-        </dependency>
-        <!-- allows the application to read S3-hosted application.yml/properties files into Spring PropertySources in early bootstrap phase -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-s3-application-properties</artifactId>
-        </dependency>
-        <!-- loads specific S3-hosted panda configuration into Spring PropertySources in early bootstrap phase -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-s3-panda-client-properties</artifactId>
-        </dependency>
-        <!-- configures Panda single-sign out support (Parrot) using SSO event consumer -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-security-panda-parrot</artifactId>
-        </dependency>
-
-        <!-- turns on security features for backend for frontend applications (enables CSRF in Spring Security and Authorization Code in Panda SSO) -->
-        <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-security-panda-edge</artifactId>
-        </dependency>
 
 
-
-
+        <!-- local -->
+        <dependency>
+            <groupId>org.springframework.samples</groupId>
+            <artifactId>spring-petclinic-jarjar</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.samples</groupId>
+            <artifactId>spring-petclinic-shared</artifactId>
+            <version>${version}</version>
+        </dependency>
 
         <!-- Spring Cloud -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-config</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>-->
-<!--        </dependency>-->
 
         <!-- Third parties -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -131,30 +102,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-        <!-- For Observation AOP -->
-        <!-- OpenTelemetry version -->
-        <!-- For Tracing -->
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-otel</artifactId>
-        </dependency>
-        <!-- For Latency Visualization -->
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-zipkin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>chaos-monkey-spring-boot</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -166,30 +114,30 @@
             <version>8.0.0.Final</version>
         </dependency>
 
-        <!-- For pushing logs out -->
+        <!-- Observability -->
+
         <dependency>
-            <groupId>ch.qos.logback.contrib</groupId>
-            <artifactId>logback-json-classic</artifactId>
-            <version>0.1.5</version>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+        <!-- OpenTelemetry version -->
+        <!-- For Tracing -->
         <dependency>
-            <groupId>ch.qos.logback.contrib</groupId>
-            <artifactId>logback-jackson</artifactId>
-            <version>0.1.5</version>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <!-- For Latency Visualization -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
 
-        <!-- Testing -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-	</dependencies>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

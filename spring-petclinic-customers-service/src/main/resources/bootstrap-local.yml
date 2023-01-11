@@ -1,0 +1,12 @@
+server:
+  port: 8081
+jarjar:
+  aws:
+    prefix: dev-atm-use1-petcliniccustomersservice
+    bucket: use1-app-dev-725778237416
+    region:
+      static: us-east-1
+
+    credentials:
+      profile-name: dev-atm-use1-petcliniccustomersservice
+

@@ -45,7 +45,6 @@ import org.springframework.http.observation.reactive.ServerRequestObservationCon
 import org.springframework.samples.petclinic.api.application.CustomersService;
 import org.springframework.samples.petclinic.api.application.VisitsService;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ExchangeFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.samples</groupId>
+        <artifactId>spring-petclinic-microservices</artifactId>
+        <version>2.7.6-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>spring-petclinic-jarjar</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-releases</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-snapshots</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <!-- provides a kitemark-compliant (response format) /health-check endpoint required to deploy the application to Ocado cloud environments -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-health</artifactId>
+        </dependency>
+        <!-- ensures log output is sent to STDOUT with Ocado kitemark-compliant JSON formatting, allowing log processing to ELK (enabled only using an @OnCloud condition, please also check the Reference for additional property settings depending on your deployment type) -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-logging-elk</artifactId>
+        </dependency>
+        <!-- provides typesafe jarjar.info.* properties for multiple purposes (like cloud resource naming, authorization, information) -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-info</artifactId>
+        </dependency>
+        <!-- provides an advisory report with recommendations for the application as well as web endpoints for accessing it. The module optionally synergizes with Panda (permission: read-advisories) -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-advisories-web</artifactId>
+        </dependency>
+        <!-- configures base web security, method security, security headers and related security features, including Panda as an authentication provider -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-security-panda-web</artifactId>
+        </dependency>
+        <!-- allows the application to read S3-hosted application.yml/properties files into Spring PropertySources in early bootstrap phase -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-s3-application-properties</artifactId>
+        </dependency>
+        <!-- loads specific S3-hosted panda configuration into Spring PropertySources in early bootstrap phase -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-s3-panda-client-properties</artifactId>
+        </dependency>
+        <!-- turns on security features for backend for frontend applications (enables CSRF in Spring Security and Authorization Code in Panda SSO) -->
+<!--        <dependency>-->
+<!--            <groupId>com.ocadotechnology.jarjar</groupId>-->
+<!--            <artifactId>jarjar-starter-security-panda-edge</artifactId>-->
+<!--        </dependency>-->
+    </dependencies>
+</project>

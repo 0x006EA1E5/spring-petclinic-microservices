@@ -15,31 +15,16 @@
  */
 package org.springframework.samples.petclinic.vets;
 
-import io.micrometer.core.instrument.*;
-import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
-import io.micrometer.core.instrument.search.MeterNotFoundException;
-import io.micrometer.observation.Observation;
-import io.micrometer.tracing.Tracer;
-import io.micrometer.tracing.handler.TracingAwareMeterObservationHandler;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
-import org.springframework.boot.actuate.autoconfigure.tracing.zipkin.Config;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.samples.petclinic.vets.system.VetsProperties;
-
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * @author Maciej Szarlinski
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.springframework.samples.petclinic")
 @EnableConfigurationProperties(VetsProperties.class)
-@Import({Config.class})
 public class VetsServiceApplication {
 
 	public static void main(String[] args) {
