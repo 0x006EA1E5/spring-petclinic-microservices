@@ -1,0 +1,44 @@
+
+stages:
+  - .pre
+  - build
+  - deploy
+
+################################################################################
+# Version
+################################################################################
+.create_release_version_base:
+  stage: .pre
+  before_script:
+    - apk add -Uq --no-progress curl
+    - mkdir -p ~/.m2 && curl -sSL https://gitlab-ci-token:$CI_BUILD_TOKEN@$CI_SERVER_HOST/flux/cicd/raw/${CICD_REPO_GIT_REF}/infra/settings.xml -o ~/.m2/settings.xml
+    - BASE_VERSION=$(mvn -q $MAVEN_CLI_OPTS help:evaluate -Dexpression=base.version -DforceStdout)
+    # Replaces all non-alphanumeric characters by underscored and takes the first 10 chars of the branch name
+    - BRANCH_SHORT_NAME=$(echo $CI_COMMIT_REF_NAME | sed -r "s/[^A-Za-z0-9]+/_/g" | cut -c -10)
+    - '[ "$CI_COMMIT_REF_NAME" != "$CI_DEFAULT_BRANCH" ] && RELEASE_VERSION_BRANCH_SUFFIX="-$BRANCH_SHORT_NAME-$CI_PIPELINE_ID-SNAPSHOT"'
+    - RELEASE_VERSION=$BASE_VERSION-$(date +%Y.%m.%d)-$CI_COMMIT_SHORT_SHA$RELEASE_VERSION_BRANCH_SUFFIX
+    - echo $RELEASE_VERSION > .release-version
+    - 'echo Release: $RELEASE_VERSION'
+  artifacts:
+    name: version
+    paths: [.release-version]
+    expire_in: 12 months
+  cache: {}
+
+create_release_version:
+  extends: .create_release_version_base
+  script:
+    - echo default create_release_version complete
+
+.build_to_nexus_base:
+  image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
+  stage: build
+  script:
+    - echo release-version $(cat .release-version)
+    - export RELEASE_VERSION=$(cat .release-version)
+    - mvn deploy -pl ${MODULE} -DskipTests -B --no-transfer-progress -e -am -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
+    - sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url
+  artifacts:
+    name: nexus_artifact.url
+    paths: [./infra/*_nexus_artifact.url]
+    expire_in: 12 months

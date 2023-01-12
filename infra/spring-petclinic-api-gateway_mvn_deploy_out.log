@@ -39,15 +39,15 @@
 [INFO] 
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-microservices ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/maven-metadata.xml (636 B at 1.1 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/spring-petclinic-microservices-2.7.6-20230112.130408-39.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/spring-petclinic-microservices-2.7.6-20230112.130408-39.pom (5.6 kB at 35 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/maven-metadata.xml (636 B at 760 B/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/spring-petclinic-microservices-2.7.6-20230112.142132-40.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/spring-petclinic-microservices-2.7.6-20230112.142132-40.pom (5.6 kB at 32 kB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/maven-metadata.xml (317 B at 6.2 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/maven-metadata.xml (317 B at 4.2 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/maven-metadata.xml (636 B at 4.1 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/2.7.6-SNAPSHOT/maven-metadata.xml (636 B at 3.8 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/maven-metadata.xml (317 B at 2.2 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-microservices/maven-metadata.xml (317 B at 1.8 kB/s)
 [INFO] 
 [INFO] --------< org.springframework.samples:spring-petclinic-jarjar >---------
 [INFO] Building spring-petclinic-jarjar 2.7.6-SNAPSHOT                    [2/7]
@@ -80,15 +80,15 @@
 [INFO] 
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-jarjar ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 11 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.130408-37.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.130408-37.pom (2.8 kB at 19 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.130408-37.jar
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.130408-37.jar (2.7 kB at 19 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 6.3 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.142132-38.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.142132-38.pom (2.8 kB at 16 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.142132-38.jar
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/spring-petclinic-jarjar-2.7.6-20230112.142132-38.jar (2.7 kB at 14 kB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/maven-metadata.xml (310 B at 6.2 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/maven-metadata.xml (310 B at 4.3 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 5.2 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 3.1 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/maven-metadata.xml
 [INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-jarjar/maven-metadata.xml (310 B at 2.0 kB/s)
 [INFO] 
@@ -101,17 +101,19 @@
 [INFO] Copying 0 resource
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ spring-petclinic-shared ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 6 source files to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-shared/target/classes
 [INFO] 
 [INFO] --- maven-resources-plugin:3.3.0:testResources (default-testResources) @ spring-petclinic-shared ---
 [INFO] skip non existing resourceDirectory /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-shared/src/test/resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ spring-petclinic-shared ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ spring-petclinic-shared ---
 [INFO] 
 [INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ spring-petclinic-shared ---
+[INFO] Building jar: /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-shared/target/spring-petclinic-shared-2.7.6-SNAPSHOT.jar
 [INFO] 
 [INFO] --- flatten-maven-plugin:1.3.0:flatten (flatten) @ spring-petclinic-shared ---
 [INFO] Generating flattened POM of project org.springframework.samples:spring-petclinic-shared:jar:2.7.6-SNAPSHOT...
@@ -123,16 +125,16 @@
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-shared ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/maven-metadata.xml
 [INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 11 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.130408-27.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.130408-27.pom (2.0 kB at 14 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.130408-27.jar
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.130408-27.jar (16 kB at 105 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.142132-28.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.142132-28.pom (2.0 kB at 13 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.142132-28.jar
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/spring-petclinic-shared-2.7.6-20230112.142132-28.jar (15 kB at 100 kB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/maven-metadata.xml (310 B at 6.2 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/maven-metadata.xml (310 B at 2.2 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 5.0 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/2.7.6-SNAPSHOT/maven-metadata.xml (803 B at 3.3 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/maven-metadata.xml (310 B at 1.9 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/spring-petclinic-shared/maven-metadata.xml (310 B at 1.7 kB/s)
 [INFO] 
 [INFO] --< org.springframework.samples.petclinic.client:spring-petclinic-customers-service >--
 [INFO] Building spring-petclinic-customers-service 2.7.6-SNAPSHOT         [4/7]
@@ -145,13 +147,15 @@
 [INFO] Copying 6 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ spring-petclinic-customers-service ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 11 source files to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-customers-service/target/classes
 [INFO] 
 [INFO] --- maven-resources-plugin:3.3.0:testResources (default-testResources) @ spring-petclinic-customers-service ---
 [INFO] Copying 1 resource
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ spring-petclinic-customers-service ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-customers-service/target/test-classes
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ spring-petclinic-customers-service ---
 [INFO] 
@@ -159,7 +163,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running org.springframework.samples.petclinic.customers.web.PetResourceTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.998 s - in org.springframework.samples.petclinic.customers.web.PetResourceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.807 s - in org.springframework.samples.petclinic.customers.web.PetResourceTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -167,6 +171,7 @@
 [INFO] 
 [INFO] 
 [INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ spring-petclinic-customers-service ---
+[INFO] Building jar: /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-customers-service/target/spring-petclinic-customers-service-2.7.6-SNAPSHOT.jar
 [INFO] 
 [INFO] --- spring-boot-maven-plugin:3.0.1:repackage (repackage) @ spring-petclinic-customers-service ---
 [INFO] Replacing main artifact with repackaged archive
@@ -183,17 +188,17 @@
 [INFO] 
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-customers-service ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/maven-metadata.xml (831 B at 12 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.130408-14.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.130408-14.pom (4.8 kB at 34 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.130408-14.jar
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.130408-14.jar (79 MB at 35 MB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/maven-metadata.xml (831 B at 8.1 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.142132-15.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.142132-15.pom (4.8 kB at 23 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.142132-15.jar
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/spring-petclinic-customers-service-2.7.6-20230112.142132-15.jar (79 MB at 6.8 MB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/maven-metadata.xml (338 B at 6.6 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/maven-metadata.xml (338 B at 5.9 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/maven-metadata.xml (831 B at 5.7 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/2.7.6-SNAPSHOT/maven-metadata.xml (831 B at 4.9 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/maven-metadata.xml (338 B at 2.2 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/client/spring-petclinic-customers-service/maven-metadata.xml (338 B at 2.3 kB/s)
 [INFO] 
 [INFO] --< org.springframework.samples.petclinic.vets:spring-petclinic-vets-service >--
 [INFO] Building spring-petclinic-vets-service 2.7.6-SNAPSHOT              [5/7]
@@ -205,13 +210,15 @@
 [INFO] Copying 5 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ spring-petclinic-vets-service ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 7 source files to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-vets-service/target/classes
 [INFO] 
 [INFO] --- maven-resources-plugin:3.3.0:testResources (default-testResources) @ spring-petclinic-vets-service ---
 [INFO] Copying 1 resource
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ spring-petclinic-vets-service ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-vets-service/target/test-classes
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ spring-petclinic-vets-service ---
 [INFO] 
@@ -219,7 +226,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running org.springframework.samples.petclinic.vets.web.VetResourceTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.368 s - in org.springframework.samples.petclinic.vets.web.VetResourceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.817 s - in org.springframework.samples.petclinic.vets.web.VetResourceTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -227,6 +234,7 @@
 [INFO] 
 [INFO] 
 [INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ spring-petclinic-vets-service ---
+[INFO] Building jar: /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-vets-service/target/spring-petclinic-vets-service-2.7.6-SNAPSHOT.jar
 [INFO] 
 [INFO] --- spring-boot-maven-plugin:3.0.1:repackage (repackage) @ spring-petclinic-vets-service ---
 [INFO] Replacing main artifact with repackaged archive
@@ -243,17 +251,17 @@
 [INFO] 
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-vets-service ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/maven-metadata.xml (824 B at 11 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.130408-17.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.130408-17.pom (5.6 kB at 38 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.130408-17.jar
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.130408-17.jar (80 MB at 33 MB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/maven-metadata.xml (824 B at 8.5 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.142132-18.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.142132-18.pom (5.6 kB at 36 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.142132-18.jar
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/spring-petclinic-vets-service-2.7.6-20230112.142132-18.jar (80 MB at 5.8 MB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/maven-metadata.xml (331 B at 6.0 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/maven-metadata.xml (331 B at 5.3 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/maven-metadata.xml (824 B at 4.8 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/2.7.6-SNAPSHOT/maven-metadata.xml (824 B at 5.8 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/maven-metadata.xml (331 B at 2.0 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/vets/spring-petclinic-vets-service/maven-metadata.xml (331 B at 2.1 kB/s)
 [INFO] 
 [INFO] --< org.springframework.samples.petclinic.visits:spring-petclinic-visits-service >--
 [INFO] Building spring-petclinic-visits-service 2.7.6-SNAPSHOT            [6/7]
@@ -266,13 +274,15 @@
 [INFO] Copying 7 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ spring-petclinic-visits-service ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-visits-service/target/classes
 [INFO] 
 [INFO] --- maven-resources-plugin:3.3.0:testResources (default-testResources) @ spring-petclinic-visits-service ---
 [INFO] Copying 1 resource
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ spring-petclinic-visits-service ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-visits-service/target/test-classes
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ spring-petclinic-visits-service ---
 [INFO] 
@@ -280,7 +290,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running org.springframework.samples.petclinic.visits.web.VisitResourceTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.643 s - in org.springframework.samples.petclinic.visits.web.VisitResourceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.883 s - in org.springframework.samples.petclinic.visits.web.VisitResourceTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -288,6 +298,7 @@
 [INFO] 
 [INFO] 
 [INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ spring-petclinic-visits-service ---
+[INFO] Building jar: /Users/gregory.eales/Developer/git/spring-petclinic-microservices/spring-petclinic-visits-service/target/spring-petclinic-visits-service-2.7.6-SNAPSHOT.jar
 [INFO] 
 [INFO] --- spring-boot-maven-plugin:3.0.1:repackage (repackage) @ spring-petclinic-visits-service ---
 [INFO] Replacing main artifact with repackaged archive
@@ -304,17 +315,17 @@
 [INFO] 
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-visits-service ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml (828 B at 11 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.130408-38.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.130408-38.pom (4.8 kB at 34 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.130408-38.jar
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.130408-38.jar (79 MB at 33 MB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml (828 B at 10 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.142132-39.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.142132-39.pom (4.8 kB at 28 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.142132-39.jar
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/spring-petclinic-visits-service-2.7.6-20230112.142132-39.jar (79 MB at 9.0 MB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml (335 B at 6.7 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml (335 B at 3.5 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml (828 B at 5.5 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/2.7.6-SNAPSHOT/maven-metadata.xml (828 B at 5.1 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml (335 B at 2.2 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/visits/spring-petclinic-visits-service/maven-metadata.xml (335 B at 2.3 kB/s)
 [INFO] 
 [INFO] --< org.springframework.samples.petclinic.api:spring-petclinic-api-gateway >--
 [INFO] Building spring-petclinic-api-gateway 2.7.6-SNAPSHOT               [7/7]
@@ -380,29 +391,29 @@
 [INFO] --- maven-deploy-plugin:3.0.0:deploy (default-deploy) @ spring-petclinic-api-gateway ---
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/maven-metadata.xml
 [INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/maven-metadata.xml (819 B at 11 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.130408-5.pom
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.130408-5.pom (7.7 kB at 55 kB/s)
-[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.130408-5.jar
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.130408-5.jar (322 MB at 2.4 MB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.142132-6.pom
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.142132-6.pom (7.7 kB at 51 kB/s)
+[INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.142132-6.jar
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/spring-petclinic-api-gateway-2.7.6-20230112.142132-6.jar (322 MB at 9.8 MB/s)
 [INFO] Downloading from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/maven-metadata.xml
-[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/maven-metadata.xml (329 B at 5.9 kB/s)
+[INFO] Downloaded from atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/maven-metadata.xml (329 B at 5.5 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/maven-metadata.xml (819 B at 5.5 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/2.7.6-SNAPSHOT/maven-metadata.xml (819 B at 2.2 kB/s)
 [INFO] Uploading to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/maven-metadata.xml
-[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/maven-metadata.xml (329 B at 1.9 kB/s)
+[INFO] Uploaded to atmosphere-nexus: https://nexus.atm.osp.tech/repository/maven-snapshots/org/springframework/samples/petclinic/api/spring-petclinic-api-gateway/maven-metadata.xml (329 B at 1.1 kB/s)
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for spring-petclinic-microservices 2.7.6-SNAPSHOT:
 [INFO] 
-[INFO] spring-petclinic-microservices ..................... SUCCESS [  2.870 s]
-[INFO] spring-petclinic-jarjar ............................ SUCCESS [  2.498 s]
-[INFO] spring-petclinic-shared ............................ SUCCESS [  1.027 s]
-[INFO] spring-petclinic-customers-service ................. SUCCESS [ 11.569 s]
-[INFO] spring-petclinic-vets-service ...................... SUCCESS [ 11.705 s]
-[INFO] spring-petclinic-visits-service .................... SUCCESS [ 11.911 s]
-[INFO] spring-petclinic-api-gateway ....................... SUCCESS [02:22 min]
+[INFO] spring-petclinic-microservices ..................... SUCCESS [  5.044 s]
+[INFO] spring-petclinic-jarjar ............................ SUCCESS [  7.368 s]
+[INFO] spring-petclinic-shared ............................ SUCCESS [  4.232 s]
+[INFO] spring-petclinic-customers-service ................. SUCCESS [ 37.927 s]
+[INFO] spring-petclinic-vets-service ...................... SUCCESS [ 35.116 s]
+[INFO] spring-petclinic-visits-service .................... SUCCESS [ 28.196 s]
+[INFO] spring-petclinic-api-gateway ....................... SUCCESS [ 48.861 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  03:05 min
-[INFO] Finished at: 2023-01-12T13:07:13Z
+[INFO] Total time:  02:48 min
+[INFO] Finished at: 2023-01-12T14:24:21Z
 [INFO] ------------------------------------------------------------------------

@@ -36,7 +36,7 @@ public class ActuatorSecondaryPrometheusScrapeEndpointConfiguration {
             ConversionService mvcConversionService) {
         return RouterFunctions.route()
                 .GET(actuatorSecondaryPrometheusScrapeEndpointProperties.getPath(), req -> {
-                    var textOutputFormat = req.headers().accept().contains(OPENMETRICS_MEDIA_TYPE) ? TextOutputFormat.CONTENT_TYPE_OPENMETRICS_100 : TextOutputFormat.CONTENT_TYPE_004;
+                    var textOutputFormat = TextOutputFormat.CONTENT_TYPE_OPENMETRICS_100;
                     @SuppressWarnings("unchecked")
                     Set<String> includedNames = req.param("includedNames").map(value -> mvcConversionService.convert(value, Set.class)).orElse(null);
                     var scrapeResponse = prometheusScrapeEndpoint.scrape(textOutputFormat, includedNames);
