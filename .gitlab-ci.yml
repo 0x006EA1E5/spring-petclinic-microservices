@@ -44,6 +44,7 @@ create_release_version:
   before_script:
     - export NEXUS_PASSWORD=$OSP_FLUX_RW_NEXUS_PASSWORD
     - export NEXUS_USERNAME=$OSP_FLUX_RW_NEXUS_USER
+    - mkdir -p ~/.m2 && curl -sSL https://gitlab-ci-token:$CI_BUILD_TOKEN@$CI_SERVER_HOST/flux/cicd/raw/${CICD_REPO_GIT_REF}/infra/settings.xml -o ~/.m2/settings.xml
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
