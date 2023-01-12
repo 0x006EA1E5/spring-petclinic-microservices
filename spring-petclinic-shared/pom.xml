@@ -11,6 +11,19 @@
 
     <artifactId>spring-petclinic-shared</artifactId>
 
+    <distributionManagement>
+        <repository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-releases</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-snapshots</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

@@ -14,10 +14,6 @@
         <version>${revision}</version>
     </parent>
 
-    <properties>
-        <revision>latest</revision>
-    </properties>
-
     <distributionManagement>
         <repository>
             <id>atmosphere-nexus</id>
@@ -30,6 +26,10 @@
             <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <properties>
+        <revision>latest</revision>
+    </properties>
 
     <dependencies>
         <!-- Testing -->

@@ -14,6 +14,19 @@
         <version>${revision}</version>
     </parent>
 
+    <distributionManagement>
+        <repository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-releases</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-snapshots</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <webjars-bootstrap.version> 3.3.7-1</webjars-bootstrap.version>
         <webjars-jquery.version>3.6.0</webjars-jquery.version>

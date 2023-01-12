@@ -15,6 +15,19 @@
         <version>${revision}</version>
     </parent>
 
+    <distributionManagement>
+        <repository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-releases</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>atmosphere-nexus</id>
+            <name>atmosphere-snapshots</name>
+            <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <spring-boot-admin.version>2.5.4</spring-boot-admin.version>
         <revision>latest</revision>
