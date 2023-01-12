@@ -8,6 +8,7 @@ stages:
 # Version
 ################################################################################
 .create_release_version_base:
+  image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
   stage: .pre
   before_script:
     - apk add -Uq --no-progress curl
@@ -42,3 +43,8 @@ create_release_version:
     name: nexus_artifact.url
     paths: [./infra/*_nexus_artifact.url]
     expire_in: 12 months
+
+build_frontend:
+  extends: .build_to_nexus_base
+  variables:
+    MODULE: spring-petclinic-api-gateway
