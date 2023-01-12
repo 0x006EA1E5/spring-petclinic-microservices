@@ -1,5 +1,5 @@
 variables:
-  MAVEN_CLI_OPTS: "-B -e -DexecutionEnvironment=CICD $MAVEN_CLI_JOB_OPTS "
+  MAVEN_CLI_OPTS: "-B --no-transfer-progress -e -DexecutionEnvironment=CICD $MAVEN_CLI_JOB_OPTS"
   MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Dhttps.protocols=TLSv1.2 -Djava.awt.headless=true"
   CICD_REPO_GIT_REF: master
 
@@ -55,7 +55,7 @@ create_release_version:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
     - mvn $MAVEN_CLI_OPTS install -pl ${MODULE} -DskipTests -am -Drevision=$RELEASE_VERSION
-    - mvn $MAVEN_CLI_OPTS install deploy:deploy -pl ${MODULE} -DskipTests -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
+    - mvn install deploy:deploy -pl ${MODULE} -DskipTests -B --no-transfer-progress -e $MAVEN_CLI_JOB_OPTS -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
     - 'sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url'
     - cat ./infra/${MODULE}_nexus_artifact.url
   artifacts:
