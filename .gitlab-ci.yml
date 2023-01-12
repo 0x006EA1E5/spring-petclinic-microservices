@@ -6,6 +6,7 @@ variables:
 stages:
   - .pre
   - build
+  - deploy_panda
   - deploy
 
 .base_tags:
@@ -65,12 +66,13 @@ create_release_version:
   needs: [create_release_version]
 
 .deploy_chancellor_base:
-  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.0-alpine
   stage: deploy
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
     - export ARTIFACT_URL=$(cat ./infra/${MODULE}_nexus_artifact.url)
+    - echo $ARTIFACT_URL
     - chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d ${DTAP} -b ${BUSINESS_ID} -a $APP_ID -A ${ALIAS}
   variables:
     DTAP: dev
@@ -79,8 +81,8 @@ create_release_version:
   when: manual
 
 .deploy_panda_base:
-  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
-  stage: deploy
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.0-alpine
+  stage: deploy_panda
   script:
     - export PANDA_PROPERTIES_FILE="./infra/${APP_ID}_panda.json"
     - chancellor configuration panda deploy -d "$DTAP" -b "$BUSINESS_ID" -a "$APP_ID" -A "$ALIAS" -c "$PANDA_PROPERTIES_FILE"
@@ -100,14 +102,18 @@ deploy_frontend:
   variables:
     MODULE: spring-petclinic-api-gateway
     APP_ID: petclinic
-  needs: [build_frontend]
+  needs:
+    - build_frontend
+    - create_release_version
 
 deploy_panda_frontend:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-api-gateway
     APP_ID: petclinic
-  needs: [build_frontend]
+  needs:
+    - build_frontend
+    - create_release_version
 
 build_customers_service:
   extends: .build_to_nexus_base
@@ -119,14 +125,18 @@ deploy_customers_service:
   variables:
     MODULE: spring-petclinic-customers-service
     APP_ID: petcliniccustomersservice
-  needs: [build_customers_service]
+  needs:
+    - build_customers_service
+    - create_release_version
 
 deploy_panda_customers_service:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-customers-service
     APP_ID: petcliniccustomersservice
-  needs: [build_customers_service]
+  needs:
+    - build_customers_service
+    - create_release_version
 
 build_vets_service:
   extends: .build_to_nexus_base
@@ -138,15 +148,18 @@ deploy_vets_service:
   variables:
     MODULE: spring-petclinic-vets-service
     APP_ID: petclinicvetsservice
-  needs: [build_vets_service]
+  needs:
+    - build_vets_service
+    - create_release_version
 
 deploy_panda_vets_service:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-vets-service
     APP_ID: petclinicvetsservice
-  needs: [build_vets_service]
-
+  needs:
+    - build_vets_service
+    - create_release_version
 
 build_visits_service:
   extends: .build_to_nexus_base
@@ -158,11 +171,15 @@ deploy_visits_service:
   variables:
     MODULE: spring-petclinic-visits-service
     APP_ID: petclinicvisitsservice
-  needs: [build_visits_service]
+  needs:
+    - build_visits_service
+    - create_release_version
 
 deploy_panda_visits_service:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-visits-service
     APP_ID: petclinicvisitsservice
-  needs: [build_visits_service]
+  needs:
+    - build_visits_service
+    - create_release_version
