@@ -54,7 +54,8 @@ create_release_version:
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
-    - mvn $MAVEN_CLI_OPTS deploy -pl ${MODULE} -DskipTests -am -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
+    - mvn $MAVEN_CLI_OPTS install -pl ${MODULE} -DskipTests -am -Drevision=$RELEASE_VERSION
+    - mvn $MAVEN_CLI_OPTS deploy:deploy -pl ${MODULE} -DskipTests -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
     - 'sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url'
     - cat ./infra/${MODULE}_nexus_artifact.url
   artifacts:
