@@ -15,6 +15,8 @@ stages:
   image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
   stage: .pre
   before_script:
+    - export NEXUS_PASSWORD=$OSP_FLUX_RW_NEXUS_PASSWORD
+    - export NEXUS_USERNAME=$OSP_FLUX_RW_NEXUS_USER
     - apk add -Uq --no-progress curl
     - mkdir -p ~/.m2 && curl -sSL https://gitlab-ci-token:$CI_BUILD_TOKEN@$CI_SERVER_HOST/flux/cicd/raw/${CICD_REPO_GIT_REF}/infra/settings.xml -o ~/.m2/settings.xml
     - mvn -q $MAVEN_CLI_OPTS help:evaluate -Dexpression=base.version -DforceStdout | tee .base-version
@@ -39,6 +41,9 @@ create_release_version:
 .build_to_nexus_base:
   image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
   stage: build
+  before_script:
+    - export NEXUS_PASSWORD=$OSP_FLUX_RW_NEXUS_PASSWORD
+    - export NEXUS_USERNAME=$OSP_FLUX_RW_NEXUS_USER
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
