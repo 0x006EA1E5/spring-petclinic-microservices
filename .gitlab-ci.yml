@@ -84,7 +84,6 @@ create_release_version:
   script:
     - export PANDA_PROPERTIES_FILE="./infra/${APP_ID}_panda.json"
     - chancellor configuration panda deploy -d "$DTAP" -b "$BUSINESS_ID" -a "$APP_ID" -A "$ALIAS" -c "$PANDA_PROPERTIES_FILE"
-
   variables:
     DTAP: dev
     BUSINESS_ID: atm
@@ -98,16 +97,17 @@ build_frontend:
 
 deploy_frontend:
   extends: .deploy_chancellor_base
-  needs: [build_frontend]
   variables:
     MODULE: spring-petclinic-api-gateway
     APP_ID: petclinic
+  needs: [build_frontend]
 
 deploy_panda_frontend:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-api-gateway
     APP_ID: petclinic
+  needs: [build_frontend]
 
 build_customers_service:
   extends: .build_to_nexus_base
@@ -116,16 +116,17 @@ build_customers_service:
 
 deploy_customers_service:
   extends: .deploy_chancellor_base
-  needs: [build_frontend]
   variables:
     MODULE: spring-petclinic-customers-service
     APP_ID: petcliniccustomersservice
+  needs: [build_customers_service]
 
 deploy_panda_customers_service:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-customers-service
     APP_ID: petcliniccustomersservice
+  needs: [build_customers_service]
 
 build_vets_service:
   extends: .build_to_nexus_base
@@ -134,16 +135,17 @@ build_vets_service:
 
 deploy_vets_service:
   extends: .deploy_chancellor_base
-  needs: [build_frontend]
   variables:
     MODULE: spring-petclinic-vets-service
     APP_ID: petclinicvetsservice
+  needs: [build_vets_service]
 
 deploy_panda_vets_service:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-vets-service
     APP_ID: petclinicvetsservice
+  needs: [build_vets_service]
 
 
 build_visits_service:
@@ -153,13 +155,14 @@ build_visits_service:
 
 deploy_visits_service:
   extends: .deploy_chancellor_base
-  needs: [build_frontend]
   variables:
     MODULE: spring-petclinic-visits-service
     APP_ID: petclinicvisitsservice
+  needs: [build_visits_service]
 
 deploy_panda_visits_service:
   extends: .deploy_panda_base
   variables:
     MODULE: spring-petclinic-visits-service
     APP_ID: petclinicvisitsservice
+  needs: [build_visits_service]
