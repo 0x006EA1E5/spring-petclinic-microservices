@@ -61,11 +61,8 @@ create_release_version:
     name: nexus_artifact.url
     paths: [./infra/*_nexus_artifact.url]
     expire_in: 12 months
+  needs: [create_release_version]
 
-build_frontend:
-  extends: .build_to_nexus_base
-  variables:
-    MODULE: spring-petclinic-api-gateway
 
 .deploy_chancellor_base:
   stage: deploy
@@ -74,15 +71,61 @@ build_frontend:
     - export RELEASE_VERSION=$(cat .release-version)
     - export ARTIFACT_URL=$(cat ./infra/${MODULE}_nexus_artifact.url)
     - chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d ${DTAP} -b ${BUSINESS_ID} -a $APP_ID -A ${ALIAS}
+  variables:
+    DTAP: dev
+    BUSINESS_ID: atm
+    ALIAS: use1
   when: manual
+
+build_frontend:
+  extends: .build_to_nexus_base
+  variables:
+    MODULE: spring-petclinic-api-gateway
 
 deploy_frontend:
   image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
   extends: .deploy_chancellor_base
+  needs: [build_frontend]
   variables:
     MODULE: spring-petclinic-api-gateway
     APP_ID: petclinic
-    DTAP: dev
-    BUSINESS_ID: atm
-    ALIAS: use1
 
+build_customers_service:
+  extends: .build_to_nexus_base
+  variables:
+    MODULE: spring-petclinic-customers-service
+
+deploy_customers_service:
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
+  extends: .deploy_chancellor_base
+  needs: [build_frontend]
+  variables:
+    MODULE: spring-petclinic-customers-service
+    APP_ID: petcliniccustomersservice
+
+
+build_vets_service:
+  extends: .build_to_nexus_base
+  variables:
+    MODULE: spring-petclinic-vets-service
+
+deploy_vets_service:
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
+  extends: .deploy_chancellor_base
+  needs: [build_frontend]
+  variables:
+    MODULE: spring-petclinic-vets-service
+    APP_ID: petclinicvetsservice
+
+build_visits_service:
+  extends: .build_to_nexus_base
+  variables:
+    MODULE: spring-petclinic-visits-service
+
+deploy_visits_service:
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
+  extends: .deploy_chancellor_base
+  needs: [build_frontend]
+  variables:
+    MODULE: spring-petclinic-visits-service
+    APP_ID: petclinicvisitsservice
