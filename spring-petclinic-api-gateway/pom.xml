@@ -80,12 +80,12 @@
         <dependency>
             <groupId>org.springframework.samples</groupId>
             <artifactId>spring-petclinic-jarjar</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.samples</groupId>
             <artifactId>spring-petclinic-shared</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- Configures a simple router to proxy calls from frontend to backend -->

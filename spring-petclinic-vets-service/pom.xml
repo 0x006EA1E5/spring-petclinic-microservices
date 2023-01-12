@@ -66,12 +66,12 @@
         <dependency>
             <groupId>org.springframework.samples</groupId>
             <artifactId>spring-petclinic-jarjar</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.samples</groupId>
             <artifactId>spring-petclinic-shared</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- Spring Cloud-->
