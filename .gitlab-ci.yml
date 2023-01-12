@@ -8,10 +8,15 @@ stages:
   - build
   - deploy
 
+.base_tags:
+  tags: [ atmosphere ]
+
+
 ################################################################################
 # Version
 ################################################################################
 .create_release_version_base:
+  extends: .base_tags
   image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
   stage: .pre
   before_script:
@@ -39,6 +44,7 @@ create_release_version:
     - echo default create_release_version complete
 
 .build_to_nexus_base:
+  extends: .base_tags
   image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
   stage: build
   before_script:
@@ -49,7 +55,8 @@ create_release_version:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
     - mvn $MAVEN_CLI_OPTS deploy -pl ${MODULE} -DskipTests -am -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
-    - 'sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url'
+    - 'sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url'
+    - cat ./infra/${MODULE}_nexus_artifact.url
   artifacts:
     name: nexus_artifact.url
     paths: [./infra/*_nexus_artifact.url]
@@ -59,3 +66,23 @@ build_frontend:
   extends: .build_to_nexus_base
   variables:
     MODULE: spring-petclinic-api-gateway
+
+.deploy_chancellor_base:
+  stage: deploy
+  script:
+    - echo release-version $(cat .release-version)
+    - export RELEASE_VERSION=$(cat .release-version)
+    - export ARTIFACT_URL=$(cat ./infra/${MODULE}_nexus_artifact.url)
+    - chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d ${DTAP} -b ${BUSINESS_ID} -a $APP_ID -A ${ALIAS}
+  when: manual
+
+deploy_frontend:
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.4.13-alpine@sha256:3ca1c9377aa5b5a4dce39877cd48ebd582e485372fe13dfa13f906d821888c90
+  extends: .deploy_chancellor_base
+  variables:
+    MODULE: spring-petclinic-api-gateway
+    APP_ID: petclinic
+    DTAP: dev
+    BUSINESS_ID: atm
+    ALIAS: use1
+
