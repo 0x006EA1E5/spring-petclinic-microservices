@@ -33,18 +33,6 @@
         <revision>latest</revision>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>atmosphere-nexus</id>
-            <name>atmosphere-releases</name>
-            <url>https://nexus.atm.osp.tech/repository/maven-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>atmosphere-nexus</id>
-            <name>atmosphere-snapshots</name>
-            <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <dependencies>
         <!-- Spring Boot -->
