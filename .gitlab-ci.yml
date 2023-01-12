@@ -1,5 +1,5 @@
 variables:
-  MAVEN_CLI_OPTS: "-B --no-transfer-progress -e -DexecutionEnvironment=CICD $MAVEN_CLI_JOB_OPTS "
+  MAVEN_CLI_OPTS: "-B -e -DexecutionEnvironment=CICD $MAVEN_CLI_JOB_OPTS "
   MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Dhttps.protocols=TLSv1.2 -Djava.awt.headless=true"
   CICD_REPO_GIT_REF: master
 
