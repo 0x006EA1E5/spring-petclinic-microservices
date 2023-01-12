@@ -43,7 +43,7 @@ spring:
 jarjar:
   info:
     appId: ${spring.application.name}
-    version: 2.6.7-SNAPSHOT
+    version: '@project.version@'
   requestid:
     create-if-missing:
       urls: /**
