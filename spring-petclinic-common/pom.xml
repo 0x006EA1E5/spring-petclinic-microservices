@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>spring-petclinic-shared</artifactId>
+    <artifactId>spring-petclinic-common</artifactId>
 
     <distributionManagement>
         <repository>

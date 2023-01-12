@@ -17,13 +17,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>spring-petclinic-admin-server</module>
+        <module>spring-petclinic-common</module>
+        <module>spring-petclinic-jarjar</module>
+        <module>spring-petclinic-api-gateway</module>
         <module>spring-petclinic-customers-service</module>
         <module>spring-petclinic-vets-service</module>
         <module>spring-petclinic-visits-service</module>
-        <module>spring-petclinic-api-gateway</module>
-        <module>spring-petclinic-jarjar</module>
-        <module>spring-petclinic-shared</module>
     </modules>
 
     <properties>
@@ -35,8 +34,6 @@
         <spring-boot.version>3.0.1</spring-boot.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <chaos-monkey-spring-boot.version>2.3.10</chaos-monkey-spring-boot.version>
-<!--        <spring-data-bom.version>2022.0.0-RC2</spring-data-bom.version>-->
-<!--        <spring-framework.version>6.0.0-RC4</spring-framework.version>-->
         <native.maven.plugin.version>0.9.17</native.maven.plugin.version>
         <base.version>2.7.6</base.version>
         <revision>latest</revision>

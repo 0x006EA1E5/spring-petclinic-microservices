@@ -35,7 +35,7 @@ import java.util.function.Function;
  */
 @RestController
 @RequestMapping("/api/gateway")
-public class ApiGatewayController {
+class ApiGatewayController {
     private final Logger logger = LoggerFactory.getLogger(ApiGatewayController.class);
 
     private final CustomersService customersService;
