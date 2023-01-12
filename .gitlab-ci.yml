@@ -2,7 +2,7 @@ variables:
   MAVEN_CLI_OPTS: "-B --no-transfer-progress -e -DexecutionEnvironment=CICD $MAVEN_CLI_JOB_OPTS "
   MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Djdk.net.URLClassPath.disableClassPathURLCheck=true -Dhttps.protocols=TLSv1.2 -Djava.awt.headless=true"
   CICD_REPO_GIT_REF: master
-  
+
 stages:
   - .pre
   - build
@@ -17,7 +17,8 @@ stages:
   before_script:
     - apk add -Uq --no-progress curl
     - mkdir -p ~/.m2 && curl -sSL https://gitlab-ci-token:$CI_BUILD_TOKEN@$CI_SERVER_HOST/flux/cicd/raw/${CICD_REPO_GIT_REF}/infra/settings.xml -o ~/.m2/settings.xml
-    - BASE_VERSION=$(mvn -q $MAVEN_CLI_OPTS help:evaluate -Dexpression=base.version -DforceStdout)
+    - mvn -q $MAVEN_CLI_OPTS help:evaluate -Dexpression=base.version -DforceStdout | tee .base-version
+    - BASE_VERSION=$(cat .base-version)
     # Replaces all non-alphanumeric characters by underscored and takes the first 10 chars of the branch name
     - BRANCH_SHORT_NAME=$(echo $CI_COMMIT_REF_NAME | sed -r "s/[^A-Za-z0-9]+/_/g" | cut -c -10)
     - '[ "$CI_COMMIT_REF_NAME" != "$CI_DEFAULT_BRANCH" ] && RELEASE_VERSION_BRANCH_SUFFIX="-$BRANCH_SHORT_NAME-$CI_PIPELINE_ID-SNAPSHOT"'
