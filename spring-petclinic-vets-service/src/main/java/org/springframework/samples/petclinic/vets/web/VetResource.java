@@ -35,7 +35,7 @@ import java.util.List;
 @RequestMapping("/vets")
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class VetResource {
 
     private final VetRepository vetRepository;

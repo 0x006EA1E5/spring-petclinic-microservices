@@ -40,7 +40,7 @@ import java.util.Optional;
 //@Timed("petclinic.owner")
 @RequiredArgsConstructor
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class OwnerResource {
 
     private final OwnerRepository ownerRepository;

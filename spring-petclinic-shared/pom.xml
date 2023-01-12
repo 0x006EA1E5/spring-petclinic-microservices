@@ -41,10 +41,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator-autoconfigure</artifactId>
         </dependency>
-        <!-- turns on security features for backend for frontend applications (enables CSRF in Spring Security and Authorization Code in Panda SSO) -->
         <dependency>
-            <groupId>com.ocadotechnology.jarjar</groupId>
-            <artifactId>jarjar-starter-security-panda-edge</artifactId>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_common</artifactId>
         </dependency>
     </dependencies>
 

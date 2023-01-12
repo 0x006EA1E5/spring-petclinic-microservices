@@ -2,11 +2,11 @@ server:
   port: 8081
 jarjar:
   aws:
-    prefix: dev-atm-use1-petclinicvisitsservice
+    prefix: dev-atm-use1-petclinic
     bucket: use1-app-dev-725778237416
     region:
       static: us-east-1
 
     credentials:
-      profile-name: dev-atm-use1-petclinicvisitsservice
+      profile-name: dev-atm-use1-petclinic
 

@@ -38,7 +38,7 @@ import java.util.Optional;
 @Timed("petclinic.pet")
 @RequiredArgsConstructor
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class PetResource {
 
     private final PetRepository petRepository;

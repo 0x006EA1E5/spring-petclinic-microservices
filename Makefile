@@ -9,7 +9,7 @@ mvn_deploy_module:
 
 .PHONY: chancellor_deploy_module
 chancellor_deploy_module:
-	@chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d $$DTAP -b $$BUSINESS_ID -a $$APP_ID -A $$ALIAS -v ARTIFACT_URL=$$(cat ./infra/${MODULE}_nexus_artifact.url) -v RELEASE_VERSION=2.7.6-SNAPSHOT-$$(date +%s)
+	@chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d $(DTAP) -b $(BUSINESS_ID) -a $$APP_ID -A $(ALIAS) -v RELEASE_VERSION=2.7.6-SNAPSHOT-$$(date +%s) -v ARTIFACT_URL=$$(cat ./infra/${MODULE}_nexus_artifact.url)
 
 
 
@@ -40,3 +40,11 @@ deploy_customers-service:
 	@export MODULE=spring-petclinic-customers-service && export APP_ID=petcliniccustomersservice \
 	&& make mvn_and_chancellor
 
+.PHONY: chancellor_deploy_frontend
+chancellor_deploy_frontend:
+	@make chancellor_deploy_module MODULE=spring-petclinic-api-gateway APP_ID=petclinic
+
+.PHONY: deploy_frontend
+deploy_frontend:
+	@export MODULE=spring-petclinic-api-gateway && export APP_ID=petclinic \
+	&& make mvn_and_chancellor

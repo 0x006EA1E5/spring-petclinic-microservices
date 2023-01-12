@@ -1,6 +1,6 @@
 spring:
   application:
-    name: petclinicvisitsservice
+    name: petclinic
   cloud:
     config:
       override-system-properties: false

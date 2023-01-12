@@ -35,8 +35,17 @@ jarjar:
   info:
     appId: ${spring.application.name}
     version: 2.6.7-SNAPSHOT
+  requestid:
+    create-if-missing:
+      urls: /**
   security:
     web:
+      explicit-access-required:
+        enabled: false
+      chain:
+        auth:
+          csrf:
+            enabled: false
       headers:
         content-security-policy:
           required: false
@@ -50,3 +59,4 @@ logging:
   level:
     org.springframework: INFO
     org.springframework.samples.petclinic: DEBUG
+    io.opentelemetry.exporter.otlp: DEBUG

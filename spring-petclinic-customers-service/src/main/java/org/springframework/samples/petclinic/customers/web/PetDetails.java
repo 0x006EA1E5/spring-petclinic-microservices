@@ -27,7 +27,7 @@ import org.springframework.samples.petclinic.customers.model.PetType;
  * @author mszarlinski@bravurasolutions.com on 2016-12-05.
  */
 @Data
-class PetDetails {
+public class PetDetails {
 
     private long id;
 

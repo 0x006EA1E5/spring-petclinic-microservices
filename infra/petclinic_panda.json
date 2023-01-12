@@ -1,5 +1,5 @@
 {
-  "applicationId": "petclinicvisitsservice",
+  "applicationId": "petclinic",
   "formatVersion": 1,
   "permissions": {
     "READ": {
@@ -13,7 +13,7 @@
     "SSO_INTERNAL_FRONTEND_APPLICATION": {
       "description": "SSO Role from finance flux",
       "grantedToRoles": ["rw_osp_monitoring"],
-      "grantedToApplications": ["lastmile_api_docs"]
+      "grantedToApplications": ["lastmile_api_docs", "petclinic"]
     },
     "ADMIN": {
       "description": "Administrator",
@@ -29,10 +29,9 @@
   },
   "frontendApplications": [
     "lastmile_api_docs",
-    "fluxteamflux"
+    "petclinic"
   ],
   "allowRedirectTo": [
     "/verify.pandasso"
-  ],
-  "requiresPasswordGrant": true
+  ]
 }

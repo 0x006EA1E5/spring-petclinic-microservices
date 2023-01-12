@@ -62,5 +62,13 @@
       <groupId>com.ocadotechnology.jarjar</groupId>
       <artifactId>jarjar-starter-s3-panda-client-properties</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.ocadotechnology.jarjar</groupId>
+      <artifactId>jarjar-starter-security-panda-edge</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ocadotechnology.jarjar</groupId>
+      <artifactId>jarjar-starter-feign-slim</artifactId>
+    </dependency>
   </dependencies>
 </project>

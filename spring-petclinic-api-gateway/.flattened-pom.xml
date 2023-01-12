@@ -7,28 +7,25 @@
     <artifactId>spring-petclinic-microservices</artifactId>
     <version>2.7.6-SNAPSHOT</version>
   </parent>
-  <groupId>org.springframework.samples.petclinic.visits</groupId>
-  <artifactId>spring-petclinic-visits-service</artifactId>
+  <groupId>org.springframework.samples.petclinic.api</groupId>
+  <artifactId>spring-petclinic-api-gateway</artifactId>
   <version>2.7.6-SNAPSHOT</version>
-  <description>Spring PetClinic Visits Service</description>
+  <description>Spring PetClinic API Gateway</description>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
       <url>https://www.apache.org/licenses/LICENSE-2.0</url>
     </license>
   </licenses>
-  <distributionManagement>
-    <repository>
-      <id>atmosphere-nexus</id>
-      <name>atmosphere-releases</name>
-      <url>https://nexus.atm.osp.tech/repository/maven-releases</url>
-    </repository>
-    <snapshotRepository>
-      <id>atmosphere-nexus</id>
-      <name>atmosphere-snapshots</name>
-      <url>https://nexus.atm.osp.tech/repository/maven-snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
+  <properties>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
+    <webjars-angular-ui-router.version>1.0.20</webjars-angular-ui-router.version>
+    <webjars-jquery.version>3.6.0</webjars-jquery.version>
+    <webjars-angular.version>1.8.2</webjars-angular.version>
+    <wro4j.version>1.8.0</wro4j.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -71,6 +68,10 @@
       <groupId>org.springframework.samples</groupId>
       <artifactId>spring-petclinic-shared</artifactId>
       <version>${version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ocadotechnology.jarjar</groupId>
+      <artifactId>jarjar-starter-edge-router-simple</artifactId>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -117,9 +118,83 @@
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+      <version>${webjars-angular.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>${webjars-jquery.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>${webjars-bootstrap.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angular-ui-router</artifactId>
+      <version>${webjars-angular-ui-router.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>webjars-locator-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.samples.petclinic.client</groupId>
+      <artifactId>spring-petclinic-customers-service</artifactId>
+      <version>2.7.6-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.samples.petclinic.vets</groupId>
+      <artifactId>spring-petclinic-vets-service</artifactId>
+      <version>2.7.6-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.samples.petclinic.visits</groupId>
+      <artifactId>spring-petclinic-visits-service</artifactId>
+      <version>2.7.6-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <groupId>ro.isdc.wro4j</groupId>
+        <artifactId>wro4j-maven-plugin</artifactId>
+        <version>${wro4j.version}</version>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${webjars-bootstrap.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
+          <cssDestinationFolder>${project.build.directory}/classes/static/css</cssDestinationFolder>
+          <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
+          <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
+          <contextFolder>${basedir}/src/main/less</contextFolder>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

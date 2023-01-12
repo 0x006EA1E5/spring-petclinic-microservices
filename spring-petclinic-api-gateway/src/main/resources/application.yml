@@ -1,46 +1,76 @@
 server:
   shutdown: graceful
-  port: 8080
-  compression:
-    enabled: true
-    mime-types: application/json,text/css,application/javascript
-    min-response-size: 2048
+#  port: 8080
+#  compression:
+#    enabled: true
+#    mime-types: application/json,text/css,application/javascript
+#    min-response-size: 2048
 
 spring:
   application:
-    name: api-gateway
-  cloud:
-    gateway:
-      routes:
-        - id: vets-service
-          uri: lb://vets-service
-          predicates:
-            - Path=/api/vet/**
-          filters:
-            - StripPrefix=2
-        - id: visits-service
-          uri: lb://visits-service
-          predicates:
-            - Path=/api/visit/**
-          filters:
-            - StripPrefix=2
-        - id: customers-service
-          uri: lb://customers-service
-          predicates:
-            - Path=/api/customer/**
-          filters:
-            - StripPrefix=2
-  sql:
-    init:
-      schema-locations: classpath*:db/hsqldb/schema.sql
-      data-locations: classpath*:db/hsqldb/data.sql
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
+    name: petclinic
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: vets-service
+#          uri: lb://vets-service
+#          predicates:
+#            - Path=/api/vet/**
+#          filters:
+#            - StripPrefix=2
+#        - id: visits-service
+#          uri: lb://visits-service
+#          predicates:
+#            - Path=/api/visit/**
+#          filters:
+#            - StripPrefix=2
+#        - id: customers-service
+#          uri: lb://customers-service
+#          predicates:
+#            - Path=/api/customer/**
+#          filters:
+#            - StripPrefix=2
+#  sql:
+#    init:
+#      schema-locations: classpath*:db/hsqldb/schema.sql
+#      data-locations: classpath*:db/hsqldb/data.sql
+#  jpa:
+#    open-in-view: false
+#    hibernate:
+#      ddl-auto: none
   # Internationalization
-  messages.basename: messages/messages
+#  messages.basename: messages/messages
+jarjar:
+  info:
+    appId: ${spring.application.name}
+    version: 2.6.7-SNAPSHOT
+  requestid:
+    create-if-missing:
+      urls: /**
+  edge.router:
+    routes:
+      petclinicvisitsservice:
+        path: /api/visit/**
+      petclinicvetsservice:
+        path: /api/vet/**
+      petcliniccustomersservice:
+        path: /api/customer/**
+  security:
+    web:
+      explicit-access-required:
+        enabled: false
+      chain:
+        auth:
+          csrf:
+            enabled: false
+      headers:
+        content-security-policy:
+          required: false
+        x-content-type-options:
+          value: nosniff
 
+panda-client:
+  default-scope: petclinic
 # Metrics
 management:
   prometheus:
@@ -86,4 +116,5 @@ logging:
   level:
     org.springframework: INFO
     org.springframework.samples.petclinic: DEBUG
-    org.springframework.cloud.gateway: DEBUG
+    com.ocadotechnology.jarjar.edgerouter: INFO
+    io.opentelemetry.exporter.otlp: DEBUG

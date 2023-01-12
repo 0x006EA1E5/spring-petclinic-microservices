@@ -67,9 +67,15 @@
             <artifactId>jarjar-starter-s3-panda-client-properties</artifactId>
         </dependency>
         <!-- turns on security features for backend for frontend applications (enables CSRF in Spring Security and Authorization Code in Panda SSO) -->
-<!--        <dependency>-->
-<!--            <groupId>com.ocadotechnology.jarjar</groupId>-->
-<!--            <artifactId>jarjar-starter-security-panda-edge</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-security-panda-edge</artifactId>
+        </dependency>
+        <!-- groups typical required Ocado integration features for Feign (URL resolution in cloud environments, optional Panda capability, requestId passing, response validation etc.) -->
+        <dependency>
+            <groupId>com.ocadotechnology.jarjar</groupId>
+            <artifactId>jarjar-starter-feign-slim</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
