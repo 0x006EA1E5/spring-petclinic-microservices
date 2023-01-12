@@ -11,12 +11,13 @@
 	<parent>
 		<groupId>org.springframework.samples</groupId>
 		<artifactId>spring-petclinic-microservices</artifactId>
-        <version>2.7.6-SNAPSHOT</version>
+        <version>${revision}</version>
 	</parent>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <revision>latest</revision>
     </properties>
 
     <distributionManagement>

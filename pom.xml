@@ -12,7 +12,7 @@
 
     <groupId>org.springframework.samples</groupId>
     <artifactId>spring-petclinic-microservices</artifactId>
-    <version>2.7.6-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
@@ -38,6 +38,8 @@
 <!--        <spring-data-bom.version>2022.0.0-RC2</spring-data-bom.version>-->
 <!--        <spring-framework.version>6.0.0-RC4</spring-framework.version>-->
         <native.maven.plugin.version>0.9.17</native.maven.plugin.version>
+        <base.version>2.7.6-SNAPSHOT</base.version>
+        <revision>latest</revision>
     </properties>
 
     <distributionManagement>

@@ -11,10 +11,11 @@
 	<parent>
 		<groupId>org.springframework.samples</groupId>
 		<artifactId>spring-petclinic-microservices</artifactId>
-        <version>2.7.6-SNAPSHOT</version>
+        <version>${revision}</version>
 	</parent>
 
     <properties>
+        <revision>latest</revision>
     </properties>
 
     <distributionManagement>

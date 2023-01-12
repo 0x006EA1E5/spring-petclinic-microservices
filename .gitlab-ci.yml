@@ -1,3 +1,5 @@
+variables:
+  MAVEN_CLI_OPTS: "-B --no-transfer-progress -e -DexecutionEnvironment=CICD $MAVEN_CLI_JOB_OPTS "
 
 stages:
   - .pre
@@ -37,7 +39,7 @@ create_release_version:
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
-    - mvn deploy -pl ${MODULE} -DskipTests -B --no-transfer-progress -e -am -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
+    - mvn $MAVEN_CLI_OPTS deploy -pl ${MODULE} -DskipTests -am -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
     - 'sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url'
   artifacts:
     name: nexus_artifact.url
