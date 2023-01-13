@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.common.actuator;
 
-import io.prometheus.client.exporter.common.TextFormat;
 import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnAvailableEndpoint;
 import org.springframework.boot.actuate.metrics.export.prometheus.PrometheusScrapeEndpoint;
 import org.springframework.boot.actuate.metrics.export.prometheus.TextOutputFormat;
