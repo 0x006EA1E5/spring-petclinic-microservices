@@ -20,14 +20,14 @@
     </appender>
 
 
-    <!--    <appender name="SENTRY" class="io.sentry.logback.SentryAppender">-->
-    <!--        <minimumEventLevel>WARN</minimumEventLevel>-->
-    <!--    </appender>-->
+    <appender name="SENTRY" class="io.sentry.logback.SentryAppender">
+        <minimumEventLevel>WARN</minimumEventLevel>
+    </appender>
 
     <springProfile name="!local">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <!--            <appender-ref ref="SENTRY"/>-->
+            <appender-ref ref="SENTRY"/>
         </root>
     </springProfile>
 
