@@ -38,7 +38,7 @@ class OtelConfiguration {
     @Bean
     Filter setSamplingPriorityFilter() {
         return (servletRequest, servletResponse, filterChain) -> {
-            Span.current().setAttribute("sampling.priority", 10);
+            Span.current().setAttribute("sampling.priority", 100);
             filterChain.doFilter(servletRequest, servletResponse);
         };
     }
