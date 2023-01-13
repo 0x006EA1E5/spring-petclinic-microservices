@@ -109,6 +109,7 @@ upload_frontend:
   extends: .build_otp_image_base
   variables:
     MODULE: spring-petclinic-api-gateway
+    APP_ID: petclinic
 
 deploy_frontend:
   extends: .deploy_chancellor_base
@@ -137,6 +138,7 @@ upload_customers_service:
   extends: .build_otp_image_base
   variables:
     MODULE: spring-petclinic-customers-service
+    APP_ID: petcliniccustomersservice
 
 deploy_customers_service:
   extends: .deploy_chancellor_base
@@ -165,6 +167,7 @@ upload_vets_service:
   extends: .build_otp_image_base
   variables:
     MODULE: spring-petclinic-vets-service
+    APP_ID: petclinicvetsservice
 
 deploy_vets_service:
   extends: .deploy_chancellor_base
@@ -193,6 +196,7 @@ upload_visits_service:
   extends: .build_otp_image_base
   variables:
     MODULE: spring-petclinic-visits-service
+    APP_ID: petclinicvisitsservice
 
 deploy_visits_service:
   extends: .deploy_chancellor_base
