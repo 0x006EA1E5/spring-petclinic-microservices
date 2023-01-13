@@ -63,7 +63,7 @@ create_release_version:
   needs: [create_release_version]
 
 .deploy_chancellor_base:
-  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.0-alpine
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.2-alpine
   stage: deploy
   script:
     - echo release-version $(cat .release-version)
@@ -77,7 +77,7 @@ create_release_version:
   when: manual
 
 .deploy_panda_base:
-  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.0-alpine
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.2-alpine
   stage: deploy_panda
   script:
     - export PANDA_PROPERTIES_FILE="./infra/${APP_ID}_panda.json"
