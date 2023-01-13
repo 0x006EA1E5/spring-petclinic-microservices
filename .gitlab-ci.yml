@@ -6,6 +6,7 @@ variables:
 stages:
   - .pre
   - build
+  - upload
   - deploy_panda
   - deploy
 
@@ -62,13 +63,24 @@ create_release_version:
     expire_in: 12 months
   needs: [create_release_version]
 
+.build_otp_image_base:
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.2-alpine
+  stage: upload
+  script:
+    - echo release-version $(cat .release-version)
+    - export RELEASE_VERSION=$(cat .release-version)
+    - chancellor image build -m infra/chancellor-cli-templates/image-builder-metadata.json -a ./${MODULE}/target/${MODULE}-${RELEASE_VERSION}.jar
+  variables:
+    DTAP: dev
+    BUSINESS_ID: atm
+    ALIAS: use1
+
 .deploy_chancellor_base:
   image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.2-alpine
   stage: deploy
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
-    - chancellor image build -m infra/chancellor-cli-templates/image-builder-metadata.json -a ./${MODULE}/target/${MODULE}-${RELEASE_VERSION}.jar
     - chancellor service deploy --descriptor=./infra/chancellor-cli-templates/image-builder-deployment.json -d ${DTAP} -b ${BUSINESS_ID} -a $APP_ID -A ${ALIAS}
   variables:
     DTAP: dev
@@ -90,6 +102,11 @@ create_release_version:
 
 build_frontend:
   extends: .build_jar_base
+  variables:
+    MODULE: spring-petclinic-api-gateway
+
+upload_frontend:
+  extends: .build_otp_image_base
   variables:
     MODULE: spring-petclinic-api-gateway
 
@@ -116,6 +133,11 @@ build_customers_service:
   variables:
     MODULE: spring-petclinic-customers-service
 
+upload_customers_service:
+  extends: .build_otp_image_base
+  variables:
+    MODULE: spring-petclinic-customers-service
+
 deploy_customers_service:
   extends: .deploy_chancellor_base
   variables:
@@ -139,6 +161,11 @@ build_vets_service:
   variables:
     MODULE: spring-petclinic-vets-service
 
+upload_vets_service:
+  extends: .build_otp_image_base
+  variables:
+    MODULE: spring-petclinic-vets-service
+
 deploy_vets_service:
   extends: .deploy_chancellor_base
   variables:
@@ -159,6 +186,11 @@ deploy_panda_vets_service:
 
 build_visits_service:
   extends: .build_jar_base
+  variables:
+    MODULE: spring-petclinic-visits-service
+
+upload_visits_service:
+  extends: .build_otp_image_base
   variables:
     MODULE: spring-petclinic-visits-service
 
