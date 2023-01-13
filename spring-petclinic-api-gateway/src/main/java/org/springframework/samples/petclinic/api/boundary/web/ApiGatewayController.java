@@ -49,7 +49,6 @@ class ApiGatewayController {
 
     @GetMapping(value = "owners/{ownerId}")
     public Optional<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
-        Span.current().setAttribute("sampling.priority", 10);
         logger.info("getOwnerDetails {}", ownerId);
         return customersService.getOwner(ownerId)
             .map(owner -> {

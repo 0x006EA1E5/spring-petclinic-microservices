@@ -9,11 +9,14 @@ import io.prometheus.client.exemplars.DefaultExemplarSampler;
 import io.prometheus.client.exemplars.ExemplarSampler;
 import io.prometheus.client.exemplars.tracer.common.SpanContextSupplier;
 import io.prometheus.client.exemplars.tracer.otel.OpenTelemetrySpanContextSupplier;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
+
+import java.io.IOException;
 
 @Configuration(proxyBeanMethods = false)
 class OtelConfiguration {
@@ -32,13 +35,11 @@ class OtelConfiguration {
         return new OpenTelemetrySpanContextSupplier();
     }
 
-    HandlerInterceptor spanHandlerInterceptor() {
-        return new HandlerInterceptor() {
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                Span.current().setAttribute("sampling.priority", 10);
-                return true;
-            }
+    @Bean
+    Filter setSamplingPriorityFilter() {
+        return (servletRequest, servletResponse, filterChain) -> {
+            Span.current().setAttribute("sampling.priority", 10);
+            filterChain.doFilter(servletRequest, servletResponse);
         };
     }
 }
