@@ -15,8 +15,11 @@
  */
 package org.springframework.samples.petclinic.customers.web;
 
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.model.Owner;
 import org.springframework.samples.petclinic.customers.model.OwnerRepository;
@@ -27,6 +30,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * @author Juergen Hoeller
@@ -44,7 +48,15 @@ import java.util.Optional;
 class OwnerResource {
 
     private final OwnerRepository ownerRepository;
-
+    private final Gauge numberOfOwners;
+    @Autowired
+    public OwnerResource(OwnerRepository ownerRepository, MeterRegistry prometheusMeterRegistry) {
+        this.ownerRepository = ownerRepository;
+        this.numberOfOwners = Gauge
+            .builder("owners", () -> findAll().size())
+            .description("Number of owners currently in the database")
+            .register(prometheusMeterRegistry);
+    }
     /**
      * Create Owner
      */
