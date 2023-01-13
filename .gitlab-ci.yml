@@ -44,7 +44,7 @@ create_release_version:
   script:
     - echo default create_release_version complete
 
-.build_to_nexus_base:
+.build_jar_base:
   extends: .base_tags
   image: hub.docker.nexus.ocado.tech/maven:3.8.7-eclipse-temurin-17-alpine
   stage: build
@@ -56,12 +56,9 @@ create_release_version:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
     - mvn $MAVEN_CLI_OPTS install -pl ${MODULE} -am -Drevision=$RELEASE_VERSION
-    - mvn install deploy:deploy -pl ${MODULE} -DskipTests -B -e $MAVEN_CLI_JOB_OPTS -Drevision=$RELEASE_VERSION | tee ./infra/${MODULE}_mvn_deploy_out.log
-    - 'sed -n "s/^.*\[INFO\] Uploaded to .*: \(https:\/\/.*${MODULE}.*.jar\) \(.*\)$/\1/p" < ./infra/${MODULE}_mvn_deploy_out.log > ./infra/${MODULE}_nexus_artifact.url'
-    - cat ./infra/${MODULE}_nexus_artifact.url
   artifacts:
-    name: nexus_artifact.url
-    paths: [./infra/*_nexus_artifact.url]
+    name: application-jar
+    paths: [./*/target/spring-petclinic-*.jar]
     expire_in: 12 months
   needs: [create_release_version]
 
@@ -71,9 +68,8 @@ create_release_version:
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
-    - export ARTIFACT_URL=$(cat ./infra/${MODULE}_nexus_artifact.url)
-    - echo $ARTIFACT_URL
-    - chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d ${DTAP} -b ${BUSINESS_ID} -a $APP_ID -A ${ALIAS}
+    - chancellor image build -m infra/chancellor-cli-templates/image-builder-metadata.json -a ./${MODULE}/target/${MODULE}-${RELEASE_VERSION}.jar
+    - chancellor service deploy --descriptor=./infra/chancellor-cli-templates/image-builder-deployment.json -d ${DTAP} -b ${BUSINESS_ID} -a $APP_ID -A ${ALIAS}
   variables:
     DTAP: dev
     BUSINESS_ID: atm
@@ -93,7 +89,7 @@ create_release_version:
   when: manual
 
 build_frontend:
-  extends: .build_to_nexus_base
+  extends: .build_jar_base
   variables:
     MODULE: spring-petclinic-api-gateway
 
@@ -116,7 +112,7 @@ deploy_panda_frontend:
     - create_release_version
 
 build_customers_service:
-  extends: .build_to_nexus_base
+  extends: .build_jar_base
   variables:
     MODULE: spring-petclinic-customers-service
 
@@ -139,7 +135,7 @@ deploy_panda_customers_service:
     - create_release_version
 
 build_vets_service:
-  extends: .build_to_nexus_base
+  extends: .build_jar_base
   variables:
     MODULE: spring-petclinic-vets-service
 
@@ -162,7 +158,7 @@ deploy_panda_vets_service:
     - create_release_version
 
 build_visits_service:
-  extends: .build_to_nexus_base
+  extends: .build_jar_base
   variables:
     MODULE: spring-petclinic-visits-service
 

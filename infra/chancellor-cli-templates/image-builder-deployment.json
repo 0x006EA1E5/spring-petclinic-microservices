@@ -1,0 +1,54 @@
+{
+  "type": "rolling",
+  "targetPlatform": "ECS",
+  "applicationData": {
+    "artifactUrl": "otpimagebuilder/${APP_ID}:${RELEASE_VERSION}",
+    "version": "${RELEASE_VERSION}"
+  },
+  "runtime": {
+    "type": "docker"
+  },
+  "profiles": [
+    {
+      "name": "jvmOptions",
+      "options": [
+        "-XX:MaxRAMPercentage=80",
+        "-Djarjar.aws.cloud.environment.enabled=true"
+      ]
+    },
+    {
+      "name": "environmentVariables",
+      "variables": {
+        "SPRING_APPLICATION_NAME": "${APP_ID}"
+      }
+    },
+    {
+      "name": "autoScaling",
+      "minSize": 1,
+      "maxSize": 1
+    },
+    {
+      "name": "instanceType/v2",
+      "memory": 2048,
+      "cpu": 256
+    },
+    {
+      "name": "jarJar"
+    },
+    {
+      "name": "tags",
+      "tags": {
+        "availability": "no_chaos"
+      }
+    },
+    {
+      "name": "serviceDiscovery",
+      "serviceRegistries": [
+        {
+          "port": 8080,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ]
+}
