@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
 class OtelConfiguration {
-    @Bean
-    PrometheusMeterRegistry prometheusMeterRegistry(PrometheusConfig prometheusConfig, CollectorRegistry collectorRegistry, Clock clock, ExemplarSampler exemplarSampler) {
-        return new PrometheusMeterRegistry(prometheusConfig, collectorRegistry, clock, exemplarSampler);
-    }
-
-    @Bean
-    ExemplarSampler exemplarSampler(SpanContextSupplier spanContextSupplier) {
-        return new DefaultExemplarSampler(spanContextSupplier);
-    }
+//    @Bean
+//    PrometheusMeterRegistry prometheusMeterRegistry(PrometheusConfig prometheusConfig, CollectorRegistry collectorRegistry, Clock clock, ExemplarSampler exemplarSampler) {
+//        return new PrometheusMeterRegistry(prometheusConfig, collectorRegistry, clock, exemplarSampler);
+//    }
+//
+//    @Bean
+//    ExemplarSampler exemplarSampler(SpanContextSupplier spanContextSupplier) {
+//        return new DefaultExemplarSampler(spanContextSupplier);
+//    }
 
     @Bean
     SpanContextSupplier spanContextSupplier() {
