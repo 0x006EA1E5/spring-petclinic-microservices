@@ -19,7 +19,9 @@
     {
       "name": "environmentVariables",
       "variables": {
-        "SPRING_APPLICATION_NAME": "${APP_ID}"
+        "SPRING_APPLICATION_NAME": "${APP_ID}",
+        "OTEL_SERVICE_NAME": "${APP_ID}",
+        "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT": "https://use1-opentelemetrycollector.atm-osp.com/v1/traces"
       }
     },
     {
