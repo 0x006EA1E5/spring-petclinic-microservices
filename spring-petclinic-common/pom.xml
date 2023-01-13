@@ -37,10 +37,6 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-otlp</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.ocadotechnology.jarjar</groupId>
             <artifactId>jarjar-security-base-web</artifactId>
         </dependency>
