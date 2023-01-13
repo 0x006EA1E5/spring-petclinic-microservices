@@ -23,7 +23,7 @@
         "OTEL_SERVICE_NAME": "${APP_ID}",
         "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT": "https://use1-opentelemetrycollector.atm-osp.com/v1/traces",
         "OTEL_EXPORTER_OTLP_TRACES_PROTOCOL": "http/protobuf",
-        "OTEL_RESOURCE_ATTRIBUTES": "appId=${APP_ID}"
+        "OTEL_RESOURCE_ATTRIBUTES": "appId=${APP_ID},sampling.priority=10"
       }
     },
     {
