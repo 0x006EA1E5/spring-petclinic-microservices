@@ -11,8 +11,6 @@ mvn_deploy_module:
 chancellor_deploy_module:
 	@chancellor service deploy --descriptor=./infra/chancellor-cli-templates/default-deployment.json -d $(DTAP) -b $(BUSINESS_ID) -a $$APP_ID -A $(ALIAS) -v RELEASE_VERSION=2.7.6-SNAPSHOT-$$(date +%s) -v ARTIFACT_URL=$$(cat ./infra/${MODULE}_nexus_artifact.url)
 
-
-
 .PHONY: mvn_and_chancellor
 mvn_and_chancellor:
 	@make mvn_deploy_module && make chancellor_deploy_module
