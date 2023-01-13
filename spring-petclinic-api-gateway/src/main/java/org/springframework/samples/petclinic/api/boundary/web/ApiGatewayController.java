@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
+import io.opentelemetry.api.trace.Span;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersService;
@@ -48,6 +49,7 @@ class ApiGatewayController {
 
     @GetMapping(value = "owners/{ownerId}")
     public Optional<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
+        Span.current().setAttribute("sampling.priority", 10);
         logger.info("getOwnerDetails {}", ownerId);
         return customersService.getOwner(ownerId)
             .map(owner -> {

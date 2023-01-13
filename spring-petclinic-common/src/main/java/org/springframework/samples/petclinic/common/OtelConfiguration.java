@@ -19,7 +19,7 @@ class OtelConfiguration {
 //    }
 //
 //    @Bean
-//    ExemplarSampler exemplarSampler(SpanContextSupplier spanContextSupplier) {
+//    DefaultExemplarSampler exemplarSampler(SpanContextSupplier spanContextSupplier) {
 //        return new DefaultExemplarSampler(spanContextSupplier);
 //    }
 
