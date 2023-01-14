@@ -12,6 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.Collections;
+
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.samples.petclinic.visits.model.Visit.visit;
@@ -40,6 +42,28 @@ class VisitResourceTest {
                         .id(1)
                         .petId(111)
                         .build(),
+                    visit()
+                        .id(2)
+                        .petId(222)
+                        .build(),
+                    visit()
+                        .id(3)
+                        .petId(222)
+                        .build()
+                )
+            );
+        given(visitRepository.findByPetId(111))
+            .willReturn(
+                Collections.singletonList(
+                    visit()
+                        .id(1)
+                        .petId(111)
+                        .build()
+                )
+            );
+        given(visitRepository.findByPetId(222))
+            .willReturn(
+                asList(
                     visit()
                         .id(2)
                         .petId(222)
