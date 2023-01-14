@@ -15,8 +15,13 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.api.trace.TracerProvider;
+import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersService;
@@ -42,10 +47,14 @@ class ApiGatewayController {
 
     private final CustomersService customersService;
     private final VisitsService visitsService;
+    private final Tracer tracer;
+
 
     public ApiGatewayController(CustomersService customersService, VisitsService visitsService) {
         this.customersService = customersService;
         this.visitsService = visitsService;
+        tracer = GlobalOpenTelemetry.getTracer("org.springframework.samples.petclinic");
+
     }
 
     @GetMapping(value = "owners/{ownerId}")
@@ -62,13 +71,16 @@ class ApiGatewayController {
     List<Visit> findByPetIdIn(Collection<Integer> petIds) {
         var visits = new ArrayList<Visit>();
         for (Integer petId : petIds) {
-            Span.current().addEvent("Getting visits for Pet", Attributes.builder().put("petId", petId).build());
+
+            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet").setAttribute("petId", petId).startSpan();
+
             visits.addAll(visitsService.visits(petId));
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+            gettingVisitsForPet.end();
         }
         return visits;
     }

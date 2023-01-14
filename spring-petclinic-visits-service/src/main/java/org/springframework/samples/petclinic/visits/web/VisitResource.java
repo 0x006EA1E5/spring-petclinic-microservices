@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
@@ -54,9 +56,11 @@ public class VisitResource {
     private static final Logger logger = LoggerFactory.getLogger(VisitResource.class);
 
     private final VisitRepository visitRepository;
+    private final Tracer tracer;
 
     VisitResource(VisitRepository visitRepository) {
         this.visitRepository = visitRepository;
+        tracer = GlobalOpenTelemetry.getTracer("org.springframework.samples.petclinic");
     }
 
     @PostMapping("owners/*/pets/{petId}/visits")
@@ -88,13 +92,14 @@ public class VisitResource {
     List<Visit> findByPetIdIn(Collection<Integer> petIds) {
         var visits = new ArrayList<Visit>();
         for (Integer petId : petIds) {
-            Span.current().addEvent("Getting visits for Pet", Attributes.builder().put("petId", petId).build());
+            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet from repo").setAttribute("petId", petId).startSpan();
             visits.addAll(visitRepository.findByPetId(petId));
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+            gettingVisitsForPet.end();
         }
         return visits;
     }
