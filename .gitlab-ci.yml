@@ -56,7 +56,7 @@ create_release_version:
   script:
     - echo release-version $(cat .release-version)
     - export RELEASE_VERSION=$(cat .release-version)
-    - mvn $MAVEN_CLI_OPTS install -pl ${MODULE} -am -Drevision=$RELEASE_VERSION
+    - mvn $MAVEN_CLI_OPTS compile install -pl ${MODULE} -am -Drevision=$RELEASE_VERSION
   artifacts:
     name: application-jar
     paths: [./*/target/spring-petclinic-*.jar]

@@ -143,10 +143,7 @@
             <artifactId>micrometer-tracing-bridge-otel</artifactId>
         </dependency>
         <!-- For Latency Visualization -->
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-otlp</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>jakarta.persistence</groupId>
