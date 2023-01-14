@@ -21,7 +21,7 @@
 
 
     <appender name="SENTRY" class="io.sentry.logback.SentryAppender">
-        <minimumEventLevel>WARN</minimumEventLevel>
+        <minimumEventLevel>ERROR</minimumEventLevel>
     </appender>
 
     <springProfile name="!local">

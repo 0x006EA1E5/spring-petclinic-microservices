@@ -51,12 +51,12 @@ class OwnerResource {
     private final OwnerRepository ownerRepository;
     private final Gauge numberOfOwners;
     @Autowired
-    public OwnerResource(OwnerRepository ownerRepository, MeterRegistry prometheusMeterRegistry) {
+    public OwnerResource(OwnerRepository ownerRepository, MeterRegistry meterRegistry) {
         this.ownerRepository = ownerRepository;
         this.numberOfOwners = Gauge
             .builder("owners", () -> findAll().size())
             .description("Number of owners currently in the database")
-            .register(prometheusMeterRegistry);
+            .register(meterRegistry);
     }
     /**
      * Create Owner
