@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 
 //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-class VisitResource {
+public class VisitResource {
 
     private static final Logger logger = LoggerFactory.getLogger(VisitResource.class);
 
@@ -78,6 +78,7 @@ class VisitResource {
     public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
         logger.info("visitsMultiGet {}", petIds);
         final List<Visit> byPetIdIn = findByPetIdIn(petIds);
+        logger.info("found {} visits", byPetIdIn.size());
         return new Visits(byPetIdIn);
     }
 
@@ -96,6 +97,6 @@ class VisitResource {
         return visits;
     }
 
-    record Visits(List<Visit> items) {
+    public record Visits(List<Visit> items) {
     }
 }

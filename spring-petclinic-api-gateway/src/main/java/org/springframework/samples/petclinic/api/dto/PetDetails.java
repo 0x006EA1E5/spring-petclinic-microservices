@@ -17,10 +17,11 @@ package org.springframework.samples.petclinic.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
+import org.springframework.samples.petclinic.visits.model.Visit;
 
 import java.util.List;
 
 /**
  * @author Maciej Szarlinski
  */
-public record PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<VisitDetails> visits) { }
+public record PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) { }

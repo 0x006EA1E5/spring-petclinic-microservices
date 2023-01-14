@@ -15,20 +15,21 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
+import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersService;
 import org.springframework.samples.petclinic.api.application.VisitsService;
 import org.springframework.samples.petclinic.api.dto.OwnerDetails;
-import org.springframework.samples.petclinic.api.dto.Visits;
+import org.springframework.samples.petclinic.visits.model.Visit;
+import org.springframework.samples.petclinic.visits.web.VisitResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -52,20 +53,34 @@ class ApiGatewayController {
         logger.info("getOwnerDetails {}", ownerId);
         return customersService.getOwner(ownerId)
             .map(owner -> {
-                    var visits = visitsService.getVisitsForPets(owner.getPetIds());
+
+                    var visits = new VisitResource.Visits(findByPetIdIn(owner.getPetIds()));
                     return addVisitsToOwner(owner).apply(visits != null ? visits: emptyVisitsForPets());
                 }
             );
     }
+    List<Visit> findByPetIdIn(Collection<Integer> petIds) {
+        var visits = new ArrayList<Visit>();
+        for (Integer petId : petIds) {
+            Span.current().addEvent("Getting visits for Pet", Attributes.builder().put("petId", petId).build());
+            visits.addAll(visitsService.visits(petId));
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        return visits;
+    }
 
-    private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
+    private Function<VisitResource.Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
             owner.pets()
                 .forEach(pet -> {
                     if (pet.visits() != null) {
                         pet.visits()
                             .addAll(visits.items().stream()
-                                .filter(v -> v.petId() == pet.id())
+                                .filter(v -> v.getPetId() == pet.id())
                                 .toList());
                     }
                 });
@@ -73,7 +88,7 @@ class ApiGatewayController {
         };
     }
 
-    private Visits emptyVisitsForPets() {
-        return new Visits(Collections.emptyList());
+    private VisitResource.Visits emptyVisitsForPets() {
+        return new VisitResource.Visits(Collections.emptyList());
     }
 }
