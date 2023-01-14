@@ -124,13 +124,6 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
-        <!-- OpenTelemetry version -->
-        <!-- For Tracing -->
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-otel</artifactId>
-        </dependency>
-        <!-- For Latency Visualization -->
 
         <dependency>
             <groupId>jakarta.persistence</groupId>
