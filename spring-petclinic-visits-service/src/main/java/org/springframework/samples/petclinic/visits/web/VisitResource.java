@@ -15,17 +15,18 @@
  */
 package org.springframework.samples.petclinic.visits.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.visits.model.Visit;
 import org.springframework.samples.petclinic.visits.model.VisitRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +44,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Ramazan Sakin
  */
 @RestController
-@RequiredArgsConstructor
-@Slf4j
+
 //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class VisitResource {
 
     private final VisitRepository visitRepository;
+
+    VisitResource(VisitRepository visitRepository) {
+        this.visitRepository = visitRepository;
+    }
 
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
@@ -69,12 +73,25 @@ class VisitResource {
     @GetMapping("pets/visits")
     public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
         log.info("visitsMultiGet {}", petIds);
-        final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);
+        final List<Visit> byPetIdIn = findByPetIdIn(petIds);
         return new Visits(byPetIdIn);
     }
 
-    @Value
-    static class Visits {
-        List<Visit> items;
+
+    List<Visit> findByPetIdIn(Collection<Integer> petIds) {
+        var visits = new ArrayList<Visit>();
+        for (Integer petId : petIds) {
+            Span.current().addEvent("Getting visits for Pet", Attributes.builder().put("petId", petId).build());
+            visits.addAll(visitRepository.findByPetId(petId));
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        return visits;
+    }
+
+    record Visits(List<Visit> items) {
     }
 }
