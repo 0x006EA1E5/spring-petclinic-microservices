@@ -61,27 +61,27 @@ class ApiGatewayController {
         return customersService.getOwner(ownerId)
             .map(owner -> {
 
-                    var visits = new Visits(findByPetIdIn(owner.getPetIds()));
+                    var visits = visitsService.getVisitsForPets(owner.getPetIds());
                     return addVisitsToOwner(owner).apply(visits);
                 }
             );
     }
-    List<Visit> findByPetIdIn(Collection<Integer> petIds) {
-        var visits = new ArrayList<Visit>();
-        for (Integer petId : petIds) {
-
-            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet").setAttribute("petId", petId).startSpan();
-
-            visits.addAll(visitsService.visits(petId));
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            gettingVisitsForPet.end();
-        }
-        return visits;
-    }
+//    List<Visit> findByPetIdIn(Collection<Integer> petIds) {
+//        var visits = new ArrayList<Visit>();
+//        for (Integer petId : petIds) {
+//
+//            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet").setAttribute("petId", petId).startSpan();
+//
+//            visits.addAll(visitsService.visits(petId));
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
+//            gettingVisitsForPet.end();
+//        }
+//        return visits;
+//    }
 
     private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
