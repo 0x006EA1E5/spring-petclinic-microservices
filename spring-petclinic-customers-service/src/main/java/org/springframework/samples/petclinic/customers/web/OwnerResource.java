@@ -65,7 +65,7 @@ class OwnerResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody Owner owner) throws TooManyOwnersException {
         var savedOwner = ownerRepository.save(owner);
-        if (findAll().size() == 12) {
+        if (findAll().size() % 5 == 0) {
             throw new TooManyOwnersException("Too many owners registered in the platform");
         }
         return savedOwner;
