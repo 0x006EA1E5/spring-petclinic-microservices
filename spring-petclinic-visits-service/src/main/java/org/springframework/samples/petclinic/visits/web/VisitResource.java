@@ -24,6 +24,8 @@ import io.opentelemetry.api.trace.Span;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.visits.model.Visit;
 import org.springframework.samples.petclinic.visits.model.VisitRepository;
@@ -48,6 +50,8 @@ import org.springframework.web.bind.annotation.RestController;
 //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class VisitResource {
 
+    private static final Logger logger = LoggerFactory.getLogger(VisitResource.class);
+
     private final VisitRepository visitRepository;
 
     VisitResource(VisitRepository visitRepository) {
@@ -61,7 +65,7 @@ class VisitResource {
         @PathVariable("petId") @Min(1) int petId) {
 
         visit.setPetId(petId);
-        log.info("Saving visit {}", visit);
+        logger.info("Saving visit {}", visit);
         return visitRepository.save(visit);
     }
 
@@ -72,7 +76,7 @@ class VisitResource {
 
     @GetMapping("pets/visits")
     public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
-        log.info("visitsMultiGet {}", petIds);
+        logger.info("visitsMultiGet {}", petIds);
         final List<Visit> byPetIdIn = findByPetIdIn(petIds);
         return new Visits(byPetIdIn);
     }
