@@ -181,7 +181,7 @@
         <dependency>
             <groupId>org.springframework.samples.petclinic.visits</groupId>
             <artifactId>spring-petclinic-visits-service</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
