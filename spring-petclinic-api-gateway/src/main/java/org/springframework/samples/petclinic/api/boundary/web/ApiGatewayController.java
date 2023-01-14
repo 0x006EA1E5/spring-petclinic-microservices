@@ -23,7 +23,7 @@ import org.springframework.samples.petclinic.api.application.CustomersService;
 import org.springframework.samples.petclinic.api.application.VisitsService;
 import org.springframework.samples.petclinic.api.dto.OwnerDetails;
 import org.springframework.samples.petclinic.visits.model.Visit;
-import org.springframework.samples.petclinic.visits.web.VisitResource;
+import org.springframework.samples.petclinic.visits.model.Visits;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,8 +54,8 @@ class ApiGatewayController {
         return customersService.getOwner(ownerId)
             .map(owner -> {
 
-                    var visits = new VisitResource.Visits(findByPetIdIn(owner.getPetIds()));
-                    return addVisitsToOwner(owner).apply(visits != null ? visits: emptyVisitsForPets());
+                    var visits = new Visits(findByPetIdIn(owner.getPetIds()));
+                    return addVisitsToOwner(owner).apply(visits);
                 }
             );
     }
@@ -73,7 +73,7 @@ class ApiGatewayController {
         return visits;
     }
 
-    private Function<VisitResource.Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
+    private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
             owner.pets()
                 .forEach(pet -> {
@@ -86,9 +86,5 @@ class ApiGatewayController {
                 });
             return owner;
         };
-    }
-
-    private VisitResource.Visits emptyVisitsForPets() {
-        return new VisitResource.Visits(Collections.emptyList());
     }
 }
