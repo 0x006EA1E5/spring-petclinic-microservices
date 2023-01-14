@@ -92,14 +92,17 @@ public class VisitResource {
     List<Visit> findByPetIdIn(Collection<Integer> petIds) {
         var visits = new ArrayList<Visit>();
         for (Integer petId : petIds) {
-            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet from repo").setAttribute("petId", petId).startSpan();
-            visits.addAll(visitRepository.findByPetId(petId));
-            try {
+            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet from repo").setAttribute("petId", petId)
+                .startSpan();
+            try (var scope = gettingVisitsForPet.makeCurrent() ){
+                visits.addAll(visitRepository.findByPetId(petId));
                 Thread.sleep(200);
+                
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
+            } finally {
+                gettingVisitsForPet.end();
             }
-            gettingVisitsForPet.end();
         }
         return visits;
     }
