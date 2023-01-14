@@ -2,8 +2,8 @@ package org.springframework.samples.petclinic.api.application;
 
 import jakarta.validation.constraints.Min;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.samples.petclinic.visits.model.Visit;
-import org.springframework.samples.petclinic.visits.model.Visits;
+import org.springframework.samples.petclinic.api.dto.Visit;
+import org.springframework.samples.petclinic.api.dto.Visits;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;

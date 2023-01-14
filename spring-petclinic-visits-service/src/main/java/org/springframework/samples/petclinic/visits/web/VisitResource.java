@@ -67,6 +67,7 @@ public class VisitResource {
 
         visit.setPetId(petId);
         logger.info("Saving visit {}", visit);
+        logger.info("Saving visit {}", visit);
         return visitRepository.save(visit);
     }
 

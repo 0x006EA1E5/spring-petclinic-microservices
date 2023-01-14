@@ -17,7 +17,7 @@ package org.springframework.samples.petclinic.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
-import org.springframework.samples.petclinic.visits.model.Visit;
+
 
 import java.util.List;
 

@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Visits {
-    private List<Visit> items;
+
+public record Visits(List<Visit> items) {
+//    private List<Visit> items;
 }
