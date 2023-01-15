@@ -19,9 +19,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Maciej Szarlinski
  */
-public record PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) { }
+public record PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) {
+    @Override
+    public List<Visit> visits() {
+        return visits != null ? visits : Collections.emptyList();
+    }
+}

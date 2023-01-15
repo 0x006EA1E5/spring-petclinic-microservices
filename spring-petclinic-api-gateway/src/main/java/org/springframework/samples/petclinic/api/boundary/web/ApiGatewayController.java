@@ -57,12 +57,12 @@ class ApiGatewayController {
 
     @GetMapping(value = "owners/{ownerId}")
     public Optional<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
-        logger.info("getOwnerDetails {}", ownerId);
+        logger.info("[getOwnerDetails] ownerId: {}", ownerId);
         return customersService.getOwner(ownerId)
             .map(owner -> {
-
-                    var visits = visitsService.getVisitsForPets(owner.getPetIds());
-                    return addVisitsToOwner(owner).apply(visits);
+                var visits = visitsService.getVisitsForPets(owner.getPetIds());
+                logger.debug("[getOwnerDetails] found {} visits", visits.items().size());
+                return addVisitsToOwner(owner).apply(visits);
                 }
             );
     }
@@ -85,8 +85,10 @@ class ApiGatewayController {
 
     private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
+            logger.debug("[addVisitsToOwner] Adding {} visits to owner {}", visits.items().size(), owner.id());
             owner.pets()
                 .forEach(pet -> {
+                    logger.debug("[addVisitsToOwner] adding visits to pet {}", pet.id());
                     if (pet.visits() != null) {
                         pet.visits()
                             .addAll(visits.items().stream()

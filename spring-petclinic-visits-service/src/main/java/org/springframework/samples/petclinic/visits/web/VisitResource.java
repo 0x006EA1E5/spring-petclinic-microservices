@@ -68,42 +68,51 @@ public class VisitResource {
     public Visit create(
         @Valid @RequestBody Visit visit,
         @PathVariable("petId") @Min(1) int petId) {
-
         visit.setPetId(petId);
-        logger.info("Saving visit {}", visit);
         logger.info("Saving visit {}", visit);
         return visitRepository.save(visit);
     }
 
     @GetMapping("owners/*/pets/{petId}/visits")
     public List<Visit> visits(@PathVariable("petId") @Min(1) int petId) {
-        return visitRepository.findByPetId(petId);
+        logger.debug("[visits] getting visits for pet {}", petId);
+        var visits = visitRepository.findByPetId(petId);
+        logger.debug("[visitsMultiGet] found {} visits", visits.size());
+        return visits;
     }
 
     @GetMapping("pets/visits")
     public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
-        logger.info("visitsMultiGet {}", petIds);
+        logger.info("[visitsMultiGet] {}", petIds);
         final List<Visit> byPetIdIn = findByPetIdIn(petIds);
-        logger.info("found {} visits", byPetIdIn.size());
+        logger.info("[visitsMultiGet] found {} visits", byPetIdIn.size());
         return new Visits(byPetIdIn);
     }
 
 
     List<Visit> findByPetIdIn(Collection<Integer> petIds) {
+        logger.debug("[findByPetIdIn] finding visits for pets {}", petIds);
         var visits = new ArrayList<Visit>();
         for (Integer petId : petIds) {
-            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet from repo").setAttribute("petId", petId)
+            var message = "Getting visits for Pet %d from repository...".formatted(petId);
+            logger.debug("[findByPetIdIn] {}", message);
+            var gettingVisitsForPet = tracer
+                .spanBuilder(message)
+                .setAttribute("petId", petId)
                 .startSpan();
             try (var scope = gettingVisitsForPet.makeCurrent() ){
-                visits.addAll(visitRepository.findByPetId(petId));
-                Thread.sleep(200);
-                
+                for (Visit visit : visitRepository.findByPetId(petId)) {
+                    logger.debug("[findByPetIdIn] adding visit {} to pet {}", visit.getId(), petId);
+                    visits.add(visit);
+                    Thread.sleep(100);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } finally {
                 gettingVisitsForPet.end();
             }
         }
+        logger.debug("[findByPetIdIn] found {} visits", visits.size());
         return visits;
     }
 }
