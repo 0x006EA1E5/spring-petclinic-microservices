@@ -59,7 +59,9 @@ class ApiGatewayController {
             .map(owner -> {
                 var visits = visitsService.getVisitsForPets(owner.getPetIds());
                 logger.debug("[getOwnerDetails] found {} visits", visits.items().size());
-                return addVisitsToOwner(owner).apply(visits);
+                var ownerDetails = addVisitsToOwner(owner).apply(visits);
+                logger.debug("[getOwnerDetails] returning ownerDetails {}", ownerDetails );
+                return ownerDetails;
                 }
             );
     }

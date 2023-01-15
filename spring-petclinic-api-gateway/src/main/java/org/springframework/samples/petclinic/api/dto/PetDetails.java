@@ -24,9 +24,11 @@ import java.util.List;
 /**
  * @author Maciej Szarlinski
  */
-public record PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) {
-    @Override
-    public List<Visit> visits() {
-        return visits != null ? visits : new ArrayList<>();
+public record PetDetails(int id, String name, PetType type, List<Visit> visits) {
+    public PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.visits = visits != null ? visits : new ArrayList<>();
     }
 }

@@ -24,6 +24,7 @@ import java.util.List;
  */
 public record OwnerDetails(int id, String firstName, String lastName, String address, String city, String telephone, List<PetDetails> pets) {
 
+
     @JsonIgnore
     public List<Integer> getPetIds() {
         return pets.stream()
