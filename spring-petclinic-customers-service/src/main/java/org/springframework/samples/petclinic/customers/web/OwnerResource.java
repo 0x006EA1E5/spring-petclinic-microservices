@@ -64,11 +64,8 @@ class OwnerResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody Owner owner) throws TooManyOwnersException {
-        var savedOwner = ownerRepository.save(owner);
-        if (findAll().size() >= 25) {
-            throw new TooManyOwnersException("Too many owners registered in the platform");
-        }
-        return savedOwner;
+        log.debug("[createOwner] creating {}", owner);
+        return ownerRepository.save(owner);
     }
 
     /**
@@ -78,6 +75,12 @@ class OwnerResource {
     public Optional<Owner> findOwner(@PathVariable("ownerId") @Min(1) int ownerId) {
         log.info("findOwner {}", ownerId);
         return ownerRepository.findById(ownerId);
+    }
+
+    @DeleteMapping(value = "/{ownerId}")
+    public void deleteOwner(@PathVariable("ownerId") @Min(1) int ownerId) {
+        log.info("findOwner {}", ownerId);
+        ownerRepository.deleteById(ownerId);
     }
 
     /**

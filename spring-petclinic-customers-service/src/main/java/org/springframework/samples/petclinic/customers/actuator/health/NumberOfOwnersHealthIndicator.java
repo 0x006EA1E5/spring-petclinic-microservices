@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.samples.petclinic.customers.model.OwnerRepository;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(prefix = "petclinic.feature-flags.health", name = "too-many-events", matchIfMissing = false)
 public class NumberOfOwnersHealthIndicator implements HealthIndicator, HealthDetailsIndicator {
     private final OwnerRepository ownerRepository;
 
