@@ -12,7 +12,7 @@ import org.springframework.samples.petclinic.customers.model.OwnerRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(prefix = "petclinic.feature-flags.health", name = "too-many-events", matchIfMissing = false)
+@ConditionalOnProperty(prefix = "petclinic.feature-flags.health", name = "too-many-owner", matchIfMissing = false)
 public class NumberOfOwnersHealthIndicator implements HealthIndicator, HealthDetailsIndicator {
     private final OwnerRepository ownerRepository;
 
