@@ -101,14 +101,14 @@ public class VisitResource {
                 .setAttribute("petId", petId)
                 .startSpan();
             try (var scope = gettingVisitsForPet.makeCurrent() ){
+                gettingVisitsForPet.addEvent(
+                    "Pharos Strong!",
+                    Attributes.builder()
+                        .put("Easter Egg", "Congratulations, you found it!")
+                        .build());
                 for (Visit visit : visitRepository.findByPetId(petId)) {
                     logger.debug("[findByPetIdIn] adding visit {} to pet {}", visit.getId(), petId);
                     visits.add(visit);
-                    gettingVisitsForPet.addEvent(
-                        "Pharos Strong!",
-                        Attributes.builder()
-                            .put("Sleeping to simulate visitRepository latency", 100)
-                            .build());
                     Thread.sleep(100);
                 }
             } catch (InterruptedException e) {
