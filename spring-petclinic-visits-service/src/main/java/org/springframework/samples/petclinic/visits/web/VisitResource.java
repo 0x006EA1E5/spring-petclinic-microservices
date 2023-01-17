@@ -104,6 +104,11 @@ public class VisitResource {
                 for (Visit visit : visitRepository.findByPetId(petId)) {
                     logger.debug("[findByPetIdIn] adding visit {} to pet {}", visit.getId(), petId);
                     visits.add(visit);
+                    gettingVisitsForPet.addEvent(
+                        "Pharos Strong!",
+                        Attributes.builder()
+                            .put("Sleeping to simulate visitRepository latency", 100)
+                            .build());
                     Thread.sleep(100);
                 }
             } catch (InterruptedException e) {
