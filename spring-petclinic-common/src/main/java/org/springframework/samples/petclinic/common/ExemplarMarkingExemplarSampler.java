@@ -35,6 +35,6 @@ class ExemplarMarkingExemplarSampler implements ExemplarSampler {
     private void markSpanAsExemplar() {
         var current = Span.current();
         current.setAttribute("sampling.priority", 100);
-        current.setAttribute("exemplar", true);
+        current.setAttribute("sampling.exemplar", true);
     }
 }
