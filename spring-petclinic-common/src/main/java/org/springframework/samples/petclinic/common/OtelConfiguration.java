@@ -1,22 +1,11 @@
 package org.springframework.samples.petclinic.common;
 
-import io.micrometer.core.instrument.Clock;
-import io.micrometer.prometheus.PrometheusConfig;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
-import io.opentelemetry.api.trace.Span;
-import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exemplars.DefaultExemplarSampler;
 import io.prometheus.client.exemplars.ExemplarSampler;
 import io.prometheus.client.exemplars.tracer.common.SpanContextSupplier;
-import io.prometheus.client.exemplars.tracer.otel.OpenTelemetrySpanContextSupplier;
-import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import io.prometheus.client.exemplars.tracer.otel_agent.OpenTelemetryAgentSpanContextSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
-
-import java.io.IOException;
 
 @Configuration(proxyBeanMethods = false)
 class OtelConfiguration {
@@ -32,14 +21,11 @@ class OtelConfiguration {
 
     @Bean
     SpanContextSupplier spanContextSupplier() {
-        return new OpenTelemetrySpanContextSupplier();
+        return new OpenTelemetryAgentSpanContextSupplier();
     }
 
     @Bean
-    Filter setSamplingPriorityFilter() {
-        return (servletRequest, servletResponse, filterChain) -> {
-            Span.current().setAttribute("sampling.priority", 100);
-            filterChain.doFilter(servletRequest, servletResponse);
-        };
+    ExemplarSampler exemplarMarkingExemplarSampler(SpanContextSupplier spanContextSupplier) {
+        return new ExemplarMarkingExemplarSampler(new DefaultExemplarSampler(spanContextSupplier));
     }
 }
