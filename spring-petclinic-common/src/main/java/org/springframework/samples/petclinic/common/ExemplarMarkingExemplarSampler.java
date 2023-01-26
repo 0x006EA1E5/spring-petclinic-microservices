@@ -34,5 +34,6 @@ class ExemplarMarkingExemplarSampler implements ExemplarSampler {
 
     private void markSpanAsExemplar() {
         Span.current().setAttribute("sampling.exemplar", "true");
+        Span.current().setAttribute("exemplar", "true");
     }
 }
