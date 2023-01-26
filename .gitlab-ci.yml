@@ -63,8 +63,9 @@ create_release_version:
     expire_in: 12 months
   needs: [create_release_version]
 
+
 .build_otp_image_base:
-  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.2-alpine
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.11.2-alpine
   stage: upload
   script:
     - echo release-version $(cat .release-version)
