@@ -29,10 +29,10 @@ class OtelConfiguration {
 
     @Bean
     SpanContextSupplier spanContextSupplier() {
-        if (OpenTelemetryAgentSpanContextSupplier.isAvailable()) {
-            logger.debug("OpenTelemetryAgentSpanContextSupplier is available, using it.");
-            return new OpenTelemetryAgentSpanContextSupplier();
-        }
+//        if (OpenTelemetryAgentSpanContextSupplier.isAvailable()) {
+//            logger.debug("OpenTelemetryAgentSpanContextSupplier is available, using it.");
+//            return new OpenTelemetryAgentSpanContextSupplier();
+//        }
         return new OpenTelemetrySpanContextSupplier();
     }
 
