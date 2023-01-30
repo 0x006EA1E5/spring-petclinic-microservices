@@ -1,0 +1,14 @@
+{
+  "appId": "${APP_ID}",
+  "version": "${RELEASE_VERSION}",
+  "runtime": {
+    "type": "java",
+    "version": "17",
+    "agents": [
+      {
+        "name": "opentelemetry",
+        "version": "1.22.0"
+      }
+    ]
+  }
+}

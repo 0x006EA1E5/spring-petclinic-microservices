@@ -27,4 +27,5 @@ CREATE TABLE pets (
 );
 ALTER TABLE pets ADD CONSTRAINT fk_pets_owners FOREIGN KEY (owner_id) REFERENCES owners (id);
 ALTER TABLE pets ADD CONSTRAINT fk_pets_types FOREIGN KEY (type_id) REFERENCES types (id);
+ALTER TABLE owners ADD CONSTRAINT unique_full_name UNIQUE (first_name, last_name);
 CREATE INDEX pets_name ON pets (name);

@@ -1,13 +1,67 @@
+server:
+#  port: 8081
+  # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
+  shutdown: graceful
+
 spring:
   application:
-    name: customers-service
-  config:
-    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+    name: petcliniccustomersservice
+  sql:
+    init:
+      schema-locations: classpath*:db/hsqldb/schema.sql
+      data-locations: classpath*:db/hsqldb/data.sql
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
 
+# Metrics
+management:
+  endpoints.web.exposure.include: "*"
+  metrics:
+    distribution:
+      percentiles-histogram:
+        'http.server.requests': true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
 
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-    import: configserver:http://config-server:8888
+eureka:
+  instance:
+    # enable to register multiple app instances with a random server port
+    instance-id: ${spring.application.name}:${random.uuid}
+
+jarjar:
+  info:
+    appId: ${spring.application.name}
+    version: '@project.version@'
+  requestid:
+    create-if-missing:
+      urls: /**
+  security:
+    web:
+      explicit-access-required:
+        enabled: false
+      chain:
+        auth:
+          csrf:
+            enabled: false
+      headers:
+        content-security-policy:
+          required: false
+        x-content-type-options:
+          value: nosniff
+# Logging
+# traceId and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG
+    com.ocadotechnology.jarjar.edgerouter: INFO
+    io.opentelemetry.exporter.otlp: DEBUG

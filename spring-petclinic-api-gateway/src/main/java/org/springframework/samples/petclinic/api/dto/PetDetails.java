@@ -15,7 +15,8 @@
  */
 package org.springframework.samples.petclinic.api.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +24,11 @@ import java.util.List;
 /**
  * @author Maciej Szarlinski
  */
-@Data
-public class PetDetails {
-
-    private int id;
-
-    private String name;
-
-    private String birthDate;
-
-    private PetType type;
-
-    private final List<VisitDetails> visits = new ArrayList<>();
-
+public record PetDetails(int id, String name, PetType type, List<Visit> visits) {
+    public PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.visits = visits != null ? visits : new ArrayList<>();
+    }
 }

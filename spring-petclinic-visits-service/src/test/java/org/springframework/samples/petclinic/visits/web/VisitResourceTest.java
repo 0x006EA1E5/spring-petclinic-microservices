@@ -5,15 +5,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.samples.petclinic.visits.model.Visit;
 import org.springframework.samples.petclinic.visits.model.VisitRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.Collections;
+
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.samples.petclinic.visits.model.Visit.visit;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,22 +33,27 @@ class VisitResourceTest {
     VisitRepository visitRepository;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldFetchVisits() throws Exception {
         given(visitRepository.findByPetIdIn(asList(111, 222)))
             .willReturn(
                 asList(
-                    visit()
-                        .id(1)
-                        .petId(111)
-                        .build(),
-                    visit()
-                        .id(2)
-                        .petId(222)
-                        .build(),
-                    visit()
-                        .id(3)
-                        .petId(222)
-                        .build()
+                    new Visit(1, null, null, 111),
+                    new Visit(2, null, null, 222),
+                    new Visit(3, null, null, 222)
+                )
+            );
+        given(visitRepository.findByPetId(111))
+            .willReturn(
+                Collections.singletonList(
+                    new Visit(1, null, null, 111)
+                )
+            );
+        given(visitRepository.findByPetId(222))
+            .willReturn(
+                asList(
+                    new Visit(2, null, null, 222),
+                    new Visit(3, null, null, 222)
                 )
             );
 

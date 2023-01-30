@@ -1,6 +1,7 @@
 # Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
+.flattened-pom.xml
 
 # Jenv
 .java-version
@@ -19,3 +20,5 @@ target/
 
 # Branch switching
 generated/
+
+docker/data/

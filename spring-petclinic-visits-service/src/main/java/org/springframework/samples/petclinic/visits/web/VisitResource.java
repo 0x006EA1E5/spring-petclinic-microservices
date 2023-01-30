@@ -15,17 +15,23 @@
  */
 package org.springframework.samples.petclinic.visits.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 
-import io.micrometer.core.annotation.Timed;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.extern.slf4j.Slf4j;
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.visits.model.Visit;
 import org.springframework.samples.petclinic.visits.model.VisitRepository;
+import org.springframework.samples.petclinic.visits.model.Visits;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,37 +49,75 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Ramazan Sakin
  */
 @RestController
-@RequiredArgsConstructor
-@Slf4j
-@Timed("petclinic.visit")
-class VisitResource {
+
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+public class VisitResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(VisitResource.class);
 
     private final VisitRepository visitRepository;
+    private final Tracer tracer;
+
+    VisitResource(VisitRepository visitRepository) {
+        this.visitRepository = visitRepository;
+        tracer = GlobalOpenTelemetry.getTracer("org.springframework.samples.petclinic");
+    }
 
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
     public Visit create(
         @Valid @RequestBody Visit visit,
         @PathVariable("petId") @Min(1) int petId) {
-
         visit.setPetId(petId);
-        log.info("Saving visit {}", visit);
+        logger.info("Saving visit {}", visit);
         return visitRepository.save(visit);
     }
 
     @GetMapping("owners/*/pets/{petId}/visits")
     public List<Visit> visits(@PathVariable("petId") @Min(1) int petId) {
-        return visitRepository.findByPetId(petId);
+        logger.debug("[visits] getting visits for pet {}", petId);
+        var visits = visitRepository.findByPetId(petId);
+        logger.debug("[visitsMultiGet] found {} visits", visits.size());
+        return visits;
     }
 
     @GetMapping("pets/visits")
     public Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
-        final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);
+        logger.info("[visitsMultiGet] {}", petIds);
+        final List<Visit> byPetIdIn = findByPetIdIn(petIds);
+        logger.info("[visitsMultiGet] found {} visits", byPetIdIn.size());
         return new Visits(byPetIdIn);
     }
 
-    @Value
-    static class Visits {
-        List<Visit> items;
+
+    List<Visit> findByPetIdIn(Collection<Integer> petIds) {
+        logger.debug("[findByPetIdIn] finding visits for pets {}", petIds);
+        var visits = new ArrayList<Visit>();
+        for (Integer petId : petIds) {
+            var message = "Getting visits for Pet %d from repository...".formatted(petId);
+            logger.debug("[findByPetIdIn] {}", message);
+            var gettingVisitsForPet = tracer
+                .spanBuilder(message)
+                .setAttribute("petId", petId)
+                .startSpan();
+            try (var scope = gettingVisitsForPet.makeCurrent() ){
+                gettingVisitsForPet.addEvent(
+                    "Pharos Strong!",
+                    Attributes.builder()
+                        .put("Easter Egg", "Congratulations, you found it!")
+                        .build());
+                for (Visit visit : visitRepository.findByPetId(petId)) {
+                    logger.debug("[findByPetIdIn] adding visit {} to pet {}", visit.getId(), petId);
+                    visits.add(visit);
+                    Thread.sleep(100);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                gettingVisitsForPet.end();
+            }
+        }
+        logger.debug("[findByPetIdIn] found {} visits", visits.size());
+        return visits;
     }
 }

@@ -16,20 +16,10 @@
 package org.springframework.samples.petclinic.visits.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -41,11 +31,17 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "visits")
-@Builder(builderMethodName = "visit")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Visit {
+
+    public Visit() {
+    }
+
+    public Visit(Integer id, Date date, String description, int petId) {
+        this.id = id;
+        this.date = date;
+        this.description = description;
+        this.petId = petId;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,4 +60,36 @@ public class Visit {
     @Column(name = "pet_id")
     private int petId;
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
 }

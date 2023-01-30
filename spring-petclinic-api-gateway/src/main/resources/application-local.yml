@@ -1,0 +1,18 @@
+
+jarjar:
+
+  edge.router:
+    routes:
+      petclinicvisitsservice:
+        path: /api/visit/**
+      petclinicvetsservice:
+        path: /api/vet/**
+      petcliniccustomersservice:
+        path: /api/customer/**
+  service:
+    clients:
+      petclinicvisitsservice.url: http://localhost:8083
+      petcliniccustomersservice.url: http://localhost:8082
+logging:
+  level:
+    com.ocado.pandasso.lib.events.parrot.ParrotSSOEventConsumer: ERROR

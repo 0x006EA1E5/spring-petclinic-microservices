@@ -15,18 +15,23 @@
  */
 package org.springframework.samples.petclinic.customers.web;
 
-import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.samples.petclinic.customers.exceptions.TooManyOwnersException;
 import org.springframework.samples.petclinic.customers.model.Owner;
 import org.springframework.samples.petclinic.customers.model.OwnerRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * @author Juergen Hoeller
@@ -37,19 +42,29 @@ import java.util.Optional;
  */
 @RequestMapping("/owners")
 @RestController
-@Timed("petclinic.owner")
+//@Timed("petclinic.owner")
 @RequiredArgsConstructor
 @Slf4j
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class OwnerResource {
 
     private final OwnerRepository ownerRepository;
-
+    private final Gauge numberOfOwners;
+    @Autowired
+    public OwnerResource(OwnerRepository ownerRepository, MeterRegistry meterRegistry) {
+        this.ownerRepository = ownerRepository;
+        this.numberOfOwners = Gauge
+            .builder("owners", () -> findAll().size())
+            .description("Number of owners currently in the database")
+            .register(meterRegistry);
+    }
     /**
      * Create Owner
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Owner createOwner(@Valid @RequestBody Owner owner) {
+    public Owner createOwner(@Valid @RequestBody Owner owner) throws TooManyOwnersException {
+        log.debug("[createOwner] creating {}", owner);
         return ownerRepository.save(owner);
     }
 
@@ -58,7 +73,14 @@ class OwnerResource {
      */
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") @Min(1) int ownerId) {
+        log.info("findOwner {}", ownerId);
         return ownerRepository.findById(ownerId);
+    }
+
+    @DeleteMapping(value = "/{ownerId}")
+    public void deleteOwner(@PathVariable("ownerId") @Min(1) int ownerId) {
+        log.info("findOwner {}", ownerId);
+        ownerRepository.deleteById(ownerId);
     }
 
     /**
@@ -66,6 +88,7 @@ class OwnerResource {
      */
     @GetMapping
     public List<Owner> findAll() {
+        log.info("findAll");
         return ownerRepository.findAll();
     }
 

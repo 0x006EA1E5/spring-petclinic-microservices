@@ -1,0 +1,3 @@
+logging:
+  level:
+    com.ocado.pandasso.lib.events.parrot.ParrotSSOEventConsumer: ERROR

@@ -1,0 +1,37 @@
+{
+  "applicationId": "petclinic",
+  "formatVersion": 1,
+  "permissions": {
+    "READ": {
+      "description": "Read",
+      "grantedToRoles": ["ro_osp_monitoring"]
+    },
+    "ACTUATOR": {
+      "description": "Access to Actuator endpoints",
+      "grantedToRoles": ["ro_osp_monitoring"]
+    },
+    "SSO_INTERNAL_FRONTEND_APPLICATION": {
+      "description": "SSO Role from finance flux",
+      "grantedToRoles": ["rw_osp_monitoring"],
+      "grantedToApplications": ["lastmile_api_docs", "petclinic"]
+    },
+    "ADMIN": {
+      "description": "Administrator",
+      "grantedToRoles": ["rw_osp_monitoring"]
+    },
+    "SUPER_ADMIN": {
+      "description": "Super Administrator",
+      "grantedToRoles": [
+        "rw_flux",
+        "rw_pharos"
+      ]
+    }
+  },
+  "frontendApplications": [
+    "lastmile_api_docs",
+    "petclinic"
+  ],
+  "allowRedirectTo": [
+    "/verify.pandasso"
+  ]
+}

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: petclinic
+  cloud:
+    config:
+      override-system-properties: false
+      allow-override: false
+      override-none: true

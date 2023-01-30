@@ -14,5 +14,11 @@ eureka:
   client:
     enabled: false
 
-logging.level.org.springframework: INFO
+logging:
+  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG
+    com.ocadotechnology.jarjar.edgerouter: INFO
+    io.opentelemetry.exporter.otlp: DEBUG
 

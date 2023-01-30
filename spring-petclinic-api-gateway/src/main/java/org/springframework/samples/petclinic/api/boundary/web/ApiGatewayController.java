@@ -15,63 +15,87 @@
  */
 package org.springframework.samples.petclinic.api.boundary.web;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
-import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
-import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
-import org.springframework.samples.petclinic.api.application.VisitsServiceClient;
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.trace.Tracer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.samples.petclinic.api.application.CustomersService;
+import org.springframework.samples.petclinic.api.application.VisitsService;
 import org.springframework.samples.petclinic.api.dto.OwnerDetails;
+import org.springframework.samples.petclinic.api.dto.Visit;
 import org.springframework.samples.petclinic.api.dto.Visits;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
+import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Maciej Szarlinski
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/gateway")
-public class ApiGatewayController {
+class ApiGatewayController {
+    private final Logger logger = LoggerFactory.getLogger(ApiGatewayController.class);
 
-    private final CustomersServiceClient customersServiceClient;
+    private final CustomersService customersService;
+    private final VisitsService visitsService;
+    private final Tracer tracer;
 
-    private final VisitsServiceClient visitsServiceClient;
 
-    private final ReactiveCircuitBreakerFactory cbFactory;
-
-    @GetMapping(value = "owners/{ownerId}")
-    public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
-        return customersServiceClient.getOwner(ownerId)
-            .flatMap(owner ->
-                visitsServiceClient.getVisitsForPets(owner.getPetIds())
-                    .transform(it -> {
-                        ReactiveCircuitBreaker cb = cbFactory.create("getOwnerDetails");
-                        return cb.run(it, throwable -> emptyVisitsForPets());
-                    })
-                    .map(addVisitsToOwner(owner))
-            );
+    public ApiGatewayController(CustomersService customersService, VisitsService visitsService) {
+        this.customersService = customersService;
+        this.visitsService = visitsService;
+        tracer = GlobalOpenTelemetry.getTracer("org.springframework.samples.petclinic");
 
     }
+
+    @GetMapping(value = "owners/{ownerId}")
+    public Optional<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
+        logger.info("[getOwnerDetails] ownerId: {}", ownerId);
+        return customersService.getOwner(ownerId)
+            .map(owner -> {
+                var visits = visitsService.getVisitsForPets(owner.getPetIds());
+                logger.debug("[getOwnerDetails] found {} visits", visits.items().size());
+                var ownerDetails = addVisitsToOwner(owner).apply(visits);
+                logger.debug("[getOwnerDetails] returning ownerDetails {}", ownerDetails );
+                return ownerDetails;
+                }
+            );
+    }
+//    List<Visit> findByPetIdIn(Collection<Integer> petIds) {
+//        var visits = new ArrayList<Visit>();
+//        for (Integer petId : petIds) {
+//
+//            var gettingVisitsForPet = tracer.spanBuilder("Getting visits for Pet").setAttribute("petId", petId).startSpan();
+//
+//            visits.addAll(visitsService.visits(petId));
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
+//            gettingVisitsForPet.end();
+//        }
+//        return visits;
+//    }
 
     private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {
         return visits -> {
-            owner.getPets()
-                .forEach(pet -> pet.getVisits()
-                    .addAll(visits.getItems().stream()
-                        .filter(v -> v.getPetId() == pet.getId())
-                        .collect(Collectors.toList()))
-                );
+            logger.debug("[addVisitsToOwner] Adding {} visits to owner {}", visits.items().size(), owner.id());
+            owner.pets()
+                .forEach(pet -> {
+                    logger.debug("[addVisitsToOwner] adding visits to pet {}", pet.id());
+                    if (pet.visits() != null) {
+                        pet.visits()
+                            .addAll(visits.items().stream()
+                                .filter(v -> v.getPetId() == pet.id())
+                                .toList());
+                    }
+                });
             return owner;
         };
-    }
-
-    private Mono<Visits> emptyVisitsForPets() {
-        return Mono.just(new Visits());
     }
 }

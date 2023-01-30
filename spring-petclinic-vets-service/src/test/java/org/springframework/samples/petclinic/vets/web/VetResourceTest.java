@@ -23,11 +23,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static java.util.Arrays.asList;
+import java.util.List;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -48,12 +50,13 @@ class VetResourceTest {
     VetRepository vetRepository;
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldGetAListOfVets() throws Exception {
 
         Vet vet = new Vet();
         vet.setId(1);
 
-        given(vetRepository.findAll()).willReturn(asList(vet));
+        given(vetRepository.findAll()).willReturn(List.of(vet));
 
         mvc.perform(get("/vets").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())

@@ -1,35 +1,120 @@
+server:
+  shutdown: graceful
+#  port: 8080
+#  compression:
+#    enabled: true
+#    mime-types: application/json,text/css,application/javascript
+#    min-response-size: 2048
+
 spring:
   application:
-    name: api-gateway
-  config:
-    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
-  cloud:
-    gateway:
-      routes:
-        - id: vets-service
-          uri: lb://vets-service
-          predicates:
-            - Path=/api/vet/**
-          filters:
-            - StripPrefix=2
-        - id: visits-service
-          uri: lb://visits-service
-          predicates:
-            - Path=/api/visit/**
-          filters:
-            - StripPrefix=2
-        - id: customers-service
-          uri: lb://customers-service
-          predicates:
-            - Path=/api/customer/**
-          filters:
-            - StripPrefix=2
+    name: petclinic
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: vets-service
+#          uri: lb://vets-service
+#          predicates:
+#            - Path=/api/vet/**
+#          filters:
+#            - StripPrefix=2
+#        - id: visits-service
+#          uri: lb://visits-service
+#          predicates:
+#            - Path=/api/visit/**
+#          filters:
+#            - StripPrefix=2
+#        - id: customers-service
+#          uri: lb://customers-service
+#          predicates:
+#            - Path=/api/customer/**
+#          filters:
+#            - StripPrefix=2
+#  sql:
+#    init:
+#      schema-locations: classpath*:db/hsqldb/schema.sql
+#      data-locations: classpath*:db/hsqldb/data.sql
+#  jpa:
+#    open-in-view: false
+#    hibernate:
+#      ddl-auto: none
+  # Internationalization
+#  messages.basename: messages/messages
+jarjar:
+  info:
+    appId: ${spring.application.name}
+    version: '@project.version@'
+  requestid:
+    create-if-missing:
+      urls: /**
+  edge.router:
+    routes:
+      petclinicvisitsservice:
+        path: /api/visit/**
+      petclinicvetsservice:
+        path: /api/vet/**
+      petcliniccustomersservice:
+        path: /api/customer/**
+  security:
+    web:
+      explicit-access-required:
+        enabled: false
+      chain:
+        auth:
+          csrf:
+            enabled: false
+      headers:
+        content-security-policy:
+          required: false
+        x-content-type-options:
+          value: nosniff
 
+panda-client:
+  default-scope: petclinic
+# Metrics
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    distribution:
+      percentiles-histogram:
+        'http.server.requests': true
+  #      slo:
+  #        'http.server.requests':
+  #          - 10ms
+  #          - 200ms
+  #          - 500ms
+  #          - 1s
+  tracing:
+    sampling:
+      probability: 1.0
 
+#zuul:
+#  prefix: /api
+#  ignoredServices: '*'
+#  routes:
+#    vets-service: /vet/**
+#    visits-service: /visit/**
+#    customers-service: /customer/**
+#    api-gateway: /gateway/**
 
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-    import: configserver:http://config-server:8888
+# Logging
+# traceId and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern.level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework: INFO
+    org.springframework.samples.petclinic: DEBUG
+    com.ocadotechnology.jarjar.edgerouter: INFO
+    io.opentelemetry.exporter.otlp: DEBUG

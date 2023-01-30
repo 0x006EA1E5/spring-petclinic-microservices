@@ -1,99 +1,131 @@
-version: '2'
+version: "3.9"
 
 services:
-  config-server:
-    image: springcommunity/spring-petclinic-config-server
-    container_name: config-server
-    mem_limit: 512M
-    ports:
-     - 8888:8888
-
-  discovery-server:
-    image: springcommunity/spring-petclinic-discovery-server
-    container_name: discovery-server
-    mem_limit: 512M
-    depends_on:
-      - config-server
-    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-     - 8761:8761
-
-  customers-service:
-    image: springcommunity/spring-petclinic-customers-service
-    container_name: customers-service
-    mem_limit: 512M
-    depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-    - 8081:8081
-
-  visits-service:
-    image: springcommunity/spring-petclinic-visits-service
-    container_name: visits-service
-    mem_limit: 512M
-    depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-     - 8082:8082
-
-  vets-service:
-    image: springcommunity/spring-petclinic-vets-service
-    container_name: vets-service
-    mem_limit: 512M
-    depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-     - 8083:8083
-
-  api-gateway:
-    image: springcommunity/spring-petclinic-api-gateway
-    container_name: api-gateway
-    mem_limit: 512M
-    depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-     - 8080:8080
-
-  tracing-server:
-    image: openzipkin/zipkin
-    container_name: tracing-server
-    mem_limit: 512M
-    environment:
-    - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
-    ports:
-     - 9411:9411
-
-  admin-server:
-    image: springcommunity/spring-petclinic-admin-server
-    container_name: admin-server
-    mem_limit: 512M
-    depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-     - 9090:9090
-
   ## Grafana / Prometheus
-
-  grafana-server:
-    build: ./docker/grafana
-    container_name: grafana-server
-    mem_limit: 256M
+  grafana:
+    image: grafana/grafana:9.2.4
+    container_name: grafana
+    volumes:
+      - ${PWD}/docker/config/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ${PWD}/docker/config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ${PWD}/docker/config/grafana/dashboards:/var/lib/grafana/dashboards:ro
     ports:
-    - 3000:3000
+    - "3000:3000"
 
-  prometheus-server:
-    build: ./docker/prometheus
-    container_name: prometheus-server
-    mem_limit: 256M
+  tempo:
+    image: grafana/tempo:latest
+    container_name: tempo
+    command: [ "-config.file=/tempo.yaml" ]
+    volumes:
+      - ${PWD}/docker/config/tempo-local.yaml:/tempo.yaml:ro
+      - ${PWD}/docker/data/tempo:/tmp/tempo
     ports:
-    - 9091:9090
+      - "3200:3200"
+      - "14268:14268"  # jaeger ingest
+      - "4317:4317"  # otlp grpc
+      - "4318:4318"  # otlp http
+      - "9411:9411"   # zipkin
+
+#  loki:
+#    image: grafana/loki:2.6.1
+#    container_name: loki
+#    volumes:
+#      - ${PWD}/docker/config/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+#    ports:
+#      - 3100:3100
+
+#  promtail:
+#    image: grafana/promtail:2.6.1
+#    command: ["-config.file=/etc/promtail/promtail-config.yaml"]
+#    container_name: promtail
+#    volumes:
+#      - ${PWD}/docker/config/promtail-config.yaml:/etc/promtail/promtail-config.yaml:ro
+#      - /tmp/app-logs/:/var/log/app-logs
+
+  prometheus:
+    image: prom/prometheus:v2.40.1
+    command:
+      - --config.file=/etc/prometheus.yaml
+      - --web.enable-remote-write-receiver
+      - --enable-feature=exemplar-storage,remote-write-receiver
+    container_name: prometheus
+    volumes:
+      - ${PWD}/docker/config/prometheus.yaml:/etc/prometheus.yaml:ro
+    ports:
+      - "9091:9090"
+
+#  otel-collector:
+#    image: otel/opentelemetry-collector:0.61.0
+#    command: [ "--config=/etc/otel-collector.yaml" ]
+#    container_name: otel-collector
+#    volumes:
+#      - ${PWD}/docker/config/otel-collector.yaml:/etc/otel-collector.yaml:ro
+
+  elasticsearch:
+    image: elasticsearch:8.5.0
+    container_name: elasticsearch
+    healthcheck:
+      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 50
+#    environment:
+#      - discovery.type=single-node
+    volumes:
+      - ${PWD}/docker/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ${PWD}/docker/data/elasticsearch/:/usr/share/elasticsearch/data:rw
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  zookeeper:
+    image: zookeeper:3.8.0
+    container_name: zookeeper
+    volumes:
+      - ${PWD}/docker/config/zoo.cfg:/conf/zoo.cfg:ro
+      - ${PWD}/docker/data/zookeeper/:/data:rw
+    ports:
+      - 2181:2181
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.5.0
+    command:
+#      - setup
+#      - -e
+      - '--strict.perms=false'
+#      - '--path.data=/usr/share/filebeat/data/'
+      - -v
+    depends_on:
+      elasticsearch:
+          condition: service_healthy
+    user: root
+    container_name: filebeat
+    volumes:
+      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /tmp/app-logs/:/app-logs/:ro
+      - ${PWD}/docker/data/filebeat/:/usr/share/filebeat/data/:rw
+#
+#  filebeat-setup:
+#    image: docker.elastic.co/beats/filebeat:8.4.3
+#    command:
+#      - setup
+#      - -e
+#      - --strict.perms=false
+#    user: root
+#    container_name: filebeat-setup
+#    volumes:
+#      - ${PWD}/docker/config/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+#      - /tmp/app-logs/:/var/log/app-logs/:ro
+#      - ${PWD}/filebeat-registry:/usr/share/filebeat/data/registry:rw
+
+#  elasticsearch-admin:
+#    image: stephanediondev/elasticsearch-admin
+#    container_name: elasticsearch-admin
+#    ports:
+#      - 80:8080
+#      - 443:4443
+#    environment:
+#      ELASTICSEARCH_URL: http://elasticsearch:9200
+#      ELASTICSEARCH_USERNAME: elastic
+#      ELASTICSEARCH_PASSWORD: +kKvULi=4qpvFtIOj9Nh
+#      SECRET_REGISTER: abcd

@@ -1,0 +1,61 @@
+{
+  "type": "rolling",
+  "batchSize": 3,
+  "action": "deploy",
+  "targetPlatform": "ECS",
+  "applicationData": {
+    "artifactUrl": "${ARTIFACT_URL}",
+    "version": "${RELEASE_VERSION}"
+  },
+  "runtime": {
+    "type": "java",
+    "javaVersion": "17"
+  },
+  "profiles": [
+    {
+      "name": "jvmOptions",
+      "options": [
+        "-XX:MaxRAMPercentage=80",
+        "-Djarjar.aws.cloud.environment.enabled=true"
+      ]
+    },
+    {
+      "name": "environmentVariables",
+      "variables": {
+        "SPRING_APPLICATION_NAME": "${APP_ID}"
+      }
+    },
+    {
+      "name": "autoScaling",
+      "minSize": 1,
+      "maxSize": 1
+    },
+    {
+      "name": "instanceType/v2",
+      "memory": 2048,
+      "cpu": 256
+    },
+    {
+      "name": "newRelic",
+      "agentVersion": "7.11.1"
+    },
+    {
+      "name": "jarJar"
+    },
+    {
+      "name": "tags",
+      "tags": {
+        "availability": "no_chaos"
+      }
+    },
+    {
+      "name": "serviceDiscovery",
+      "serviceRegistries": [
+        {
+          "port": 8080,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ]
+}

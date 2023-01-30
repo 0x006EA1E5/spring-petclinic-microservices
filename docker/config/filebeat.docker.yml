@@ -1,0 +1,111 @@
+filebeat:
+  config:
+#    modules:
+#      path: ${path.config}/modules.d/*.yml
+#      reload.enabled: true
+  inputs:
+    - type: filestream
+      id: config-server
+      # Change to true to enable this input configuration.
+      enabled: true
+      file_identity.path: ~
+      # Paths that should be crawled and fetched. Glob based paths.
+#      close:
+#        reader:
+#          on_eof: true
+#      prospector:
+#        scanner:
+#          resend_on_touch: true
+      paths:
+        - /app-logs/*.log.json
+      processors:
+        - add_fields:
+            when:
+              contains:
+                log.file.path: config-server.log.json
+            target: ''
+            fields:
+              appId: config-server
+        - add_fields:
+            when:
+              contains:
+                log.file.path: admin-server.log.json
+            target: ''
+            fields:
+              appId: admin-server
+        - add_fields:
+            when:
+              contains:
+                log.file.path: api-gateway.log.json
+            target: ''
+            fields:
+              appId: api-gateway
+        - add_fields:
+            when:
+              contains:
+                log.file.path: customer-service.log.json
+            target: ''
+            fields:
+              appId: customer-service
+        - add_fields:
+            when:
+              contains:
+                log.file.path: vets-service.log.json
+            target: ''
+            fields:
+              appId: vets-service
+        - add_fields:
+            when:
+              contains:
+                log.file.path: visits-service.log.json
+            target: ''
+            fields:
+              appId: visits-service
+#setup.dashboards.enabled: false
+#filebeat.autodiscover:
+#  providers:
+#    - type: docker
+#      hints.enabled: true
+
+#processors:
+#- add_cloud_metadata: ~
+##setup.ilm.overwrite: true
+queue.mem:
+#  events: 4096
+  flush.timeout: 1s
+
+processors:
+  - decode_json_fields:
+      fields:
+        - message
+      process_array: false
+      max_depth: 1
+      target: ""
+      overwrite_keys: true
+      add_error_key: true
+  - timestamp:
+      field: timestamp
+      layouts: ['2006-01-02T15:04:05.999-0700']
+      test: ['2022-11-02T12:39:30.040+0000']
+  - rename:
+      fields:
+        - from: mdc.spanId
+          to: spanId
+        - from: mdc.traceId
+          to: traceId
+      ignore_missing: true
+      fail_on_error: false
+  - drop_fields:
+      fields:
+        - timestamp
+        - mdc
+        - context
+
+output.elasticsearch:
+  hosts:
+    - 'elasticsearch:9200'
+#  username: 'elastic'
+#  password: '+kKvULi=4qpvFtIOj9Nh'
+  ssl:
+    enabled: false
+
