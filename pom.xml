@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.ocadotechnology.jarjar</groupId>
         <artifactId>jarjar</artifactId>
-        <version>11.0.0-M1</version>
+        <version>11.0.0-RC1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,12 +31,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <assertj.version>3.22.0</assertj.version>
 
-        <spring-boot.version>3.0.1</spring-boot.version>
-        <spring-cloud.version>2022.0.0</spring-cloud.version>
-        <chaos-monkey-spring-boot.version>2.3.10</chaos-monkey-spring-boot.version>
+        <spring-boot.version>3.0.5</spring-boot.version>
+        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <chaos-monkey-spring-boot.version>3.0.0</chaos-monkey-spring-boot.version>
         <native.maven.plugin.version>0.9.17</native.maven.plugin.version>
-        <base.version>2.7.6</base.version>
-        <opentelemetry.version>1.21.0</opentelemetry.version>
+        <base.version>0.0.5</base.version>
+        <opentelemetry.version>1.24.0</opentelemetry.version>
         <revision>latest</revision>
     </properties>
 
@@ -116,52 +116,6 @@
                 <enabled>false</enabled>
             </releases>
         </pluginRepository>
-        <pluginRepository>
-            <id>graalvm-native-build-tools-snapshots</id>
-            <name>GraalVM native-build-tools Snapshots</name>
-            <url>https://raw.githubusercontent.com/graalvm/native-build-tools/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
     </pluginRepositories>
-    <profiles>
-        <profile>
-            <id>native</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>${native.maven.plugin.version}</version>
-                        <extensions>true</extensions>
-                        <executions>
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>compile-no-fork</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                            <execution>
-                                <id>test-native</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <!-- ... -->
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
 
 </project>

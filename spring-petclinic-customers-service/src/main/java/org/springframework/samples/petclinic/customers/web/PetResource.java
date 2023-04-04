@@ -16,8 +16,8 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.model.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,14 +36,17 @@ import java.util.Optional;
  */
 @RestController
 @Timed("petclinic.pet")
-@RequiredArgsConstructor
-@Slf4j
 //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 class PetResource {
+    private static final Logger logger = LoggerFactory.getLogger(PetResource.class);
 
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
 
+    PetResource(PetRepository petRepository, OwnerRepository ownerRepository) {
+        this.petRepository = petRepository;
+        this.ownerRepository = ownerRepository;
+    }
 
     @GetMapping("/petTypes")
     public List<PetType> getPetTypes() {
@@ -67,20 +70,20 @@ class PetResource {
     @PutMapping("/owners/*/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processUpdateForm(@RequestBody PetRequest petRequest) {
-        int petId = petRequest.getId();
+        int petId = petRequest.id();
         Pet pet = findPetById(petId);
         save(pet, petRequest);
     }
 
     private Pet save(final Pet pet, final PetRequest petRequest) {
 
-        pet.setName(petRequest.getName());
-        pet.setBirthDate(petRequest.getBirthDate());
+        pet.setName(petRequest.name());
+        pet.setBirthDate(petRequest.birthDate());
 
-        petRepository.findPetTypeById(petRequest.getTypeId())
+        petRepository.findPetTypeById(petRequest.typeId())
             .ifPresent(pet::setType);
 
-        log.info("Saving pet {}", pet);
+        logger.info("Saving pet {}", pet);
         return petRepository.save(pet);
     }
 

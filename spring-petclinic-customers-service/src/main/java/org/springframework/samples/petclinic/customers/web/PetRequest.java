@@ -15,26 +15,14 @@
  */
 package org.springframework.samples.petclinic.customers.web;
 
-import lombok.Data;
-
-import java.util.Date;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.Instant;
 
 /**
  * @author mszarlinski@bravurasolutions.com on 2016-12-05.
  */
-@Data
-public class PetRequest {
-    private int id;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthDate;
-
-    @Size(min = 1)
-    private String name;
-
-    private int typeId;
+public record PetRequest(int id, @JsonFormat(pattern = "yyyy-MM-dd") Instant birthDate, @Size(min = 1) String name,
+                         int typeId) {
 }
