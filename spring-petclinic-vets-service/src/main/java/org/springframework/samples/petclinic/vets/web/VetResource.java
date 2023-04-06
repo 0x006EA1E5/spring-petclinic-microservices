@@ -15,7 +15,7 @@
  */
 package org.springframework.samples.petclinic.vets.web;
 
-import org.springframework.samples.petclinic.vets.model.Vet;
+import org.springframework.samples.petclinic.common.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

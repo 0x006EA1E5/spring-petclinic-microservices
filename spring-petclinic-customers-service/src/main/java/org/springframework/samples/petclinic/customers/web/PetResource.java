@@ -19,8 +19,11 @@ import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.samples.petclinic.common.model.Owner;
+import org.springframework.samples.petclinic.common.model.Pet;
+import org.springframework.samples.petclinic.common.model.PetDetails;
+import org.springframework.samples.petclinic.common.model.PetType;
 import org.springframework.samples.petclinic.customers.model.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.constraints.Min;

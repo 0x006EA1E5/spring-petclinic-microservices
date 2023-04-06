@@ -133,10 +133,6 @@
             <groupId>de.codecentric</groupId>
             <artifactId>chaos-monkey-spring-boot</artifactId>
         </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-        </dependency>
 
         <!-- For pushing logs out -->
         <dependency>

@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.customers.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.samples.petclinic.common.model.Owner;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant with Spring Data naming

@@ -21,6 +21,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.common.model.Pet;
+import org.springframework.samples.petclinic.common.model.PetType;
 
 /**
  * Repository class for <code>Pet</code> domain objects All method names are compliant with Spring Data naming

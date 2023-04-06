@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.vets.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.samples.petclinic.common.model.Vet;
 
 /**
  * Repository class for <code>Vet</code> domain objects All method names are compliant with Spring Data naming

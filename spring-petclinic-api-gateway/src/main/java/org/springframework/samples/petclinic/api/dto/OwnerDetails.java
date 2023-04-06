@@ -16,19 +16,18 @@
 package org.springframework.samples.petclinic.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.samples.petclinic.common.model.PetDetails;
 
 import java.util.List;
 
 /**
  * @author Maciej Szarlinski
  */
-public record OwnerDetails(int id, String firstName, String lastName, String address, String city, String telephone, List<PetDetails> pets) {
-
-
+public record OwnerDetails(long id, String firstName, String lastName, String address, String city, String telephone, List<PetDetailsWithVisits> pets) {
     @JsonIgnore
-    public List<Integer> getPetIds() {
+    public List<Long> getPetIds() {
         return pets.stream()
-            .map(PetDetails::id)
+            .map(PetDetailsWithVisits::id)
             .toList();
     }
 }

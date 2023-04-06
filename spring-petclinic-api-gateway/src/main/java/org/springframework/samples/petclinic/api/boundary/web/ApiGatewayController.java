@@ -19,16 +19,20 @@ import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.trace.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.api.application.CustomersService;
 import org.springframework.samples.petclinic.api.application.VisitsService;
 import org.springframework.samples.petclinic.api.dto.OwnerDetails;
-import org.springframework.samples.petclinic.api.dto.Visit;
-import org.springframework.samples.petclinic.api.dto.Visits;
+import org.springframework.samples.petclinic.common.model.PetDetails;
+import org.springframework.samples.petclinic.common.model.PetType;
+import org.springframework.samples.petclinic.common.model.Visit;
+import org.springframework.samples.petclinic.common.model.Visits;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
 
@@ -98,4 +102,5 @@ class ApiGatewayController {
             return owner;
         };
     }
+
 }

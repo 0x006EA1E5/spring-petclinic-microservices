@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visits.model;
+package org.springframework.samples.petclinic.common.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Simple JavaBean domain object representing a visit.
@@ -36,7 +35,7 @@ public class Visit {
     public Visit() {
     }
 
-    public Visit(Integer id, Date date, String description, int petId) {
+    public Visit(Integer id, Instant date, String description, int petId) {
         this.id = id;
         this.date = date;
         this.description = description;
@@ -47,11 +46,10 @@ public class Visit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Builder.Default
     @Column(name = "visit_date")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date date = new Date();
+    private Instant date = Instant.now();
 
     @Size(max = 8192)
     @Column(name = "description")
@@ -69,11 +67,11 @@ public class Visit {
         this.id = id;
     }
 
-    public Date getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 

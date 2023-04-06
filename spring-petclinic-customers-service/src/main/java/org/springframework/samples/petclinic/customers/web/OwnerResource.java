@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.exceptions.TooManyOwnersException;
-import org.springframework.samples.petclinic.customers.model.Owner;
+import org.springframework.samples.petclinic.common.model.Owner;
 import org.springframework.samples.petclinic.customers.model.OwnerRepository;
 import org.springframework.web.bind.annotation.*;
 

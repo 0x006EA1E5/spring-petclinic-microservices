@@ -46,6 +46,5 @@ class OtelConfiguration {
             return new ExemplarMarkingExemplarSampler(defaultExemplarSampler, tracer);
         }
         return defaultExemplarSampler;
-
     }
 }

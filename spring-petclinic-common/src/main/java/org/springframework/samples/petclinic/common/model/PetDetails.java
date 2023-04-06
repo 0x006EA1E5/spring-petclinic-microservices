@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.api.dto;
+package org.springframework.samples.petclinic.common.model;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @author Maciej Szarlinski
+ * @author mszarlinski@bravurasolutions.com on 2016-12-05.
  */
-public record PetDetails(int id, String name, PetType type, List<Visit> visits) {
-    public PetDetails(int id, String name, PetType type, @JsonSetter(nulls = Nulls.AS_EMPTY) List<Visit> visits) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.visits = visits != null ? visits : new ArrayList<>();
+public record PetDetails(long id, String name, String owner, @DateTimeFormat(pattern = "yyyy-MM-dd") Instant birthDate,
+                         PetType type) {
+
+    public PetDetails(Pet pet) {
+        this(pet.getId(), pet.getName(), pet.getOwner().getFirstName() + " " + pet.getOwner().getLastName(),
+            pet.getBirthDate(), pet.getType());
     }
 }
