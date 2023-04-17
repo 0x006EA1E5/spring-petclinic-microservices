@@ -76,6 +76,18 @@ create_release_version:
     BUSINESS_ID: atm
     ALIAS: use1
 
+.build_otp_image_base_no_agent:
+  image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.11.2-alpine
+  stage: upload
+  script:
+    - echo release-version $(cat .release-version)
+    - export RELEASE_VERSION=$(cat .release-version)
+    - chancellor image build -m infra/chancellor-cli-templates/image-builder-metadata-no-agent.json -a ./${MODULE}/target/${MODULE}-${RELEASE_VERSION}.jar
+  variables:
+    DTAP: dev
+    BUSINESS_ID: atm
+    ALIAS: use1
+
 .deploy_chancellor_base:
   image: registry.gitlab.ocado.tech/chancellor-cli/chancellor-cli:3.10.2-alpine
   stage: deploy
@@ -136,7 +148,7 @@ build_customers_service:
     MODULE: spring-petclinic-customers-service
 
 upload_customers_service:
-  extends: .build_otp_image_base
+  extends: .build_otp_image_base_no_agent
   variables:
     MODULE: spring-petclinic-customers-service
     APP_ID: petcliniccustomersservice
